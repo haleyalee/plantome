@@ -8,6 +8,9 @@ import userProfile from '../images/icons/user.svg';
 import search from '../images/icons/search.svg';
 import x from '../images/icons/x-lg.svg';
 
+// import styles
+import '../styles/Nav.css';
+
 // import components
 import ShoppingCart from './ShoppingCart';
 
@@ -62,15 +65,15 @@ function Nav():JSX.Element {
           {/* Icons */}
           <ul className="navbar-nav ml-auto">
             {/* Search */}
-            <li className="nav-item px-2">
-              <div className="input-group">
-                <div className="input-group-prepend">
-                  <button className="btn btn-outline-secondary" style={{border: "1px solid #ced4da", borderTopRightRadius: 0, borderBottomRightRadius: 0}} type="button">
-                    <img src={search} alt="Search" width="24px" height="24px"/>
-                  </button>  
+            <li className="nav-item dropdown px-2">
+                <a className="nav-link" href="#" role="button" id="searchDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <img src={search} alt="Search" width="24px" height="24px"/>
+                </a>
+                <div className="dropdown-menu dropdown-menu-right p-2" aria-labelledby="searchDropdown">
+                  <div className="dropdown-item p-0">
+                    <input type="text" className="form-control" placeholder="Search" aria-label="search" />
+                  </div>
                 </div>
-                <input type="text" className="form-control" placeholder="Search" aria-label="search" />
-              </div>
             </li>
             {/* User Profile */}
             <li className="nav-item px-2">
@@ -90,7 +93,7 @@ function Nav():JSX.Element {
                   <ShoppingCart />
                 </div>
               </Drawer>
-              <a className="nav-link position-relative" onClick={()=> setCartOpen(true)}>
+              <a className="nav-link position-relative" role="button" onClick={()=> setCartOpen(true)}>
                 <img src={shoppingCart} alt="Shopping Cart" width="24px" height="24px"/>
                 {/* add badge to show {getTotalItems(cartItems)} */}
                 <span className="position-absolute translate-middle start-100 badge rounded-pill bg-secondary">2</span>
