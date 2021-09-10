@@ -6,14 +6,19 @@ import '../styles/App.css';
 
 // import context
 import AppContext from '../contexts';
+import Plant from '../entities/plant';
 
 // import components
 import CompanyCard from './CompanyCard';
-import Plant from './Plant';
+import PlantItem from './PlantItem';
 
-function Home():JSX.Element {
+type Props = {
+  addToCart: (item:Plant)=>void
+}
 
-  const {plants } = useContext(AppContext);
+function Home(props:Props):JSX.Element {
+
+  const {plants} = useContext(AppContext);
 
   return (
     <div>
@@ -57,7 +62,7 @@ function Home():JSX.Element {
         <Grid container spacing={4}>
           { plants.map( (plant) => 
             <Grid key={plant.id} item xs={12} sm={6} md={4} lg={3}>
-              <Plant key={plant.id} name={plant.name} price={plant.price} category={plant.category} quantity={plant.quantity} image={plant.image} />
+              <PlantItem key={plant.id} plant={plant} addToCart={props.addToCart}/>
             </Grid>
           ) }
         </Grid>

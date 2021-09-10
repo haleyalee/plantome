@@ -13,12 +13,17 @@ import '../styles/Nav.css';
 
 // import components
 import ShoppingCart from './ShoppingCart';
+import Plant from '../entities/plant';
 
-function Nav():JSX.Element {
+type Props = {
+  cart: Plant[],
+  addToCart: (item:Plant)=>void,
+  removeFromCart: (item:Plant)=>void
+}
+
+function Nav(props:Props):JSX.Element {
 
   const [cartOpen, setCartOpen] = useState(false);
-  // const [cartItems, setCartItems] = useState([]);
-
 
   return (
     <div className="container py-2">
@@ -90,13 +95,12 @@ function Nav():JSX.Element {
                   </button>
                 </div>
                 <div>
-                  <ShoppingCart />
+                  <ShoppingCart cart={props.cart} addToCart={props.addToCart} removeFromCart={props.removeFromCart}/>
                 </div>
               </Drawer>
               <a className="nav-link position-relative" role="button" onClick={()=> setCartOpen(true)}>
                 <img src={shoppingCart} alt="Shopping Cart" width="24px" height="24px"/>
-                {/* add badge to show {getTotalItems(cartItems)} */}
-                <span className="position-absolute translate-middle start-100 badge rounded-pill bg-secondary">2</span>
+                <span className="position-absolute translate-middle start-100 badge rounded-pill bg-secondary">{props.cart.length}</span>
               </a>
             </li>
           </ul>

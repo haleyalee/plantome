@@ -5,9 +5,14 @@ import Grid from '@material-ui/core/Grid';
 import AppContext from '../../contexts';
 
 // import components
-import Plant from './../Plant';
+import PlantItem from './../PlantItem';
+import Plant from '../../entities/plant';
 
-function ShopPlants():JSX.Element {
+type Props = {
+  addToCart: (item:Plant)=>void
+}
+
+function ShopPlants(props:Props):JSX.Element {
 
   const { plants } = useContext(AppContext);
 
@@ -17,7 +22,7 @@ function ShopPlants():JSX.Element {
       <Grid container spacing={4}>
         { plants.map( (plant) => 
           <Grid key={plant.id} item xs={12} sm={6} md={4} lg={3}>
-            <Plant key={plant.id} name={plant.name} price={plant.price} category={plant.category} quantity={plant.quantity} image={plant.image} />
+            <PlantItem key={plant.id} plant={plant} addToCart={props.addToCart} />
           </Grid>
         ) }
       </Grid>

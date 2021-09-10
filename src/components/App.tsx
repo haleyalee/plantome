@@ -1,4 +1,4 @@
-import React from  'react';
+import React, {useState} from  'react';
 // import { useQuery } from 'react-query';
 import {
   BrowserRouter as Router,
@@ -8,6 +8,8 @@ import {
 
 // import external stylesheets
 import '../styles/App.css';
+
+import Plant from '../entities/plant';
 
 // import components
 import Nav from './Nav';
@@ -36,20 +38,52 @@ function App():JSX.Element {
   // const getTotalItems = (items:CartItemType[]) => 
   //  items.reduct((ack: number, item) => ack + item.amount, 0);
 
-  // const handleAddToCart = () => null;
-   
-  // const handleRemoveFromCart = () => null;
-
   // if ( isLoading ) return <LinearProgress />;
   // if ( error ) return <div>Something went wrong... </div>
+
+  const [cart, setCart] = useState<Plant[]>([]);
+
+  const handleAddToCart = (item:Plant) => {
+    // if item is already in cart, increase quantity
+    if (cart.includes(item)) {
+      item.quantity += 1;
+      console.log(item)
+    } 
+    // else add item to cart, set quantity to 1
+    else {
+      item.quantity = 1;
+      setCart((currentCart) => [...currentCart, item]);
+    }
+    console.log(cart);
+  };
+
+  const handleRemoveFromCart = (item:Plant) => {
+    // set item quantity to 0
+    item.quantity = 0;
+    
+    // remove item from cart
+    setCart((currentCart) => {
+      const idxItem = currentCart.findIndex((cartItem) => cartItem.id === item.id);
+
+      if (idxItem === -1) {
+        return currentCart;
+      }
+
+      return [
+        ...currentCart.slice(0, idxItem),
+        ...currentCart.slice(idxItem + 1),
+      ];
+    });
+    console.log(cart)
+  }
 
   return (
     <div>
       <Router >
-        <Nav />
+        <Nav cart={cart} addToCart={handleAddToCart} removeFromCart={handleRemoveFromCart} />
         <Switch>
-          <Route exact path="/"><Home /></Route>
-          <Route path="/plants"><AllPlants /></Route>
+          <Route exact path="/"><Home addToCart={handleAddToCart}/></Route>
+          <Route path="/plants"><AllPlants addToCart={handleAddToCart}/></Route>
           <Route path="/about"><About /></Route>
           <Route path="/contact"><Contact /></Route>
         </Switch>

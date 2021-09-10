@@ -1,16 +1,18 @@
 import React, { useState } from 'react'
 
-function QuantityTicker():JSX.Element {
+function QuantityTicker(props:any):JSX.Element {
 
-  const [count, setCount] = useState(1);
+  const [count, setCount] = useState(props.quantity);
 
   const handleMinus = () => {
     if (count-1 >= 0)
       setCount(count-1);
+      props.quantity -= 1;
   }
 
   const handlePlus = () => {
     setCount(count+1);
+    props.quantity += 1;
   }
 
   return (
