@@ -3,20 +3,36 @@ import React, {useState, useEffect} from 'react'
 // import components
 import Plant from '../entities/plant';
 
-
-const itemStyle = {
-  width: "300px",
-}
+import "../styles/ShoppingCart.css"
 
 type Props = {
   plant: Plant,
   addToCart: (item:Plant)=>void,
-  removeFromCart: (item:Plant)=>void
+  removeFromCart: (item:Plant)=>void,
+  findSubtotal: (itemPrice:number)=>void
 }
 
 function ShoppingCartItem(props:Props):JSX.Element {
 
   const [count, setCount] = useState(props.plant.quantity);
+  const minusId = "minus_" + props.plant.id;
+  const plusId = "plus_" + props.plant.id;
+
+  useEffect(() => {
+    setCount(props.plant.quantity)
+
+    // disable decrement if quantity is 1
+    if (count === 1) {
+      document.getElementById(minusId)?.classList.add("disabled");
+    } else {
+      document.getElementById(minusId)?.classList.remove("disabled");
+    }
+  }, [props.plant.quantity]);
+
+  // render subtotal
+  useEffect(() => {
+    props.findSubtotal(props.plant.quantity * props.plant.price);
+  });
 
   const handleMinus = () => {
     if (count-1 >= 0) {
@@ -32,39 +48,28 @@ function ShoppingCartItem(props:Props):JSX.Element {
     console.log(props.plant)
   }
 
-  useEffect(() => {
-    setCount(props.plant.quantity)
-    
-    // disable decrement if quantity is 1
-    if (count === 1) {
-      document.getElementById("minus")?.classList.add("disabled");
-    } else {
-      document.getElementById("minus")?.classList.remove("disabled");
-    }
-  }, [props.plant.quantity]);
-
   return (
-    <div className="d-flex py-3" style={itemStyle}>
-      <img className="me-3" src={props.plant.image} alt={props.plant.name} width="98px" height="120px" />
+    <div className="item d-flex p-2 mt-4">
+      <img className="me-3" src={props.plant.image} alt={props.plant.name} width="100px" height="120px" />
       <div className="d-flex w-100 flex-column justify-content-between"> 
         <div className="d-flex justify-content-between">
           {/* Name */}
-          <h6>{props.plant.name}</h6>
+          <h6 className="pe-3">{props.plant.name}</h6>
           {/* Total Price (adjusted to quantity) */}
           <h6>${(props.plant.quantity * props.plant.price).toFixed(2)}</h6>
         </div>
-        <div className="d-flex justify-content-between">
+        <div className="d-flex justify-content-between align-items-end">
           {/* Quantity */}
           <div className="d-flex">
-            <p className="pe-2">Qty</p>
-            <span>
-              <button id="minus" className="btn btn-outline-secondary p-0 px-1 text-center" onClick={handleMinus}>-</button>
+            <p className="m-0 pe-2">Qty</p>
+            <span className="m-0">
+              <button id={minusId} className="btn btn-outline-secondary p-0 px-1 text-center qty-btn" onClick={handleMinus}>-</button>
               <a> {props.plant.quantity} </a>
-              <button id="plus" className="btn btn-outline-secondary p-0 px-1" onClick={handlePlus}>+</button>
+              <button id={plusId} className="btn btn-outline-secondary p-0 px-1 text-center qty-btn" onClick={handlePlus}>+</button>
             </span>
           </div>
           {/* Delete button */}
-          <a role="button" onClick={() => props.removeFromCart(props.plant)}><u>delete</u></a>
+          <a className="black" role="button" onClick={() => props.removeFromCart(props.plant)}><u>delete</u></a>
         </div>
       </div>
     </div>

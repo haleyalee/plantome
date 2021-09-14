@@ -25,6 +25,10 @@ function Nav(props:Props):JSX.Element {
 
   const [cartOpen, setCartOpen] = useState(false);
 
+  const handleClose = (state:boolean) => {
+    setCartOpen(state);
+  }
+
   return (
     <div className="container py-2">
       <nav className="navbar navbar-expand-lg navbar-light">
@@ -88,19 +92,19 @@ function Nav(props:Props):JSX.Element {
             </li>
             {/* Shopping Cart */}
             <li className="nav-item px-2">
-              <Drawer anchor="right" open={cartOpen} onClose={() => setCartOpen(false)}>
+              <Drawer anchor="right" open={cartOpen} onClose={()=>handleClose(false)}>
                 <div className="position-relative">
-                  <button className="icon position-absolute top-0 end-0" onClick={()=> setCartOpen(false)} >
+                  <button id="x" className="icon position-absolute" onClick={()=>handleClose(false)} >
                     <img src={x} alt="Close Shopping Cart" width="24px" height="24px" />
                   </button>
                 </div>
                 <div>
-                  <ShoppingCart cart={props.cart} addToCart={props.addToCart} removeFromCart={props.removeFromCart}/>
+                  <ShoppingCart cart={props.cart} addToCart={props.addToCart} removeFromCart={props.removeFromCart} close={handleClose}/>
                 </div>
               </Drawer>
               <a className="nav-link position-relative" role="button" onClick={()=> setCartOpen(true)}>
                 <img src={shoppingCart} alt="Shopping Cart" width="24px" height="24px"/>
-                <span className="position-absolute translate-middle start-100 badge rounded-pill bg-secondary">{props.cart.length}</span>
+                <span id="badge" className="position-absolute translate-middle start-100 badge rounded-pill">{props.cart.length}</span>
               </a>
             </li>
           </ul>

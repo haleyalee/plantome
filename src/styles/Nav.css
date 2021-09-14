@@ -2,3 +2,13 @@
   right: 0;
   left: auto;
 }
+
+#badge {
+  background-color: #B2AC88;
+}
+
+#x {
+  top: 15px;
+  right: 15px;
+  left: auto;
+}

@@ -1,0 +1,21 @@
+#cart {
+  min-width: 406px;
+}
+
+/* Shopping Cart Items */
+
+.item {
+  border: 0.5px solid rgba(0,0,0,.125);
+  border-radius: 4px;
+}
+
+.qty-btn {
+  text-align: center;
+  width: 21px;
+  border: 0.5px solid rgba(0,0,0,.125);
+}
+
+.qty-btn:hover {
+  background-color: #B2AC88;
+  color: white;
+}

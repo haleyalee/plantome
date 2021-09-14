@@ -33,7 +33,7 @@ const initialContext = {
       price: 15.00, 
       category: ['Best Seller', 'Beginner', 'Low Maintenance'], 
       quantity: 0, 
-      image: "https://cdn.shopify.com/s/files/1/0252/3928/9903/products/golden-pothos-589505_900x.jpg?v=1606341920" 
+      image: "https://cdn.shopify.com/s/files/1/0012/2712/8915/products/Golden-Pothos-Sage-Sisters-1.jpg?v=1611594088" 
     }, { 
       id: 4, 
       name: 'Dracaena Marginata', 
