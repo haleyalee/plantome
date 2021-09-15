@@ -56,8 +56,8 @@ function Nav(props:Props):JSX.Element {
                   {/* <Link to="plants/aquatic" className="dropdown-item">aquatic</Link> */}
                   <Link to="plants/beginner" className="dropdown-item">beginner</Link>
                   <Link to="plants/low-maintenance" className="dropdown-item">low-maintenance</Link>
-                  <Link to="plants/pet-friendly" className="dropdown-item">pet-friendly</Link>
-                  <Link to="plants/succulents-cacti" className="dropdown-item">succulents &amp; cacti</Link>
+                  {/* <Link to="plants/pet-friendly" className="dropdown-item">pet-friendly</Link> */}
+                  {/* <Link to="plants/succulents-cacti" className="dropdown-item">succulents &amp; cacti</Link> */}
                   <Link to="plants/tropical" className="dropdown-item">tropical</Link>
                 </div>
             </li>

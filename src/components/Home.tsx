@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
 
 // import external stylesheet
@@ -18,7 +18,15 @@ type Props = {
 
 function Home(props:Props):JSX.Element {
 
-  const {plants} = useContext(AppContext);
+  const {plants, setPlants} = useContext(AppContext);
+
+  useEffect(() => {
+    fetch('https://knyxsiqbhk.execute-api.us-east-2.amazonaws.com/Prod/plants')
+    .then( response => response.json())
+    .then( plnts => plnts.map( ( plant:Plant, index:number) => { plant._id = index+1; return plant}))
+    .then( plnts => setPlants(plnts))
+    .catch( error => console.log(error));
+  }, [setPlants])
 
   return (
     <div>
