@@ -1,32 +1,20 @@
-import React, { useContext, useEffect } from 'react';
-import Grid from '@material-ui/core/Grid';
+import React from 'react';
 
 // import external stylesheet
 import '../styles/App.css';
 
 // import context
-import AppContext from '../contexts';
 import Plant from '../entities/plant';
 
 // import components
 import CompanyCard from './CompanyCard';
-import PlantItem from './PlantItem';
+import FilteredPlants from './plants/FilteredPlants';
 
 type Props = {
   addToCart: (item:Plant)=>void
 }
 
 function Home(props:Props):JSX.Element {
-
-  const {plants, setPlants} = useContext(AppContext);
-
-  useEffect(() => {
-    fetch('https://knyxsiqbhk.execute-api.us-east-2.amazonaws.com/Prod/plants')
-    .then( response => response.json())
-    .then( plnts => plnts.map( ( plant:Plant, index:number) => { plant._id = index+1; return plant}))
-    .then( plnts => setPlants(plnts))
-    .catch( error => console.log(error));
-  }, [setPlants])
 
   return (
     <div>
@@ -50,31 +38,16 @@ function Home(props:Props):JSX.Element {
       {/* Cards */}
       <div className="container py-5">
         <div className="row">
-          <div className="col-sm-12 col-md-4 py-sm-3">
-            <CompanyCard feature={"Free Shipping"} />
-          </div>
-          <div className="col-sm-12 col-md-4 py-sm-3">
-            <CompanyCard feature={"Customer Support"} />
-          </div>
-          <div className="col-sm-12 col-md-4 py-sm-3">
-            <CompanyCard feature={"Secure Payment"} />
-          </div>
+          <CompanyCard feature={"Free Shipping"} />
+          <CompanyCard feature={"Customer Support"} />
+          <CompanyCard feature={"Secure Payment"} />
         </div>
       </div>
 
 
       {/* Best Sellers */}
-      <div className="container py-5">
-        <h3 className="pb-4">Best Sellers</h3>
-
-        <Grid container spacing={4}>
-          { plants.map( (plant) => 
-            <Grid key={plant.id} item xs={12} sm={6} md={4} lg={3}>
-              <PlantItem key={plant.id} plant={plant} addToCart={props.addToCart}/>
-            </Grid>
-          ) }
-        </Grid>
-      </div>
+      <FilteredPlants pageName={"Best Seller"} addToCart={props.addToCart} />
+      
     </div>
   );
 }
