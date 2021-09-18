@@ -14,19 +14,30 @@ import '../styles/Nav.css';
 // import components
 import ShoppingCart from './ShoppingCart';
 import Plant from '../entities/plant';
+import SearchBar from './SearchBar';
 
 type Props = {
   cart: Plant[],
   addToCart: (item:Plant)=>void,
-  removeFromCart: (item:Plant)=>void
+  removeFromCart: (item:Plant)=>void,
+  search: (results:Plant[])=>void
 }
 
 function Nav(props:Props):JSX.Element {
 
+  // Shopping Cart Drawer
   const [cartOpen, setCartOpen] = useState(false);
 
   const handleClose = (state:boolean) => {
     setCartOpen(state);
+  }
+
+  // Search Dropdown
+  // const [dropdown, setDropdown] = useState(false);
+
+  const handleDropdown = () => {
+    const dropdown = document.getElementById("closeDropdown")
+    dropdown?.classList.remove('show');
   }
 
   return (
@@ -78,9 +89,9 @@ function Nav(props:Props):JSX.Element {
                 <a className="nav-link" href="#" role="button" id="searchDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <img src={search} alt="Search" width="24px" height="24px"/>
                 </a>
-                <div className="dropdown-menu dropdown-menu-right p-2" aria-labelledby="searchDropdown">
+                <div id="closeDropdown" className="dropdown-menu dropdown-menu-right p-2" aria-labelledby="searchDropdown">
                   <div className="dropdown-item p-0">
-                    <input type="text" className="form-control" placeholder="Search" aria-label="search" />
+                    <SearchBar search={props.search} closeDropdown={handleDropdown} />
                   </div>
                 </div>
             </li>
