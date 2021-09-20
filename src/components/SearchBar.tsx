@@ -1,18 +1,17 @@
 import React, {useState, useEffect, useContext} from 'react'
-import {withRouter} from 'react-router-dom';
 
 // import entities
 import Plant from '../entities/plant';
+// import search from '../images/icons/search.svg';
 
 // import context
 import AppContext from '../contexts';
 
-// type Props = {
-//   search: (results:Plant[])=>void
-// }
+type Props = {
+  search: (results:Plant[])=>void
+}
 
-// eslint-disable-next-line
-function SearchBar(props:any):JSX.Element {
+function SearchBar(props:Props):JSX.Element {
 
   const { plants, setPlants } = useContext(AppContext);
 
@@ -29,7 +28,6 @@ function SearchBar(props:any):JSX.Element {
   const handleChange = (e:React.SyntheticEvent) => {
     const target = e.target as HTMLInputElement;
     setSearchFilter(target.value);
-    // document.getElementById('searchField')?.reset();git 
   }
 
   const filterPlants = () => {
@@ -37,28 +35,44 @@ function SearchBar(props:any):JSX.Element {
     props.search(filtered);
   }
 
+  const handleSubmit = (e:React.SyntheticEvent) => {
+    e.preventDefault();
+    filterPlants();
+    setSearchFilter('');
+  }
+
   const handleEnter = (e:React.KeyboardEvent) => {
     if (e.key === 'Enter') {
-      e.preventDefault();
-      filterPlants();
-      if (props.closeDropdown) props.closeDropdown();
-      props.history.push("/plants/search");
+      handleSubmit(e);
     }
   }
 
   return (
     <div>
-      <input 
-        id="searchField"
-        type="text" 
-        className="form-control" 
-        placeholder="Search Plants" 
-        aria-label="search" 
-        onChange={handleChange}
-        onKeyPress={handleEnter}
-      />
+      <form onSubmit={handleSubmit}>
+        <div className="input-group mb-3">
+          {/* <div className="input-group-prepend">
+            <span className="input-group-text" id="basic-addon1">
+              <img src={search} alt="Search" width="24px" height="24px"/>
+            </span>
+          </div> */}
+          <input 
+            id="searchField"
+            type="text" 
+            className="form-control" 
+            placeholder="Search" 
+            aria-label="search" 
+            value={searchFilter}
+            onChange={handleChange}
+            onKeyPress={handleEnter}
+            />
+            <div className="input-group-append">
+              <input type="submit" className="btn btn-secondary" value="Submit" />
+            </div>
+        </div>
+      </form>
     </div>
   )
 }
 
-export default withRouter(SearchBar);
+export default SearchBar;
