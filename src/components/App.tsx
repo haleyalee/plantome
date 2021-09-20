@@ -16,6 +16,7 @@ import Nav from './Nav';
 import Home from './Home';
 import AllPlants from './plants/AllPlants';
 import FilteredPlants from './plants/FilteredPlants';
+import SearchPlants from './plants/SearchPlants';
 import About from './About';
 import Contact from './Contact';
 // import Drawer from '@material-ui/core/Drawer';
@@ -78,14 +79,20 @@ function App():JSX.Element {
     console.log(cart)
   }
 
-  
+  // Search
+  const [searchResult, setSearchResult] = useState<Plant[]>([]);
+
+  const searchPlants = (results:Plant[]) => {
+    setSearchResult(results);
+  }
 
   return (
     <div>
       <Router >
-        <Nav cart={cart} addToCart={handleAddToCart} removeFromCart={handleRemoveFromCart} />
+        <Nav cart={cart} addToCart={handleAddToCart} removeFromCart={handleRemoveFromCart} search={searchPlants} />
         <Switch>
           <Route exact path="/"><Home addToCart={handleAddToCart}/></Route>
+          <Route exact path="/plants/search"><SearchPlants search={searchPlants} searchResult={searchResult} addToCart={handleAddToCart} /></Route>
           <Route exact path="/plants/best-seller"><FilteredPlants pageName={"Best Seller"} addToCart={handleAddToCart} /></Route>
           <Route exact path="/plants/beginner"><FilteredPlants pageName={"Beginner"} addToCart={handleAddToCart} /></Route>
           <Route exact path="/plants/low-maintenance"><FilteredPlants pageName={"Low Maintenance"} addToCart={handleAddToCart} /></Route>
