@@ -89,9 +89,9 @@ function Nav(props:Props):JSX.Element {
 
             {/* User Profile */}
             <li className="nav-item px-2">
-              <a href="#" className="nav-link">
+              <Link to="/signup" className="nav-link">
                 <img src={userProfile} alt="User Profile" width="24px" height="24px"/>
-              </a>
+              </Link>
             </li>
 
             {/* Shopping Cart */}

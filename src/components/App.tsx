@@ -19,6 +19,7 @@ import FilteredPlants from './plants/FilteredPlants';
 import SearchPlants from './plants/SearchPlants';
 import About from './About';
 import Contact from './Contact';
+import SignUp from './SignUp';
 // import Drawer from '@material-ui/core/Drawer';
 // import LinearProgress from '@material-ui/core/LinearProgress';
 // import Grid from '@material-ui/core/Grid';
@@ -100,6 +101,7 @@ function App():JSX.Element {
           <Route path="/plants"><AllPlants addToCart={handleAddToCart}/></Route>
           <Route path="/about"><About /></Route>
           <Route path="/contact"><Contact /></Route>
+          <Route path="/signup"><SignUp /></Route>
         </Switch>
       </Router>
     </div>
