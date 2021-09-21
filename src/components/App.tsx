@@ -5,6 +5,10 @@ import {
   Switch,
   Route
 } from 'react-router-dom';
+import Amplify from 'aws-amplify';
+import aws_exports from '../aws-exports';
+// import { withAuthenticator } from 'aws-amplify-react';
+Amplify.configure(aws_exports);
 
 // import external stylesheets
 import '../styles/App.css';
@@ -20,11 +24,7 @@ import SearchPlants from './plants/SearchPlants';
 import About from './About';
 import Contact from './Contact';
 import SignUp from './SignUp';
-// import Drawer from '@material-ui/core/Drawer';
-// import LinearProgress from '@material-ui/core/LinearProgress';
-// import Grid from '@material-ui/core/Grid';
-// import Badge from '@material-ui/core/Badge';
-// import PlantContextProvider from '../contexts/PlantContextProvider';
+import SignIn from './SignIn';
 
 
 export type CartItemType = {
@@ -87,6 +87,14 @@ function App():JSX.Element {
     setSearchResult(results);
   }
 
+  // User Authentication
+  // eslint-disable-next-line
+  const [signedUp, setSignedUp] = useState(false);
+
+  const handleSignUp = () => {
+    setSignedUp(true);
+  }
+
   return (
     <div>
       <Router >
@@ -101,7 +109,8 @@ function App():JSX.Element {
           <Route path="/plants"><AllPlants addToCart={handleAddToCart}/></Route>
           <Route path="/about"><About /></Route>
           <Route path="/contact"><Contact /></Route>
-          <Route path="/signup"><SignUp /></Route>
+          <Route path="/signup"><SignUp handleSignUp={handleSignUp}/></Route>
+          <Route path="/signin"><SignIn /></Route>
         </Switch>
       </Router>
     </div>

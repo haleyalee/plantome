@@ -36,7 +36,7 @@ function ShopFilteredPlants(props:Props):JSX.Element {
             <PlantItem key={plant.id} plant={plant} addToCart={props.addToCart} />
           </Grid>
           :
-          <div></div>
+          <div key={plant.id}></div>
         ) }
       </Grid>
     </div>

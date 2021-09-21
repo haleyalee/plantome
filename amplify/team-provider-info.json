@@ -14,6 +14,12 @@
     "categories": {
       "auth": {
         "plantomeb4bc39f2": {}
+      },
+      "function": {
+        "AdminQueriesb5682ed5": {
+          "deploymentBucketName": "amplify-amplify36bc55c423e14-staging-160336-deployment",
+          "s3Key": "amplify-builds/AdminQueriesb5682ed5-4432373744362b434a31-build.zip"
+        }
       }
     }
   }

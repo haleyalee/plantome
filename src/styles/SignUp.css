@@ -1,4 +1,4 @@
-form {
+#confirmationForm, #signUpForm {
   border: 0.5px solid rgba(0,0,0,.125);
   border-radius: 4px;
   padding: 1rem;
