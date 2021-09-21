@@ -14,7 +14,6 @@ import '../styles/Nav.css';
 // import components
 import ShoppingCart from './ShoppingCart';
 import Plant from '../entities/plant';
-// import SearchBar from './SearchBar';
 
 type Props = {
   cart: Plant[],
@@ -89,7 +88,7 @@ function Nav(props:Props):JSX.Element {
 
             {/* User Profile */}
             <li className="nav-item px-2">
-              <Link to="/signup" className="nav-link">
+              <Link to="/account" className="nav-link">
                 <img src={userProfile} alt="User Profile" width="24px" height="24px"/>
               </Link>
             </li>

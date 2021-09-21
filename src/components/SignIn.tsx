@@ -15,7 +15,10 @@ function SignIn(props:any):JSX.Element {
       username: email,
       password: password
     })
-    .then( () => console.log("Successfully signed in") )
+    .then( () => {
+      console.log("Successfully signed in"); 
+      props.handleSignIn(true); 
+    })
     .catch( (error) => console.log(`Error signing in: ${error}`))
   }
 
@@ -31,6 +34,7 @@ function SignIn(props:any):JSX.Element {
     setEmail('');
     setPassword('');
     setSignedIn(true);
+    props.history.push('/account');
   }
 
   const switchToSignUp = () => {
@@ -42,7 +46,7 @@ function SignIn(props:any):JSX.Element {
       
       { (signedIn) 
       ?
-      <div>You have successfully signed in</div>
+      <div><em>You have successfully signed in.</em></div>
       :
       <div className="d-flex flex-column justify-content-center align-content-center">
         <h2 className="mx-auto pb-3">Sign In</h2>

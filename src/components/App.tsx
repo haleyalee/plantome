@@ -25,6 +25,7 @@ import About from './About';
 import Contact from './Contact';
 import SignUp from './SignUp';
 import SignIn from './SignIn';
+import Account from './Account';
 
 
 export type CartItemType = {
@@ -37,12 +38,6 @@ export type CartItemType = {
 }
 
 function App():JSX.Element {
-
-  // const getTotalItems = (items:CartItemType[]) => 
-  //  items.reduct((ack: number, item) => ack + item.amount, 0);
-
-  // if ( isLoading ) return <LinearProgress />;
-  // if ( error ) return <div>Something went wrong... </div>
 
   const [cart, setCart] = useState<Plant[]>([]);
 
@@ -88,11 +83,10 @@ function App():JSX.Element {
   }
 
   // User Authentication
-  // eslint-disable-next-line
-  const [signedUp, setSignedUp] = useState(false);
+  const [signedIn, setSignedIn] = useState(false);
 
-  const handleSignUp = () => {
-    setSignedUp(true);
+  const handleSignIn = (state:boolean) => {
+    setSignedIn(state);
   }
 
   return (
@@ -109,8 +103,9 @@ function App():JSX.Element {
           <Route path="/plants"><AllPlants addToCart={handleAddToCart}/></Route>
           <Route path="/about"><About /></Route>
           <Route path="/contact"><Contact /></Route>
-          <Route path="/signup"><SignUp handleSignUp={handleSignUp}/></Route>
-          <Route path="/signin"><SignIn /></Route>
+          <Route path="/signup"><SignUp /></Route>
+          <Route path="/signin"><SignIn handleSignIn={handleSignIn}/></Route>
+          <Route path="/account">{ (signedIn) ? <Account handleSignIn={handleSignIn} /> : <SignIn handleSignIn={handleSignIn} /> }</Route>
         </Switch>
       </Router>
     </div>

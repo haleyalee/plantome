@@ -50,7 +50,6 @@ function SignUp(props:any):JSX.Element {
     Auth.confirmSignUp(email, confirmationCode)
     .then(() => {
       console.log("Successfully confirmed sign up!");
-      props.handleSignUp();
       // TODO: redirect to home page or profile page
     })
     .catch((error) => console.log(`Error confirming sign up: ${error}`))
@@ -70,9 +69,7 @@ function SignUp(props:any):JSX.Element {
       setPassword('');
       setVerified(true);
     }
-
     // e.target.reset();
-
   }
 
   const switchToSignIn = () => {
