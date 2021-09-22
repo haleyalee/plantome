@@ -34,7 +34,7 @@ function SignIn(props:any):JSX.Element {
     setEmail('');
     setPassword('');
     setSignedIn(true);
-    props.history.push('/account');
+    props.history.push('/plants');
   }
 
   const switchToSignUp = () => {
