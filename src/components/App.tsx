@@ -25,6 +25,7 @@ import About from './About';
 import Contact from './Contact';
 import SignUp from './SignUp';
 import SignIn from './SignIn';
+import ForgotPassword from './ForgotPassword';
 import Account from './Account';
 
 
@@ -104,6 +105,7 @@ function App():JSX.Element {
           <Route path="/about"><About /></Route>
           <Route path="/contact"><Contact /></Route>
           <Route path="/signup"><SignUp /></Route>
+          <Route exact path="/signin/forgotpassword"><ForgotPassword /></Route>
           <Route path="/signin"><SignIn handleSignIn={handleSignIn}/></Route>
           <Route path="/account">{ (signedIn) ? <Account handleSignIn={handleSignIn} /> : <SignIn handleSignIn={handleSignIn} /> }</Route>
         </Switch>

@@ -55,6 +55,12 @@ function SignUp(props:any):JSX.Element {
     .catch((error) => console.log(`Error confirming sign up: ${error}`))
   }
 
+  const resendSignUp = () => {
+    Auth.resendSignUp(email)
+    .then( () => console.log("Successfully resent the confirmation code"))
+    .catch( (error) => console.log(`Error resending confirmation code: ${error}`))
+  }
+
   const handleSubmit = (e:React.SyntheticEvent) => {
     e.preventDefault();
     
@@ -91,13 +97,13 @@ function SignUp(props:any):JSX.Element {
               className="form-control mb-3"
               type="text" 
               placeholder="Confirmation Code" 
+              value={confirmationCode}
               onChange={(e) => setConfirmationCode(e.target.value)}
             />
             <input type="submit" className="btn btn-success" value="Confirm Sign Up" />
           </form>
           <div className="mx-auto py-3">
-            {/* TODO: Resend email verification */}
-            <p>Didn&apos;t receive email? <a role="button"><strong><u>Resend code</u></strong>.</a></p>
+            <p>Didn&apos;t receive email? <a role="button" onClick={resendSignUp}><strong><u>Resend code</u></strong>.</a></p>
           </div>
         </div>
         :

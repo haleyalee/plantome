@@ -1,4 +1,8 @@
-#confirmationForm, #signUpForm {
+#confirmationForm, 
+#signUpForm, 
+#signInForm,
+#forgotPasswordForm,
+#resetPasswordForm {
   border: 0.5px solid rgba(0,0,0,.125);
   border-radius: 4px;
   padding: 1rem;

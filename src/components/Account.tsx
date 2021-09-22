@@ -1,6 +1,6 @@
-import { Auth } from 'aws-amplify';
 import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
+import { Auth } from 'aws-amplify';
 
 // import styles
 import "../styles/Account.css";
@@ -32,6 +32,14 @@ function Account(props:any) {
     Auth.signOut();
     props.handleSignIn(false);
   }
+
+  // const deleteAccount = () => {
+  //   return
+  // }
+
+  // const changePassword = () => {
+  //   return
+  // }
 
   return (
     <div className="container py-5">
