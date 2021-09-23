@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Auth } from 'aws-amplify';
 
@@ -10,6 +10,23 @@ function Account(props:any) {
 
   const [userProfile, setUserProfile] = useState(true);
   const [orderHistory, setOrderHistory] = useState(false);
+
+  const [fname, setFname] = useState('');
+  const [lname, setLname] = useState('');
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    // console.log(Auth.currentUserInfo())
+    Auth.currentUserInfo()
+    .then((res) => {
+      setUser(res);
+      setFname(res.attributes.given_name);
+      setLname(res.attributes.family_name);
+    })
+    .catch((error) => {
+      console.log(`No current user: ${error}`);
+    })
+  }, [setUser, setFname, setLname]);
 
   const switchView = (page:string) => {
     switch (page) {
@@ -30,6 +47,7 @@ function Account(props:any) {
 
   const signOut = () => {
     Auth.signOut();
+    props.history.push('/signin');
     props.handleSignIn(false);
   }
 
@@ -46,8 +64,8 @@ function Account(props:any) {
       
       <div className="row pt-0">
         
-        <div id="account-menu" className="col-3">
-          <h3 className="pb-4">My Account</h3>
+        <div id="account-menu" className="col-4">
+          <h3 className="pb-4">Hello, {fname} 🌱</h3>
           <div id="user-profile-opt" className="mx-auto pb-4" role="button" onClick={() => switchView('user-profile')}>
             <h5>User Profile Settings</h5>
           </div>
@@ -58,7 +76,7 @@ function Account(props:any) {
             <h5>Sign Out</h5>
           </div>
         </div>
-        <div className="col-9">
+        <div className="col-8">
           {/* User Profile Settings */}
           { (userProfile && !orderHistory)
           ?

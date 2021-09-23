@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Auth } from 'aws-amplify';
 
+// eslint-disable-next-line
 function ForgotPassword(props:any):JSX.Element {
 
   const [email, setEmail] = useState('');

@@ -1,4 +1,4 @@
-import React, {useState} from  'react';
+import React, {useState, useEffect} from  'react';
 // import { useQuery } from 'react-query';
 import {
   BrowserRouter as Router,
@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom';
 import Amplify from 'aws-amplify';
 import aws_exports from '../aws-exports';
-// import { withAuthenticator } from 'aws-amplify-react';
+import { Auth } from 'aws-amplify';
 Amplify.configure(aws_exports);
 
 // import external stylesheets
@@ -39,7 +39,26 @@ export type CartItemType = {
 }
 
 function App():JSX.Element {
+  
+  // User Authentication
+  const [signedIn, setSignedIn] = useState(false);
 
+  const handleSignIn = (state:boolean) => {
+    setSignedIn(state);
+  }
+
+  useEffect(() => {
+    Auth.currentSession()
+    .then((res) => {
+      console.log(res);
+      setSignedIn(true);
+    })
+    .catch((error) => {
+      console.log(`Error: ${error}`);
+    })
+  });
+  
+  // Shopping Cart
   const [cart, setCart] = useState<Plant[]>([]);
 
   const handleAddToCart = (item:Plant) => {
@@ -81,13 +100,6 @@ function App():JSX.Element {
 
   const searchPlants = (results:Plant[]) => {
     setSearchResult(results);
-  }
-
-  // User Authentication
-  const [signedIn, setSignedIn] = useState(false);
-
-  const handleSignIn = (state:boolean) => {
-    setSignedIn(state);
   }
 
   return (
