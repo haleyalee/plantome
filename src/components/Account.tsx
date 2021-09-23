@@ -20,10 +20,8 @@ function Account(props:any) {
   const [user, setUser] = useState({});
 
   useEffect(() => {
-    // console.log(Auth.currentUserInfo())
     Auth.currentUserPoolUser()
     .then((res) => {
-      console.log(res);
       setUser(res);
       setEmail(res.attributes.email);
       setFname(res.attributes.given_name);
@@ -52,18 +50,14 @@ function Account(props:any) {
   }
 
   const signOut = () => {
-    Auth.signOut();
-    props.history.push('/signin');
-    props.handleSignIn(false);
+    Auth.signOut()
+    .then(() => {
+      console.log("Successfully signed out");
+      props.history.push('/signin');
+      props.handleSignIn(false);
+    })
+    .catch((error) => console.log(`Error signing out: ${error.message}`))
   }
-
-  // const deleteAccount = () => {
-  //   return
-  // }
-
-  // const changePassword = () => {
-  //   return
-  // }
 
   return (
     <div className="container pb-5">

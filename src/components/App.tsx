@@ -49,8 +49,7 @@ function App():JSX.Element {
 
   useEffect(() => {
     Auth.currentSession()
-    .then((res) => {
-      console.log(res);
+    .then(() => {
       setSignedIn(true);
     })
     .catch((error) => {
@@ -105,7 +104,7 @@ function App():JSX.Element {
   return (
     <div>
       <Router >
-        <Nav cart={cart} addToCart={handleAddToCart} removeFromCart={handleRemoveFromCart} search={searchPlants} />
+        <Nav cart={cart} signedIn={signedIn} handleSignIn={handleSignIn} addToCart={handleAddToCart} removeFromCart={handleRemoveFromCart} search={searchPlants} />
         <Switch>
           <Route exact path="/"><Home addToCart={handleAddToCart}/></Route>
           <Route exact path="/plants/search"><SearchPlants search={searchPlants} searchResult={searchResult} addToCart={handleAddToCart} /></Route>
