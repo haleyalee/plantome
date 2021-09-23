@@ -11,6 +11,7 @@ function SignIn(props:any):JSX.Element {
   const [password, setPassword] = useState('');
 
   const [signedIn, setSignedIn] = useState(false);
+  const [error, setError] = useState('');
 
   const signIn = () => {
     Auth.signIn({
@@ -20,8 +21,12 @@ function SignIn(props:any):JSX.Element {
     .then( () => {
       console.log("Successfully signed in"); 
       props.handleSignIn(true); 
+      props.history.push('/plants');
     })
-    .catch( (error) => console.log(`Error signing in: ${error}`))
+    .catch((error) => {
+      console.log(`Error signing in: ${error.message}`)
+      setError(error.message);
+    })
   }
 
   const switchToForgotPassword = () => {
@@ -33,8 +38,8 @@ function SignIn(props:any):JSX.Element {
     signIn();
     setEmail('');
     setPassword('');
+    setError('');
     setSignedIn(true);
-    props.history.push('/plants');
   }
 
   const switchToSignUp = () => {
@@ -44,7 +49,7 @@ function SignIn(props:any):JSX.Element {
   return (
     <div className="container py-5">
       
-      { (signedIn) 
+      { (error === '' && signedIn) 
       ?
       <div><em>You have successfully signed in.</em></div>
       :
@@ -94,6 +99,7 @@ function SignIn(props:any):JSX.Element {
               <button type="submit" id="submit" className="form-control btn btn-success">Sign In</button>
             </div>
           </div>
+          { error ? <div className="row g-3 mt-1 text-danger">❌ {error}</div> : <div></div> }
         </form>
         <div className="mx-auto py-3">
           <p>Don&apos;t have an account? <a role="button" onClick={switchToSignUp}><strong><u>Sign Up</u></strong></a></p>

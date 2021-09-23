@@ -104,7 +104,7 @@ function App():JSX.Element {
           <Route path="/plants"><AllPlants addToCart={handleAddToCart}/></Route>
           <Route path="/about"><About /></Route>
           <Route path="/contact"><Contact /></Route>
-          <Route path="/signup"><SignUp /></Route>
+          <Route path="/signup"><SignUp handleSignIn={handleSignIn} /></Route>
           <Route exact path="/signin/forgotpassword"><ForgotPassword /></Route>
           <Route path="/signin"><SignIn handleSignIn={handleSignIn}/></Route>
           <Route path="/account">{ (signedIn) ? <Account handleSignIn={handleSignIn} /> : <SignIn handleSignIn={handleSignIn} /> }</Route>

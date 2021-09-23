@@ -15,13 +15,14 @@ function SignUp(props:any):JSX.Element {
   const [confirmPassword, setConfirmPassword] = useState('');
 
   const [confirmationCode, setConfirmationCode] = useState('');
+  const [isConfirming, setIsConfirming] = useState(false);
   const [verified, setVerified] = useState(false);
+  const [error, setError] = useState('');
 
-  // const [isLoading, setIsLoading] = useState(false);
 
   // form validation
   useEffect(() => {
-    const form = document.getElementById("form") as HTMLSelectElement;
+    const form = document.getElementById("signUpForm") as HTMLSelectElement;
     form?.addEventListener('submit', function (event) {
       if (!form.checkValidity()) {
         event.preventDefault()
@@ -42,38 +43,51 @@ function SignUp(props:any):JSX.Element {
         family_name: lname
       }
     })
-    .then(() => console.log("Sucessfully signed up!"))
-    .catch((error) => console.log(`Error signing up: ${error}`))
+    .then(() => {
+      console.log("Sucessfully signed up!");
+      setIsConfirming(true);
+    })
+    .catch((error) => {
+      console.log(`Error signing up: ${error.message}`)
+      setError(error.message);
+    })
   }
 
   const confirmSignUp = () => {
     Auth.confirmSignUp(email, confirmationCode)
     .then(() => {
       console.log("Successfully confirmed sign up!");
-      // TODO: redirect to home page or profile page
+      Auth.signIn(email, password);
+      props.handleSignIn(true);
+      props.history.push('/plants');
     })
-    .catch((error) => console.log(`Error confirming sign up: ${error}`))
+    .catch((error) => {
+      console.log(`Error confirming sign up: ${error.message}`)
+      setError(error.message);
+    })
   }
 
   const resendSignUp = () => {
     Auth.resendSignUp(email)
-    .then( () => console.log("Successfully resent the confirmation code"))
-    .catch( (error) => console.log(`Error resending confirmation code: ${error}`))
+    .then( () => {
+      console.log("Successfully resent the confirmation code");
+    })
+    .catch((error) => {
+      console.log(`Error resending confirmation code: ${error.message}`)
+      setError(error.message);
+    })
   }
 
-  const handleSubmit = (e:React.SyntheticEvent) => {
+  const handleSubmit = (form:string, e:React.SyntheticEvent) => {
     e.preventDefault();
     
-    if (verified) {
+    if (verified && form === "confirmationForm") {
       confirmSignUp();
       setConfirmationCode('');
-      setEmail('');
-    } else {
+    } else if (form === "signUpForm") {
       signUp();
-      setFname('');
-      setLname('');
-      setPassword('');
       setVerified(true);
+      setError('');
     }
     // e.target.reset();
   }
@@ -85,22 +99,23 @@ function SignUp(props:any):JSX.Element {
   return (
     <div className="container py-5">
 
-      { (verified) 
+      { (verified && isConfirming) 
         ?
         // Confirmation Form
         <div className="d-flex flex-column justify-content-center align-content-center">
           <h2 className="mx-auto pb-3"></h2>
-          <form id="confirmationForm" className="w-50 mx-auto d-flex flex-column" onSubmit={handleSubmit}>
+          <form id="confirmationForm" className="w-50 mx-auto d-flex flex-column" onSubmit={(e) => handleSubmit("confirmationForm", e)}>
             <label htmlFor="confirmation" className="form-label ">Confirmation Code</label>
             <input 
               id="confirmation" 
               className="form-control mb-3"
               type="text" 
-              placeholder="Confirmation Code" 
+              placeholder="Confirmation Code"
               value={confirmationCode}
               onChange={(e) => setConfirmationCode(e.target.value)}
             />
             <input type="submit" className="btn btn-success" value="Confirm Sign Up" />
+            { error ? <div className="row g-3 mt-1 text-danger">❌ {error}</div> : <div></div> }
           </form>
           <div className="mx-auto py-3">
             <p>Didn&apos;t receive email? <a role="button" onClick={resendSignUp}><strong><u>Resend code</u></strong>.</a></p>
@@ -110,7 +125,7 @@ function SignUp(props:any):JSX.Element {
         // Sign Up Form
         <div className="d-flex flex-column justify-content-center align-content-center">
           <h2 className="m-auto pb-3">Sign Up</h2>
-          <form id="signUpForm" className="w-50 mx-auto needs-validation" noValidate onSubmit={handleSubmit} >
+          <form id="signUpForm" className="w-50 mx-auto needs-validation" noValidate onSubmit={(e) => handleSubmit("signUpForm", e)} >
             <div className="row g-3">
               <div className="col-lg-6">
                 <label htmlFor="fname" className="form-label">First Name</label>
@@ -201,6 +216,7 @@ function SignUp(props:any):JSX.Element {
                 <button type="submit" id="submit" className="form-control btn btn-success">Register</button>
               </div>
             </div>
+            { error ? <div className="row g-3 mt-1 text-danger">❌ {error}</div> : <div></div> }
           </form>
           <div className="mx-auto py-3">
             <p>Already have an account? <a role="button" onClick={switchToSignIn}><strong><u>Sign In</u></strong></a></p>
