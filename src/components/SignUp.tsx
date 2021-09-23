@@ -78,13 +78,13 @@ function SignUp(props:any):JSX.Element {
     })
   }
 
-  const handleSubmit = (form:string, e:React.SyntheticEvent) => {
+  const handleSubmit = (e:React.SyntheticEvent) => {
     e.preventDefault();
     
-    if (verified && form === "confirmationForm") {
+    if (verified) {
       confirmSignUp();
       setConfirmationCode('');
-    } else if (form === "signUpForm") {
+    } else {
       signUp();
       setVerified(true);
       setError('');
@@ -104,7 +104,7 @@ function SignUp(props:any):JSX.Element {
         // Confirmation Form
         <div className="d-flex flex-column justify-content-center align-content-center">
           <h2 className="mx-auto pb-3"></h2>
-          <form id="confirmationForm" className="w-50 mx-auto d-flex flex-column" onSubmit={(e) => handleSubmit("confirmationForm", e)}>
+          <form id="confirmationForm" className="mx-auto d-flex flex-column" onSubmit={handleSubmit}>
             <label htmlFor="confirmation" className="form-label ">Confirmation Code</label>
             <input 
               id="confirmation" 
@@ -125,7 +125,7 @@ function SignUp(props:any):JSX.Element {
         // Sign Up Form
         <div className="d-flex flex-column justify-content-center align-content-center">
           <h2 className="m-auto pb-3">Sign Up</h2>
-          <form id="signUpForm" className="w-50 mx-auto needs-validation" noValidate onSubmit={(e) => handleSubmit("signUpForm", e)} >
+          <form id="signUpForm" className="mx-auto needs-validation" noValidate onSubmit={handleSubmit} >
             <div className="row g-3">
               <div className="col-lg-6">
                 <label htmlFor="fname" className="form-label">First Name</label>

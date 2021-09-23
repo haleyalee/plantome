@@ -54,6 +54,8 @@ function ForgotPassword(props:any):JSX.Element {
 
     if (verified) {
       forgotPasswordSubmit();
+      setConfirmationCode('');
+      setNewPassword('');
     } else {
       forgotPassword();
       // setVerified(true);
@@ -69,7 +71,7 @@ function ForgotPassword(props:any):JSX.Element {
         // Reset Password Form
         <div className="d-flex flex-column justify-content-center align-content-center">
           <h2 className="mx-auto pb-3">Reset Password</h2>
-          <form id="resetPasswordForm" className="w-50 mx-auto needs-validation" noValidate onSubmit={handleSubmit}>
+          <form id="resetPasswordForm" className="mx-auto needs-validation" noValidate onSubmit={handleSubmit}>
             <div className="row g-3">
               <div className="col-12">
                 <label htmlFor="confirmation" className="form-label ">Confirmation Code</label>
@@ -114,7 +116,7 @@ function ForgotPassword(props:any):JSX.Element {
         :
         <div className="d-flex flex-column justify-content-center align-content-center">
           <h2 className="mx-auto pb-3">Forgot Password?</h2>
-          <form id="forgotPasswordForm" className="w-50 mx-auto" onSubmit={handleSubmit}>
+          <form id="forgotPasswordForm" className="mx-auto" onSubmit={handleSubmit}>
             <div className="row g-3">
               <div className="col-12">
                 <label htmlFor="email" className="form-label">Please enter the email associated with your account</label>

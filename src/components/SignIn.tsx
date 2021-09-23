@@ -54,7 +54,7 @@ function SignIn(props:any):JSX.Element {
       :
       <div className="d-flex flex-column justify-content-center align-content-center">
         <h2 className="mx-auto pb-3">Sign In</h2>
-        <form id="signInForm" className="w-50 mx-auto" onSubmit={handleSubmit} >
+        <form id="signInForm" className="mx-auto" onSubmit={handleSubmit} >
           <div className="row g-3">
             <div className="col-12">
               <label htmlFor="email" className="form-label">Email Address</label>
