@@ -5,41 +5,47 @@ import { Auth } from 'aws-amplify';
 // import styles
 import "../styles/Account.css";
 
+// import components
+import MyAccount from "./account/MyAccount";
+
 // eslint-disable-next-line
 function Account(props:any) {
 
-  const [userProfile, setUserProfile] = useState(true);
+  const [myAccount, setMyAccount] = useState(true);
   const [orderHistory, setOrderHistory] = useState(false);
 
+  const [email, setEmail] = useState('');
   const [fname, setFname] = useState('');
   const [lname, setLname] = useState('');
   const [user, setUser] = useState({});
 
   useEffect(() => {
     // console.log(Auth.currentUserInfo())
-    Auth.currentUserInfo()
+    Auth.currentUserPoolUser()
     .then((res) => {
+      console.log(res);
       setUser(res);
+      setEmail(res.attributes.email);
       setFname(res.attributes.given_name);
       setLname(res.attributes.family_name);
     })
     .catch((error) => {
       console.log(`No current user: ${error}`);
     })
-  }, [setUser, setFname, setLname]);
+  }, [setUser, setEmail, setFname, setLname]);
 
   const switchView = (page:string) => {
     switch (page) {
-      case "user-profile":
-        setUserProfile(true);
+      case "my-account":
+        setMyAccount(true);
         setOrderHistory(false);
         break;
       case "order-history":
-        setUserProfile(false);
+        setMyAccount(false);
         setOrderHistory(true);
         break;
       default:
-        setUserProfile(false);
+        setMyAccount(false);
         setOrderHistory(false);
         break;
     }
@@ -60,37 +66,32 @@ function Account(props:any) {
   // }
 
   return (
-    <div className="container py-5">
+    <div className="container pb-5">
       
       <div className="row pt-0">
         
-        <div id="account-menu" className="col-4">
+        <div id="account-menu" className="col-xs-12 col-md-4 col-lg-3 bg-light py-4">
           <h3 className="pb-4">Hello, {fname} 🌱</h3>
-          <div id="user-profile-opt" className="mx-auto pb-4" role="button" onClick={() => switchView('user-profile')}>
-            <h5>User Profile Settings</h5>
+          <div id="my-account-opt" className="menu-opt" role="button" onClick={() => switchView('my-account')}>
+            <h5>My Account</h5>
           </div>
-          <div id="order-history-opt" className="mx-auto pb-4" role="button" onClick={() => switchView('order-history')}>
+          <div id="order-history-opt" className="menu-opt" role="button" onClick={() => switchView('order-history')}>
             <h5>Order History</h5>
           </div>
-          <div id="log-out-opt" className="mx-auto pb-4" role="button" onClick={signOut}>
+          <div id="log-out-opt" className="menu-opt" role="button" onClick={signOut}>
             <h5>Sign Out</h5>
           </div>
         </div>
-        <div className="col-8">
+        <div id="account-view" className="col-xs-12 col-md-8 col-lg-9 pt-5">
           {/* User Profile Settings */}
-          { (userProfile && !orderHistory)
+          { (myAccount && !orderHistory)
           ?
-          <div id="user-profile">
-            <h3 className="pb-4">User Profile Settings</h3>
-            <div>
-              <button className="btn btn-outline-danger">Permanently Delete My Account</button>
-            </div>
-          </div>
+          <div id="my-account"><MyAccount  user={user} fname={fname} lname={lname} email={email} /></div>
           :
           <div></div>
           }
           {/* Order History */}
-          { (orderHistory && !userProfile)
+          { (orderHistory && !myAccount)
           ?
           <div id="order-history">
             <h3 className="pb-4">Order History</h3>
