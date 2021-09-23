@@ -1,0 +1,24 @@
+#confirmationForm, 
+#signUpForm, 
+#signInForm,
+#forgotPasswordForm,
+#resetPasswordForm {
+  border: 0.5px solid rgba(0,0,0,.125);
+  border-radius: 4px;
+  padding: 1rem;
+  width: 75%;
+}
+
+.row {
+  padding: 1rem 0;
+}
+
+@media (min-width: 992px) { 
+  #confirmationForm, 
+  #signUpForm, 
+  #signInForm,
+  #forgotPasswordForm,
+  #resetPasswordForm {
+    width: 50%;
+  }
+}

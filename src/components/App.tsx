@@ -1,10 +1,14 @@
-import React, {useState} from  'react';
+import React, {useState, useEffect} from  'react';
 // import { useQuery } from 'react-query';
 import {
   BrowserRouter as Router,
   Switch,
   Route
 } from 'react-router-dom';
+import Amplify from 'aws-amplify';
+import aws_exports from '../aws-exports';
+import { Auth } from 'aws-amplify';
+Amplify.configure(aws_exports);
 
 // import external stylesheets
 import '../styles/App.css';
@@ -19,11 +23,10 @@ import FilteredPlants from './plants/FilteredPlants';
 import SearchPlants from './plants/SearchPlants';
 import About from './About';
 import Contact from './Contact';
-// import Drawer from '@material-ui/core/Drawer';
-// import LinearProgress from '@material-ui/core/LinearProgress';
-// import Grid from '@material-ui/core/Grid';
-// import Badge from '@material-ui/core/Badge';
-// import PlantContextProvider from '../contexts/PlantContextProvider';
+import SignUp from './SignUp';
+import SignIn from './SignIn';
+import ForgotPassword from './ForgotPassword';
+import Account from './Account';
 
 
 export type CartItemType = {
@@ -36,13 +39,25 @@ export type CartItemType = {
 }
 
 function App():JSX.Element {
+  
+  // User Authentication
+  const [signedIn, setSignedIn] = useState(false);
 
-  // const getTotalItems = (items:CartItemType[]) => 
-  //  items.reduct((ack: number, item) => ack + item.amount, 0);
+  const handleSignIn = (state:boolean) => {
+    setSignedIn(state);
+  }
 
-  // if ( isLoading ) return <LinearProgress />;
-  // if ( error ) return <div>Something went wrong... </div>
-
+  useEffect(() => {
+    Auth.currentSession()
+    .then(() => {
+      setSignedIn(true);
+    })
+    .catch((error) => {
+      console.log(`Error: ${error}`);
+    })
+  });
+  
+  // Shopping Cart
   const [cart, setCart] = useState<Plant[]>([]);
 
   const handleAddToCart = (item:Plant) => {
@@ -89,7 +104,7 @@ function App():JSX.Element {
   return (
     <div>
       <Router >
-        <Nav cart={cart} addToCart={handleAddToCart} removeFromCart={handleRemoveFromCart} search={searchPlants} />
+        <Nav cart={cart} signedIn={signedIn} handleSignIn={handleSignIn} addToCart={handleAddToCart} removeFromCart={handleRemoveFromCart} search={searchPlants} />
         <Switch>
           <Route exact path="/"><Home addToCart={handleAddToCart}/></Route>
           <Route exact path="/plants/search"><SearchPlants search={searchPlants} searchResult={searchResult} addToCart={handleAddToCart} /></Route>
@@ -100,6 +115,10 @@ function App():JSX.Element {
           <Route path="/plants"><AllPlants addToCart={handleAddToCart}/></Route>
           <Route path="/about"><About /></Route>
           <Route path="/contact"><Contact /></Route>
+          <Route path="/signup"><SignUp handleSignIn={handleSignIn} /></Route>
+          <Route exact path="/signin/forgotpassword"><ForgotPassword /></Route>
+          <Route path="/signin"><SignIn handleSignIn={handleSignIn}/></Route>
+          <Route path="/account">{ (signedIn) ? <Account handleSignIn={handleSignIn} /> : <SignIn handleSignIn={handleSignIn} /> }</Route>
         </Switch>
       </Router>
     </div>

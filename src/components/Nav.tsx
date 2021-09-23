@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import Drawer from '@material-ui/core/Drawer'
+import { Auth } from 'aws-amplify';
 
 // import icons
 import shoppingCart from '../images/icons/shopping-cart.svg';
@@ -14,10 +15,11 @@ import '../styles/Nav.css';
 // import components
 import ShoppingCart from './ShoppingCart';
 import Plant from '../entities/plant';
-// import SearchBar from './SearchBar';
 
 type Props = {
   cart: Plant[],
+  handleSignIn: (state:boolean)=>void,
+  signedIn: boolean,
   addToCart: (item:Plant)=>void,
   removeFromCart: (item:Plant)=>void,
   search: (results:Plant[])=>void
@@ -30,6 +32,16 @@ function Nav(props:Props):JSX.Element {
 
   const handleClose = (state:boolean) => {
     setCartOpen(state);
+  }
+
+  // Sign Out
+  const signOut = () => {
+    Auth.signOut()
+    .then(() => {
+      console.log("Successfully signed out.")
+      props.handleSignIn(false);
+    })
+    .catch((error) => console.log(`Error signing out: ${error.message}`))
   }
 
   return (
@@ -88,11 +100,24 @@ function Nav(props:Props):JSX.Element {
             </li>
 
             {/* User Profile */}
-            <li className="nav-item px-2">
-              <a href="#" className="nav-link">
-                <img src={userProfile} alt="User Profile" width="24px" height="24px"/>
-              </a>
-            </li>
+            { props.signedIn
+              ?
+              <li className="nav-item dropdown px-2">
+                <a className="nav-link" href="#" role="button" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <img src={userProfile} alt="User Profile" width="24px" height="24px"/>
+                </a>
+                <div className="dropdown-menu dropdown-menu-right p-2" aria-labelledby="userDropdown">
+                  <Link to="/account" className="dropdown-item">my account</Link>
+                  <a className="dropdown-item" role="button" onClick={signOut}>sign out</a>
+                </div>
+              </li>
+              :
+              <li className="nav-item px-2">
+                <Link to="/account" className="nav-link">
+                  <img src={userProfile} alt="User Profile" width="24px" height="24px"/>
+                </Link>
+              </li>
+            }
 
             {/* Shopping Cart */}
             <li className="nav-item px-2">

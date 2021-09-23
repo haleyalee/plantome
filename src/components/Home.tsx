@@ -1,20 +1,23 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 
 // import external stylesheet
 import '../styles/App.css';
 
 // import context
-import Plant from '../entities/plant';
+// import Plant from '../entities/plant';
 
 // import components
 import CompanyCard from './CompanyCard';
 import FilteredPlants from './plants/FilteredPlants';
 
-type Props = {
-  addToCart: (item:Plant)=>void
-}
+// type Props = {
+//   addToCart: (item:Plant)=>void,
+//   history:
+// }
 
-function Home(props:Props):JSX.Element {
+// eslint-disable-next-line
+function Home(props:any):JSX.Element {
 
   return (
     <div>
@@ -26,10 +29,10 @@ function Home(props:Props):JSX.Element {
           <p className="lead">Sign up now for 15% off your first order and monthly plant care tips.</p>
           <div className="d-flex flex-row pt-5">
             <div>
-              <a className="btn btn-primary btn-lg" href="#" role="button">Sign Up</a>
+              <a className="btn btn-primary btn-lg" href="#" role="button" onClick={() => props.history.push('/signup')}>Sign Up</a>
             </div>
             <div className="mx-3">
-              <a className="btn btn-outline-primary btn-lg" href="#" role="button">Shop Now</a>
+              <a className="btn btn-outline-primary btn-lg" href="#" role="button" onClick={() => props.history.push('/plants')} >Shop Now</a>
             </div>
           </div>
         </div> 
@@ -52,4 +55,4 @@ function Home(props:Props):JSX.Element {
   );
 }
 
-export default Home;
+export default withRouter(Home);
