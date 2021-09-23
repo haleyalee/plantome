@@ -11,6 +11,7 @@ function SignIn(props:any):JSX.Element {
   const [password, setPassword] = useState('');
 
   const [signedIn, setSignedIn] = useState(false);
+  // const [signingIn, setSigningIn] = useState(false);
   const [error, setError] = useState('');
 
   const signIn = () => {
@@ -20,6 +21,7 @@ function SignIn(props:any):JSX.Element {
     })
     .then( () => {
       console.log("Successfully signed in"); 
+      setSignedIn(true);
       props.handleSignIn(true); 
       props.history.push('/plants');
     })
@@ -36,10 +38,7 @@ function SignIn(props:any):JSX.Element {
   const handleSubmit = (e:React.SyntheticEvent) => {
     e.preventDefault();
     signIn();
-    setEmail('');
-    setPassword('');
     setError('');
-    setSignedIn(true);
   }
 
   const switchToSignUp = () => {
@@ -49,7 +48,7 @@ function SignIn(props:any):JSX.Element {
   return (
     <div className="container py-5">
       
-      { (error === '' && signedIn) 
+      { (signedIn) 
       ?
       <div><em>You have successfully signed in.</em></div>
       :
@@ -84,14 +83,11 @@ function SignIn(props:any):JSX.Element {
                 id="password" 
                 className="form-control" 
                 placeholder="Password" 
-                pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                // pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                 value={password} 
                 onChange={(e)=>setPassword(e.target.value)} 
                 required 
               />
-              <div className="invalid-feedback">
-                A valid password must contain at least one number, one uppercase and one lowercase letter, and at least 8 or more characters.
-              </div>
             </div>
           </div>
           <div className="row g-3">
