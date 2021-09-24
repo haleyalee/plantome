@@ -1,0 +1,37 @@
+#easy-checkout {
+  border-radius: 4px;
+  border: 0.5px solid rgba(0,0,0,0.125);
+}
+
+#order-summary {
+  border-radius: 4px;
+  border: 0.5px solid rgba(0,0,0,0.125);
+  height: 100%;
+}
+
+#cardNum {
+  width: 75%;
+  border-right: none;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+#cardExp {
+  width: 12.5%;
+  border-left: none;
+  border-right: none;
+  border-radius: 0;
+}
+
+#cardCVV {
+  width: 12.5%;
+  border-left: none;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.shipment-box {
+  border-radius: 4px;
+  border: 0.5px solid rgba(0,0,0,0.125);
+  padding: 1rem;
+}

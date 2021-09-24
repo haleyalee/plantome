@@ -47,6 +47,11 @@ function ShoppingCart(props:any):JSX.Element {
     setSubtotal(subtotal + itemPrice)
   }
 
+  const switchToCheckout = () => {
+    props.history.push('/checkout');
+    props.close(false);
+  }
+
   return (
     <div id="cart" className="container px-4 py-4">
       <h3 className="pb-3">Shopping Cart</h3>
@@ -95,7 +100,7 @@ function ShoppingCart(props:any):JSX.Element {
               <p><strong>Total</strong></p>
               <p><strong>${(subtotal + tax).toFixed(2)}</strong></p>
             </div>
-            <button className="btn btn-primary my-4">Checkout</button>
+            <button className="btn btn-primary my-4" onClick={switchToCheckout}>Checkout</button>
           </div>
         </div>
       }    
