@@ -9,22 +9,27 @@
   height: 100%;
 }
 
-#cardNum {
+#divCardNum {
   width: 75%;
+}
+
+#divCardExp, #divCardCVV {
+  width: 12.5%;
+}
+
+#cardNum {
   border-right: none;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
 
 #cardExp {
-  width: 12.5%;
   border-left: none;
   border-right: none;
   border-radius: 0;
 }
 
 #cardCVV {
-  width: 12.5%;
   border-left: none;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;

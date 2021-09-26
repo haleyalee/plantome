@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Plant from '../entities/plant';
+// import Plant from '../entities/plant';
 
 export default function CheckoutItem():JSX.Element {
   return (
