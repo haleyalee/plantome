@@ -5,10 +5,14 @@ import { Auth } from 'aws-amplify';
 import '../styles/Checkout.css';
 import AddressForm from './AddressForm';
 
+// import entities
+import Plant from '../entities/plant';
+
 // import components
 import CheckoutItem from './CheckoutItem';
 
 type Props = {
+  cart: Plant[];
   signedIn: boolean,
   handleSignIn: (state:boolean)=>void
 }
@@ -70,8 +74,13 @@ function Checkout(props:Props):JSX.Element {
   const [tax, setTax] = useState(0);
   const [total, setTotal] = useState(0);
 
+  let subtotalArr:number[] = props.cart.map( (item:Plant) => item.price * item.quantity );
+
   useEffect(() => {
-    setSubtotal(10);
+    if (props.cart.length > 0) {
+      subtotalArr = props.cart.map( (item:Plant) => item.price * item.quantity );
+      setSubtotal(subtotalArr.reduce( (prev:number, curr:number) => prev + curr));
+    }
     setTax(subtotal*0.06);
     setTotal(subtotal+tax);
   }, [subtotal, tax, setSubtotal, setTax, setTotal]);
@@ -128,7 +137,7 @@ function Checkout(props:Props):JSX.Element {
           <h2 className="pb-3">Checkout</h2>
 
           <div id="divEasyCheckout" className="mb-5">
-            <div id="easy-checkout" className="d-flex justify-content-between bg-light p-4 mb-2">
+            <div id="easy-checkout" className="d-flex justify-content-between bg-light p-4">
               <h6 className="m-0">Make checking out easy! Sign in now.</h6>
               <a role="button" data-toggle="collapse" href="#signInToggle" aria-expanded="false" aria-controls="signInToggle">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-right" viewBox="0 0 16 16">
@@ -321,173 +330,19 @@ function Checkout(props:Props):JSX.Element {
                       <div className="shipment-box bg-light">
                         <h6>Delivery date: {todayDate.getMonth()} </h6>
                         <div>
-                          <CheckoutItem />
-                          <CheckoutItem />
+                          { props.cart.map((plant) => <CheckoutItem key={plant.id} name={plant.name} price={plant.price} quantity={plant.quantity} image={plant.image} /> )}
                         </div>
                       </div>
                     </div>
                     <div className="d-flex justify-content-between align-middle align-content-center">
-                      <h5 className="my-auto h-100">Total: $0.00</h5>
+                      <h5 className="my-auto h-100">Total: ${total.toFixed(2)}</h5>
                       <button className="btn btn-primary" onClick={handlePlaceOrder}>Place Order</button>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-
           </div>
-
-          {/* Shipping Address */}
-          {/* <div id="shipping-address" className="mb-5">
-            <h4 className="mb-3">Shipping Address</h4>
-            <form id="shipping-address-form">
-              <label className="form-label">Name</label>
-              <div className="form-floating mb-3">
-                <input 
-                  id="name" 
-                  type="text" 
-                  className="form-control" 
-                  placeholder="First &#38; Last Name" 
-                  value={name} 
-                  onChange={(e)=>setName(e.target.value)} 
-                />
-                <label htmlFor="name" className="form-label">Name</label>
-              </div>
-              <div className="d-flex flex-column mb-3">
-                <label className="form-label">Shipping Address</label>
-                  <AddressForm
-                    streetId="shipAddrStreet"
-                    street={shipAddrStreet}
-                    setStreet={setShipAddrStreet}
-                    extraId="shipAddrExtra"
-                    extra={shipAddrExtra}
-                    setExtra={setShipAddrExtra}
-                    cityId="shipAddrCity"
-                    city={shipAddrCity}
-                    setCity={setShipAddrCity}
-                    stateId="shipAddrState"
-                    state={shipAddrState}
-                    setState={setShipAddrState}
-                    zipcodeId="shipAddrZip"
-                    zipcode={shipAddrZip}
-                    setZipcode={setShipAddrZip}
-                  />
-              </div>
-              <div className="form-check">
-                <input 
-                  id="useAsBilling" 
-                  type="checkbox" 
-                  className="form-check-input" 
-                  value="" 
-                  checked={useAsBilling}
-                  onChange={toggleUseAsBilling}
-                  />
-                <label htmlFor="useAsBilling" className="form-check-label">Use as billing address</label>
-              </div>
-            </form>
-          </div> */}
-
-          {/* Payment Details */}
-          {/* <div id="payment-details" className="mb-5">
-            <h4 className="mb-3">Payment Details</h4>
-            <form id="payment-details-form">
-              <div className="d-flex flex-column mb-3">
-                <label className="form-label">Card Information</label>
-                <div className="form-floating mb-3">
-                  <select id="cardType" className="form-select" value={cardType} onChange={(e)=>setCardType(e.target.value)}>
-                    <option value="select">Select card type...</option>
-                    <option value="Visa">Visa</option>
-                  </select>
-                  <label htmlFor="cardType" className="form-label">Card Type</label>
-                </div>
-                <div className="form-floating mb-3">
-                  <input 
-                    id="cardName" 
-                    type="text" 
-                    className="form-control" 
-                    placeholder="First &#38; Last Name" 
-                    value={cardName} 
-                    onChange={(e)=>setCardName(e.target.value)} 
-                  />
-                  <label htmlFor="cardName" className="form-label">Cardholder Name</label>
-                </div>
-                <div className="d-flex">
-                  <div id="divCardNum" className="form-floating mb-3">
-                    <input 
-                      id="cardNum" 
-                      type="text" 
-                      className="form-control" 
-                      placeholder="Card Number" 
-                      value={cardNum} 
-                      onChange={(e)=>setCardNum(e.target.value)} 
-                    />
-                    <label htmlFor="cardNum" className="form-label">Card Number</label>
-                  </div>
-                  <div id="divCardExp" className="form-floating mb-3">
-                    <input
-                      id="cardExp"
-                      type="text"
-                      className="form-control"
-                      placeholder="MM/YY"
-                      value={cardExp}
-                      onChange={(e)=>setCardExp(e.target.value)}
-                    />
-                    <label htmlFor="cardExp" className="form-label">MM/YY</label>
-                  </div>
-                  <div id="divCardCVV" className="form-floating mb-3">
-                    <input
-                      id="cardCVV"
-                      type="text"
-                      className="form-control"
-                      placeholder="CVV"
-                      value={cardCVV}
-                      onChange={(e)=>setCardCVV(e.target.value)}
-                    />
-                    <label htmlFor="cardCVV" className="form-label">CVV</label>
-                  </div>
-                </div>
-              </div>
-              <div className="d-flex flex-column mb-3">
-                <label className="form-label">Billing Address</label>
-                <AddressForm
-                  streetId="billAddrStreet"
-                  street={billAddrStreet}
-                  setStreet={setBillAddrStreet}
-                  extraId="billAddrExtra"
-                  extra={billAddrExtra}
-                  setExtra={setBillAddrExtra}
-                  cityId="billAddrCity"
-                  city={billAddrCity}
-                  setCity={setBillAddrCity}
-                  stateId="billAddrState"
-                  state={billAddrState}
-                  setState={setBillAddrState}
-                  zipcodeId="billAddrZip"
-                  zipcode={billAddrZip}
-                  setZipcode={setBillAddrZip}
-                />
-              </div>
-            </form>
-          </div> */}
-
-          {/* Review Order */}
-          {/* <div id="review-order" className="mb-5">
-            <h4 className="mb-3">Review Order</h4>
-            <div className="shipment mb-3">
-              <h5 className="mb-3">Shipment 1 of 1</h5>
-              <div className="shipment-box bg-light">
-                <h6>Delivery date: {todayDate.getMonth()} </h6>
-                <div>
-                  <CheckoutItem />
-                  <CheckoutItem />
-                </div>
-              </div>
-            </div>
-            <div className="d-flex justify-content-between align-middle align-content-center">
-              <h5 className="my-auto h-100">Total: $0.00</h5>
-              <button className="btn btn-primary" onClick={handlePlaceOrder}>Place Order</button>
-            </div>
-          </div> */}
         </div>
 
         <div className="col-1"></div>
