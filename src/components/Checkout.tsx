@@ -155,9 +155,190 @@ function Checkout(props:Props):JSX.Element {
             </div>
           </div>
           
+          <div className="accordion" id="checkoutAccordion">
+            <div className="accordion-item">
+              <h2 className="accordion-header" id="headerShipAddr">
+                <button className="accordion-button" type="button" data-toggle="collapse" data-target="#collapseShipAddr">
+                  Shipping Address
+                </button>
+              </h2>
+              <div id="collapseShipAddr" className="accordion-collapse collapse show" data-parent="#checkoutAccordion">
+                <div className="accordion-body">
+                  <div id="shipping-address">
+                    <form id="shipping-address-form">
+                      <label className="form-label">Name</label>
+                      <div className="form-floating mb-3">
+                        <input 
+                          id="name" 
+                          type="text" 
+                          className="form-control" 
+                          placeholder="First &#38; Last Name" 
+                          value={name} 
+                          onChange={(e)=>setName(e.target.value)} 
+                        />
+                        <label htmlFor="name" className="form-label">Name</label>
+                      </div>
+                      <div className="d-flex flex-column mb-3">
+                        <label className="form-label">Shipping Address</label>
+                          <AddressForm
+                            streetId="shipAddrStreet"
+                            street={shipAddrStreet}
+                            setStreet={setShipAddrStreet}
+                            extraId="shipAddrExtra"
+                            extra={shipAddrExtra}
+                            setExtra={setShipAddrExtra}
+                            cityId="shipAddrCity"
+                            city={shipAddrCity}
+                            setCity={setShipAddrCity}
+                            stateId="shipAddrState"
+                            state={shipAddrState}
+                            setState={setShipAddrState}
+                            zipcodeId="shipAddrZip"
+                            zipcode={shipAddrZip}
+                            setZipcode={setShipAddrZip}
+                          />
+                      </div>
+                      <div className="form-check">
+                        <input 
+                          id="useAsBilling" 
+                          type="checkbox" 
+                          className="form-check-input" 
+                          value="" 
+                          checked={useAsBilling}
+                          onChange={toggleUseAsBilling}
+                          />
+                        <label htmlFor="useAsBilling" className="form-check-label">Use as billing address</label>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="accordion-item">
+              <h2 className="accordion-header" id="headerPayDets">
+                <button className="accordion-button collapsed" type="button" data-toggle="collapse" data-target="#collapsePayDets">
+                  Payment Details
+                </button>
+              </h2>
+              <div id="collapsePayDets" className="accordion-collapse collapse" data-parent="#checkoutAccordion">
+                <div className="accordion-body">
+                  <div id="payment-details" >
+                    <form id="payment-details-form">
+                      <div className="d-flex flex-column mb-3">
+                        <label className="form-label">Card Information</label>
+                        <div className="form-floating mb-3">
+                          <select id="cardType" className="form-select" value={cardType} onChange={(e)=>setCardType(e.target.value)}>
+                            <option value="select">Select card type...</option>
+                            <option value="Visa">Visa</option>
+                          </select>
+                          <label htmlFor="cardType" className="form-label">Card Type</label>
+                        </div>
+                        <div className="form-floating mb-3">
+                          <input 
+                            id="cardName" 
+                            type="text" 
+                            className="form-control" 
+                            placeholder="First &#38; Last Name" 
+                            value={cardName} 
+                            onChange={(e)=>setCardName(e.target.value)} 
+                          />
+                          <label htmlFor="cardName" className="form-label">Cardholder Name</label>
+                        </div>
+                        <div className="d-flex">
+                          <div id="divCardNum" className="form-floating mb-3">
+                            <input 
+                              id="cardNum" 
+                              type="text" 
+                              className="form-control" 
+                              placeholder="Card Number" 
+                              value={cardNum} 
+                              onChange={(e)=>setCardNum(e.target.value)} 
+                            />
+                            <label htmlFor="cardNum" className="form-label">Card Number</label>
+                          </div>
+                          <div id="divCardExp" className="form-floating mb-3">
+                            <input
+                              id="cardExp"
+                              type="text"
+                              className="form-control"
+                              placeholder="MM/YY"
+                              value={cardExp}
+                              onChange={(e)=>setCardExp(e.target.value)}
+                            />
+                            <label htmlFor="cardExp" className="form-label">MM/YY</label>
+                          </div>
+                          <div id="divCardCVV" className="form-floating mb-3">
+                            <input
+                              id="cardCVV"
+                              type="text"
+                              className="form-control"
+                              placeholder="CVV"
+                              value={cardCVV}
+                              onChange={(e)=>setCardCVV(e.target.value)}
+                            />
+                            <label htmlFor="cardCVV" className="form-label">CVV</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="d-flex flex-column mb-3">
+                        <label className="form-label">Billing Address</label>
+                        <AddressForm
+                          streetId="billAddrStreet"
+                          street={billAddrStreet}
+                          setStreet={setBillAddrStreet}
+                          extraId="billAddrExtra"
+                          extra={billAddrExtra}
+                          setExtra={setBillAddrExtra}
+                          cityId="billAddrCity"
+                          city={billAddrCity}
+                          setCity={setBillAddrCity}
+                          stateId="billAddrState"
+                          state={billAddrState}
+                          setState={setBillAddrState}
+                          zipcodeId="billAddrZip"
+                          zipcode={billAddrZip}
+                          setZipcode={setBillAddrZip}
+                        />
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="accordion-item">
+              <h2 className="accordion-header" id="headerReviewOrder">
+                <button className="accordion-button collapsed" type="button" data-toggle="collapse" data-target="#collapseReviewOrder">
+                  Review Order
+                </button>
+              </h2>
+              <div id="collapseReviewOrder" className="accordion-collapse collapse" data-parent="#checkoutAccordion">
+                <div className="accordion-body">
+                  <div id="review-order" >
+                    <div className="shipment mb-3">
+                      <h5 className="mb-3">Shipment 1 of 1</h5>
+                      <div className="shipment-box bg-light">
+                        <h6>Delivery date: {todayDate.getMonth()} </h6>
+                        <div>
+                          <CheckoutItem />
+                          <CheckoutItem />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="d-flex justify-content-between align-middle align-content-center">
+                      <h5 className="my-auto h-100">Total: $0.00</h5>
+                      <button className="btn btn-primary" onClick={handlePlaceOrder}>Place Order</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
 
           {/* Shipping Address */}
-          <div id="shipping-address" className="mb-5">
+          {/* <div id="shipping-address" className="mb-5">
             <h4 className="mb-3">Shipping Address</h4>
             <form id="shipping-address-form">
               <label className="form-label">Name</label>
@@ -204,10 +385,10 @@ function Checkout(props:Props):JSX.Element {
                 <label htmlFor="useAsBilling" className="form-check-label">Use as billing address</label>
               </div>
             </form>
-          </div>
+          </div> */}
 
           {/* Payment Details */}
-          <div id="payment-details" className="mb-5">
+          {/* <div id="payment-details" className="mb-5">
             <h4 className="mb-3">Payment Details</h4>
             <form id="payment-details-form">
               <div className="d-flex flex-column mb-3">
@@ -287,10 +468,10 @@ function Checkout(props:Props):JSX.Element {
                 />
               </div>
             </form>
-          </div>
+          </div> */}
 
           {/* Review Order */}
-          <div id="review-order" className="mb-5">
+          {/* <div id="review-order" className="mb-5">
             <h4 className="mb-3">Review Order</h4>
             <div className="shipment mb-3">
               <h5 className="mb-3">Shipment 1 of 1</h5>
@@ -306,7 +487,7 @@ function Checkout(props:Props):JSX.Element {
               <h5 className="my-auto h-100">Total: $0.00</h5>
               <button className="btn btn-primary" onClick={handlePlaceOrder}>Place Order</button>
             </div>
-          </div>
+          </div> */}
         </div>
 
         <div className="col-1"></div>
