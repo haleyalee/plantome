@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Auth } from 'aws-amplify';
 
 // import styles
 import '../styles/Checkout.css';
@@ -7,11 +8,41 @@ import AddressForm from './AddressForm';
 // import components
 import CheckoutItem from './CheckoutItem';
 
-function Checkout():JSX.Element {
+type Props = {
+  signedIn: boolean,
+  handleSignIn: (state:boolean)=>void
+}
+
+function Checkout(props:Props):JSX.Element {
 
   // Sign in
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  useEffect(() => {
+    const easyCheckout = document.getElementById('divEasyCheckout');
+    if (props.signedIn) {
+      if(easyCheckout) easyCheckout.style.display = "none";
+    } 
+    else {
+      if(easyCheckout) easyCheckout.style.display = "block";
+    }
+  });
+
+  const signIn = (e:React.SyntheticEvent) => {
+    e.preventDefault();
+    Auth.signIn({
+      username: email,
+      password: password
+    })
+    .then( () => {
+      console.log("Successfully signed in"); 
+      props.handleSignIn(true); 
+    })
+    .catch((error) => {
+      console.log(`Error signing in: ${error.message}`)
+    })
+  }
 
   // Shipping Address
   const [name, setName] = useState('');
@@ -96,7 +127,7 @@ function Checkout():JSX.Element {
         <div className="col-8">
           <h2 className="pb-3">Checkout</h2>
 
-          <div className="mb-5">
+          <div id="divEasyCheckout" className="mb-5">
             <div id="easy-checkout" className="d-flex justify-content-between bg-light p-4 mb-2">
               <h6 className="m-0">Make checking out easy! Sign in now.</h6>
               <a role="button" data-toggle="collapse" href="#signInToggle" aria-expanded="false" aria-controls="signInToggle">
@@ -117,7 +148,7 @@ function Checkout():JSX.Element {
                     <label htmlFor="password">Password</label>
                   </div>
                   <div className="d-flex flex-row-reverse">
-                    <button className="btn btn-secondary">Sign In</button>
+                    <button className="btn btn-secondary" onClick={signIn}>Sign In</button>
                   </div>
                 </form>
               </div>

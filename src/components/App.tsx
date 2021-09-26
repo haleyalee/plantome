@@ -143,7 +143,7 @@ function App():JSX.Element {
             { (signedIn) ? <Account handleSignIn={handleSignIn} /> : <SignIn handleSignIn={handleSignIn} /> }
           </Route>
           <Route path="/checkout">
-            <Checkout />
+            <Checkout signedIn={signedIn} handleSignIn={handleSignIn}/>
           </Route>
         </Switch>
       </Router>
