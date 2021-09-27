@@ -105,15 +105,17 @@ function SignUp(props:any):JSX.Element {
         <div className="d-flex flex-column justify-content-center align-content-center">
           <h2 className="mx-auto pb-3"></h2>
           <form id="confirmationForm" className="mx-auto d-flex flex-column" onSubmit={handleSubmit}>
-            <label htmlFor="confirmation" className="form-label ">Confirmation Code</label>
-            <input 
-              id="confirmation" 
-              className="form-control mb-3"
-              type="text" 
-              placeholder="Confirmation Code"
-              value={confirmationCode}
-              onChange={(e) => setConfirmationCode(e.target.value)}
-            />
+            <div className="form-floating">
+              <input 
+                id="confirmation" 
+                className="form-control mb-3"
+                type="text" 
+                placeholder="Confirmation Code"
+                value={confirmationCode}
+                onChange={(e) => setConfirmationCode(e.target.value)}
+              />
+              <label htmlFor="confirmation" className="form-label ">Confirmation Code</label>
+            </div>
             <input type="submit" className="btn btn-success" value="Confirm Sign Up" />
             { error ? <div className="row g-3 mt-1 text-danger">❌ {error}</div> : <div></div> }
           </form>
@@ -128,86 +130,96 @@ function SignUp(props:any):JSX.Element {
           <form id="signUpForm" className="mx-auto needs-validation" noValidate onSubmit={handleSubmit} >
             <div className="row g-3">
               <div className="col-lg-6">
-                <label htmlFor="fname" className="form-label">First Name</label>
-                <input 
-                  type="text" 
-                  id="fname" 
-                  className="form-control" 
-                  placeholder="First Name" 
-                  pattern="[A-Za-z]{1,32}"
-                  value={fname} 
-                  onChange={(e)=>setFname(e.target.value)} 
-                  required 
-                />
-                <div className="invalid-feedback">
-                  Please provide a valid first name.
+                <div className="form-floating">
+                  <input 
+                    type="text" 
+                    id="fname" 
+                    className="form-control" 
+                    placeholder="First Name" 
+                    pattern="[A-Za-z]{1,32}"
+                    value={fname} 
+                    onChange={(e)=>setFname(e.target.value)} 
+                    required 
+                  />
+                  <label htmlFor="fname" className="form-label">First Name</label>
+                  <div className="invalid-feedback">
+                    Please provide a valid first name.
+                  </div>
                 </div>
               </div>
               <div className="col-lg-6">
-                <label htmlFor="lname" className="form-label">Last Name</label>
-                <input 
-                  type="text" 
-                  id="lname" 
-                  className="form-control" 
-                  placeholder="Last Name" 
-                  pattern="[A-Za-z]{1,32}"
-                  value={lname} 
-                  onChange={(e)=>setLname(e.target.value)} 
-                  required 
-                />
-                <div className="invalid-feedback">
-                  Please provide a valid last name.
+                <div className="form-floating">
+                  <input 
+                    type="text" 
+                    id="lname" 
+                    className="form-control" 
+                    placeholder="Last Name" 
+                    pattern="[A-Za-z]{1,32}"
+                    value={lname} 
+                    onChange={(e)=>setLname(e.target.value)} 
+                    required 
+                  />
+                  <label htmlFor="lname" className="form-label">Last Name</label>
+                  <div className="invalid-feedback">
+                    Please provide a valid last name.
+                  </div>
                 </div>
               </div>
             </div>
             <div className="row g-3">
               <div className="col-12">
-                <label htmlFor="email" className="form-label">Email Address</label>
-                <input 
-                  type="email" 
-                  id="email" 
-                  className="form-control" 
-                  placeholder="Email Address"
-                  value={email} 
-                  onChange={(e)=>setEmail(e.target.value)} 
-                  required 
-                />
-                <div className="invalid-feedback">
-                  Please provide a valid email address.
+                <div className="form-floating">
+                  <input 
+                    type="email" 
+                    id="email" 
+                    className="form-control" 
+                    placeholder="Email Address"
+                    value={email} 
+                    onChange={(e)=>setEmail(e.target.value)} 
+                    required 
+                  />
+                  <label htmlFor="email" className="form-label">Email Address</label>
+                  <div className="invalid-feedback">
+                    Please provide a valid email address.
+                  </div>
                 </div>
               </div>
             </div>
             <div className="row g-3">
               <div className="col-lg-6">
-                <label htmlFor="password" className="form-label">Password</label>
-                <input 
-                  type="password" 
-                  id="password" 
-                  className="form-control" 
-                  placeholder="Password" 
-                  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                  value={password} 
-                  onChange={(e)=>setPassword(e.target.value)} 
-                  required 
-                />
-                <div className="invalid-feedback">
-                  A valid password must contain at least one number, one uppercase and one lowercase letter, and at least 8 or more characters.
+                <div className="form-floating">
+                  <input 
+                    type="password" 
+                    id="password" 
+                    className="form-control" 
+                    placeholder="Password" 
+                    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                    value={password} 
+                    onChange={(e)=>setPassword(e.target.value)} 
+                    required 
+                  />
+                  <label htmlFor="password" className="form-label">Password</label>
+                  <div className="invalid-feedback">
+                    A valid password must contain at least one number, one uppercase and one lowercase letter, and at least 8 or more characters.
+                  </div>
                 </div>
               </div>
               <div className="col-lg-6">
-                <label htmlFor="confirm-password" className="form-label">Confirm Password</label>
-                <input 
-                  type="password" 
-                  id="confirm-password" 
-                  className="form-control" 
-                  placeholder="Confirm Password" 
-                  pattern={password}
-                  value={confirmPassword} 
-                  onChange={(e)=>setConfirmPassword(e.target.value)} 
-                  required
-                />
-                <div className="invalid-feedback">
-                  Please ensure passwords match.
+                <div className="form-floating">
+                  <input 
+                    type="password" 
+                    id="confirm-password" 
+                    className="form-control" 
+                    placeholder="Confirm Password" 
+                    pattern={password}
+                    value={confirmPassword} 
+                    onChange={(e)=>setConfirmPassword(e.target.value)} 
+                    required
+                  />
+                  <label htmlFor="confirm-password" className="form-label">Confirm Password</label>
+                  <div className="invalid-feedback">
+                    Please ensure passwords match.
+                  </div>
                 </div>
               </div>
             </div>
