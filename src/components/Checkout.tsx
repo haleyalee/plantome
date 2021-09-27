@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Auth } from 'aws-amplify';
+import { withRouter } from 'react-router-dom';
 
 // import styles
 import '../styles/Checkout.css';
@@ -9,15 +10,19 @@ import AddressForm from './AddressForm';
 import Plant from '../entities/plant';
 
 // import components
-import CheckoutItem from './CheckoutItem';
+// import CheckoutItem from './CheckoutItem';
+import ReviewOrder from './ReviewOrder';
 
-type Props = {
-  cart: Plant[];
-  signedIn: boolean,
-  handleSignIn: (state:boolean)=>void
-}
+// type Props = {
+//   cart: Plant[];
+//   signedIn: boolean,
+//   handleSignIn: (state:boolean)=>void,
+//   handlePlacedOrder: ()=>void,
+//   history: any
+// }
 
-function Checkout(props:Props):JSX.Element {
+// eslint-disable-next-line
+function Checkout(props:any):JSX.Element {
 
   // Sign in
   const [email, setEmail] = useState('');
@@ -85,65 +90,6 @@ function Checkout(props:Props):JSX.Element {
     setTotal(subtotal+tax);
   }, [subtotal, tax, setSubtotal, setTax, setTotal]);
 
-  // Delivery date
-  const [deliveryDate, setDeliveryDate] = useState("");
-
-  useEffect(() => {
-    const today = new Date();
-    // define estimated delivery date to be 10 days from order
-    today.setDate(today.getDate() + 10);
-
-    const d = today.getDate();
-    const m = today.getMonth() + 1;
-    const y = today.getFullYear();
-
-    let month;
-
-    switch (m) {
-      case 1:
-        month = "January";
-        break;
-      case 2:
-        month = "February";
-        break;
-      case 3:
-        month = "March";
-        break;
-      case 4:
-        month = "April";
-        break;
-      case 5:
-        month = "May";
-        break;
-      case 6:
-        month = "June";
-        break;
-      case 7:
-        month = "July";
-        break;
-      case 8: 
-        month = "August";
-        break;
-      case 9:
-        month = "September";
-        break;
-      case 10: 
-        month = "October";
-        break;
-      case 11:
-        month = "November";
-        break;
-      case 12:
-        month = "December";
-        break;
-      default:
-        month = "Error";
-        break;
-    }
-
-    setDeliveryDate(month + " " + d + ", " + y);
-  });
-
   // Use Shipping Address as Billing Address
   const toggleUseAsBilling = () => {
 
@@ -167,32 +113,25 @@ function Checkout(props:Props):JSX.Element {
       billAddr.map((id) => document.getElementById(id)?.removeAttribute('disabled'));
     }
   }
-
-  useEffect(() => {
-    const form = document.getElementById("checkoutForm") as HTMLSelectElement;
-    form?.addEventListener('submit', function (event) {
-      if (!form.checkValidity()) {
-        event.preventDefault()
-        event.stopPropagation()
-      }
-
-      form.classList.add('was-validated')
-    }, false)
-  });
   
   const handlePlaceOrder = (e:React.SyntheticEvent) => {
     e.preventDefault();
+    
+    // form validation
     const form = document.getElementById("checkoutForm") as HTMLFormElement;
-    console.log("checking form validity");
-    console.log(form.checkValidity());
     if (!form.checkValidity()) {
       e.preventDefault()
       e.stopPropagation()
     }
     else {
       console.log("Successfully placed order");
+      props.handlePlacedOrder();
+      props.emptyCart();
+      props.history.push('/checkout/order-confirmation');
     }
-    form.classList.add('was-validated')
+    form.classList.add('was-validated');
+
+
   }
 
   return (
@@ -213,7 +152,7 @@ function Checkout(props:Props):JSX.Element {
             </div>
             <div className="collapse" id="signInToggle">
               <div className="card card-body">
-                <form id="signInForm">
+                <form >
                   <div className="form-floating mb-3">
                     <input id="email" type="text" className="form-control" placeholder="Email Address" value={email} onChange={(e)=>setEmail(e.target.value)} required/>
                     <label htmlFor="email">Email Address</label>
@@ -420,12 +359,7 @@ function Checkout(props:Props):JSX.Element {
                     <div id="review-order" >
                       <div className="shipment mb-3">
                         <h5 className="mb-3">Shipment 1 of 1</h5>
-                        <div className="shipment-box bg-light">
-                          <p>Delivery date: <strong>{deliveryDate}</strong> </p>
-                          <div>
-                            { props.cart.map((plant) => <CheckoutItem key={plant.id} name={plant.name} price={plant.price} quantity={plant.quantity} image={plant.image} /> )}
-                          </div>
-                        </div>
+                        <ReviewOrder cart={props.cart} />
                       </div>
                       <div className="d-flex justify-content-between align-middle align-content-center">
                         <h5 className="my-auto h-100">Total: ${total.toFixed(2)}</h5>
@@ -469,4 +403,4 @@ function Checkout(props:Props):JSX.Element {
   )
 }
 
-export default Checkout;
+export default withRouter(Checkout);

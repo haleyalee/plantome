@@ -28,6 +28,7 @@ import SignIn from './SignIn';
 import ForgotPassword from './ForgotPassword';
 import Account from './Account';
 import Checkout from './Checkout';
+import OrderConfirmation from './OrderConfirmation';
 
 
 export type CartItemType = {
@@ -56,6 +57,10 @@ function App():JSX.Element {
   
   // Shopping Cart
   const [cart, setCart] = useState<Plant[]>([]);
+
+  const emptyCart = () => {
+    setCart([]);
+  }
 
   const handleAddToCart = (item:Plant) => {
     // if item is already in cart, increase quantity
@@ -96,6 +101,14 @@ function App():JSX.Element {
 
   const searchPlants = (results:Plant[]) => {
     setSearchResult(results);
+  }
+
+  // Checkout
+  const [placedOrder, setPlacedOrder] = useState(false);
+  const [checkOutCart, setCheckoutCart] = useState<Plant[]>([]);
+  const handlePlacedOrder = () => {
+    setPlacedOrder(true);
+    setCheckoutCart(cart);
   }
 
   return (
@@ -140,10 +153,13 @@ function App():JSX.Element {
             <SignIn handleSignIn={handleSignIn}/>
           </Route>
           <Route path="/account">
-            { (signedIn) ? <Account handleSignIn={handleSignIn} /> : <SignIn handleSignIn={handleSignIn} /> }
+            { (signedIn) ? <Account handleSignIn={handleSignIn} cart={checkOutCart} /> : <SignIn handleSignIn={handleSignIn} /> }
+          </Route>
+          <Route exact path ="/checkout/order-confirmation">
+            { (placedOrder) ? <OrderConfirmation cart={checkOutCart} signedIn={signedIn} /> : <Home addToCart={handleAddToCart} /> }
           </Route>
           <Route path="/checkout">
-            <Checkout cart={cart} signedIn={signedIn} handleSignIn={handleSignIn}/>
+            <Checkout cart={cart} emptyCart={emptyCart} signedIn={signedIn} handleSignIn={handleSignIn} handlePlacedOrder={handlePlacedOrder}/>
           </Route>
         </Switch>
       </Router>
