@@ -21,8 +21,8 @@ type Props = {
 function AddressForm(props:Props):JSX.Element {
   return (
     <div>
-      <div className="d-flex mb-3">
-        <div className="form-floating w-75 me-3">
+      <div id="street-extra" className="d-flex mb-3">
+        <div id="street" className="form-floating">
           <input 
             id={props.streetId} 
             type="text" 
@@ -37,7 +37,7 @@ function AddressForm(props:Props):JSX.Element {
             Please provide a street address.
           </div>
         </div>
-        <div className="form-floating w-25">
+        <div id="extra" className="form-floating">
           <input 
             id={props.extraId}
             type="text" 
@@ -49,8 +49,8 @@ function AddressForm(props:Props):JSX.Element {
           <label htmlFor={props.extraId}>Other</label>
         </div>
       </div>
-      <div className="d-flex">
-        <div className="form-floating me-3 w-50">
+      <div id="city-state-zip" className="d-flex">
+        <div id="city" className="form-floating">
           <input 
             id={props.cityId} 
             type="text" 
@@ -65,7 +65,7 @@ function AddressForm(props:Props):JSX.Element {
             Please provide a city.
           </div>
         </div>
-        <div className="form-floating w-25 me-3">
+        <div id="state" className="form-floating">
           <select id={props.stateId} className="form-select" value={props.state} onChange={(e)=>props.setState(e.target.value)} required>
             <option selected disabled value="">Select state...</option>
             <option value="AL">Alabama</option>
@@ -125,7 +125,7 @@ function AddressForm(props:Props):JSX.Element {
             Please select a state.
           </div>
         </div>
-        <div className="form-floating w-25">
+        <div id="zipcode" className="form-floating">
           <input 
             id={props.zipcodeId} 
             type="text" 

@@ -136,9 +136,37 @@ function Checkout(props:any):JSX.Element {
 
   return (
     <div className="container py-5">
-      <div className="row">
-        <div className="col-8">
-          <h2 className="pb-3">Checkout</h2>
+      <h2 id="mobile-header" className="pb-3">Checkout</h2>
+      <div id="checkout" className="row">
+
+        {/* Order Summary */}
+        <div id="order-summary" className="col-sm-12 col-lg-3 bg-light p-4">
+          <h3 className="pb-3">Order Summary</h3>
+          <div className="d-flex flex-column">
+            <div className="d-flex justify-content-between">
+              <p>Subtotal</p>
+              <p>${subtotal.toFixed(2)}</p>
+            </div>
+            <div className="d-flex justify-content-between">
+              <p>Tax</p>
+              <p>${tax.toFixed(2)}</p>
+            </div>
+            <div className="d-flex justify-content-between">
+              <p>Shipping</p>
+              <p>FREE</p>
+            </div>
+            <div className="d-flex justify-content-between">
+              <p><strong>Total</strong></p>
+              <p><strong>${total.toFixed(2)}</strong></p>
+            </div>
+            <button type="submit" className="btn btn-primary mt-4" onClick={handlePlaceOrder}>Place Order</button>
+          </div>
+        </div>
+
+        <div className="col-sm-12 col-lg-1"></div>
+
+        <div className="col-sm-12 col-lg-8 p-0">
+          <h2 id="web-header" className="pb-3">Checkout</h2>
 
           {/* Easy Checkout */}
           <div id="divEasyCheckout" className="mb-5">
@@ -172,6 +200,7 @@ function Checkout(props:any):JSX.Element {
           {/* Accordion */}
           <div className="accordion" id="checkoutAccordion">
             <form id="checkoutForm" className="needs-validation" noValidate onSubmit={handlePlaceOrder} >
+
               {/* Shipping Address */}
               <div className="accordion-item">
                 <h2 className="accordion-header" id="headerShipAddr">
@@ -274,7 +303,7 @@ function Checkout(props:any):JSX.Element {
                             Please provide a cardholder name.
                           </div>
                         </div>
-                        <div className="d-flex">
+                        <div id="card-info" className="d-flex">
                           <div id="divCardNum" className="form-floating mb-3">
                             <input 
                               id="cardNum" 
@@ -290,34 +319,36 @@ function Checkout(props:any):JSX.Element {
                               Please provide the card number.
                             </div>
                           </div>
-                          <div id="divCardExp" className="form-floating mb-3">
-                            <input
-                              id="cardExp"
-                              type="text"
-                              className="form-control"
-                              placeholder="MM/YY"
-                              value={cardExp}
-                              onChange={(e)=>setCardExp(e.target.value)}
-                              required
-                            />
-                            <label htmlFor="cardExp" className="form-label">MM/YY</label>
-                            <div className="invalid-feedback">
-                              Please provide the card expiration date.
+                          <div id="exp-cvv" className="d-inline-flex">
+                            <div id="divCardExp" className="form-floating mb-3">
+                              <input
+                                id="cardExp"
+                                type="text"
+                                className="form-control"
+                                placeholder="MM/YY"
+                                value={cardExp}
+                                onChange={(e)=>setCardExp(e.target.value)}
+                                required
+                              />
+                              <label htmlFor="cardExp" className="form-label">MM/YY</label>
+                              <div className="invalid-feedback">
+                                Please provide the card expiration date.
+                              </div>
                             </div>
-                          </div>
-                          <div id="divCardCVV" className="form-floating mb-3">
-                            <input
-                              id="cardCVV"
-                              type="text"
-                              className="form-control"
-                              placeholder="CVV"
-                              value={cardCVV}
-                              onChange={(e)=>setCardCVV(e.target.value)}
-                              required
-                            />
-                            <label htmlFor="cardCVV" className="form-label">CVV</label>
-                            <div className="invalid-feedback">
-                              Please provide the card CVV.
+                            <div id="divCardCVV" className="form-floating mb-3">
+                              <input
+                                id="cardCVV"
+                                type="text"
+                                className="form-control"
+                                placeholder="CVV"
+                                value={cardCVV}
+                                onChange={(e)=>setCardCVV(e.target.value)}
+                                required
+                              />
+                              <label htmlFor="cardCVV" className="form-label">CVV</label>
+                              <div className="invalid-feedback">
+                                Please provide the card CVV.
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -373,30 +404,6 @@ function Checkout(props:any):JSX.Element {
           </div>
         </div>
 
-        <div className="col-1"></div>
-
-        <div id="order-summary" className="col-3 bg-light p-4">
-          <h3 className="pb-3">Order Summary</h3>
-          <div className="d-flex flex-column">
-            <div className="d-flex justify-content-between">
-              <p>Subtotal</p>
-              <p>${subtotal.toFixed(2)}</p>
-            </div>
-            <div className="d-flex justify-content-between">
-              <p>Tax</p>
-              <p>${tax.toFixed(2)}</p>
-            </div>
-            <div className="d-flex justify-content-between">
-              <p>Shipping</p>
-              <p>FREE</p>
-            </div>
-            <div className="d-flex justify-content-between">
-              <p><strong>Total</strong></p>
-              <p><strong>${total.toFixed(2)}</strong></p>
-            </div>
-            <button type="submit" className="btn btn-primary mt-4" onClick={handlePlaceOrder}>Place Order</button>
-          </div>
-        </div>
       </div>
       
     </div>
