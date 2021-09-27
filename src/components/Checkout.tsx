@@ -85,7 +85,64 @@ function Checkout(props:Props):JSX.Element {
     setTotal(subtotal+tax);
   }, [subtotal, tax, setSubtotal, setTax, setTotal]);
 
-  const [todayDate] = useState(new Date());
+  // Delivery date
+  const [deliveryDate, setDeliveryDate] = useState("");
+
+  useEffect(() => {
+    const today = new Date();
+    // define estimated delivery date to be 10 days from order
+    today.setDate(today.getDate() + 10);
+
+    const d = today.getDate();
+    const m = today.getMonth() + 1;
+    const y = today.getFullYear();
+
+    let month;
+
+    switch (m) {
+      case 1:
+        month = "January";
+        break;
+      case 2:
+        month = "February";
+        break;
+      case 3:
+        month = "March";
+        break;
+      case 4:
+        month = "April";
+        break;
+      case 5:
+        month = "May";
+        break;
+      case 6:
+        month = "June";
+        break;
+      case 7:
+        month = "July";
+        break;
+      case 8: 
+        month = "August";
+        break;
+      case 9:
+        month = "September";
+        break;
+      case 10: 
+        month = "October";
+        break;
+      case 11:
+        month = "November";
+        break;
+      case 12:
+        month = "December";
+        break;
+      default:
+        month = "Error";
+        break;
+    }
+
+    setDeliveryDate(month + " " + d + ", " + y);
+  });
 
   // Use Shipping Address as Billing Address
   const toggleUseAsBilling = () => {
@@ -110,24 +167,32 @@ function Checkout(props:Props):JSX.Element {
       billAddr.map((id) => document.getElementById(id)?.removeAttribute('disabled'));
     }
   }
-  
-  const handlePlaceOrder = () => {
-    console.log(name);
-    console.log(shipAddrStreet);
-    console.log(shipAddrCity);
-    console.log(shipAddrState);
-    console.log(shipAddrZip);
-    console.log(useAsBilling);
 
-    console.log(cardType);
-    console.log(cardName);
-    console.log(cardNum);
-    console.log(cardExp);
-    console.log(cardCVV);
-    console.log(billAddrStreet);
-    console.log(billAddrCity);
-    console.log(billAddrState);
-    console.log(billAddrZip);
+  useEffect(() => {
+    const form = document.getElementById("checkoutForm") as HTMLSelectElement;
+    form?.addEventListener('submit', function (event) {
+      if (!form.checkValidity()) {
+        event.preventDefault()
+        event.stopPropagation()
+      }
+
+      form.classList.add('was-validated')
+    }, false)
+  });
+  
+  const handlePlaceOrder = (e:React.SyntheticEvent) => {
+    e.preventDefault();
+    const form = document.getElementById("checkoutForm") as HTMLFormElement;
+    console.log("checking form validity");
+    console.log(form.checkValidity());
+    if (!form.checkValidity()) {
+      e.preventDefault()
+      e.stopPropagation()
+    }
+    else {
+      console.log("Successfully placed order");
+    }
+    form.classList.add('was-validated')
   }
 
   return (
@@ -136,6 +201,7 @@ function Checkout(props:Props):JSX.Element {
         <div className="col-8">
           <h2 className="pb-3">Checkout</h2>
 
+          {/* Easy Checkout */}
           <div id="divEasyCheckout" className="mb-5">
             <div id="easy-checkout" className="d-flex justify-content-between bg-light p-4">
               <h6 className="m-0">Make checking out easy! Sign in now.</h6>
@@ -147,13 +213,13 @@ function Checkout(props:Props):JSX.Element {
             </div>
             <div className="collapse" id="signInToggle">
               <div className="card card-body">
-                <form>
+                <form id="signInForm">
                   <div className="form-floating mb-3">
-                    <input id="email" type="text" className="form-control" placeholder="Email Address" value={email} onChange={(e)=>setEmail(e.target.value)} />
+                    <input id="email" type="text" className="form-control" placeholder="Email Address" value={email} onChange={(e)=>setEmail(e.target.value)} required/>
                     <label htmlFor="email">Email Address</label>
                   </div>
                   <div className="form-floating mb-3">
-                    <input id="password" type="password" className="form-control" placeholder="Password" value={password} onChange={(e)=>setPassword(e.target.value)} />
+                    <input id="password" type="password" className="form-control" placeholder="Password" value={password} onChange={(e)=>setPassword(e.target.value)} required/>
                     <label htmlFor="password">Password</label>
                   </div>
                   <div className="d-flex flex-row-reverse">
@@ -164,17 +230,19 @@ function Checkout(props:Props):JSX.Element {
             </div>
           </div>
           
+          {/* Accordion */}
           <div className="accordion" id="checkoutAccordion">
-            <div className="accordion-item">
-              <h2 className="accordion-header" id="headerShipAddr">
-                <button className="accordion-button" type="button" data-toggle="collapse" data-target="#collapseShipAddr">
-                  Shipping Address
-                </button>
-              </h2>
-              <div id="collapseShipAddr" className="accordion-collapse collapse show" data-parent="#checkoutAccordion">
-                <div className="accordion-body">
-                  <div id="shipping-address">
-                    <form id="shipping-address-form">
+            <form id="checkoutForm" className="needs-validation" noValidate onSubmit={handlePlaceOrder} >
+              {/* Shipping Address */}
+              <div className="accordion-item">
+                <h2 className="accordion-header" id="headerShipAddr">
+                  <button className="accordion-button" type="button" data-toggle="collapse" data-target="#collapseShipAddr">
+                    <h5 className="m-0">Shipping Address</h5>
+                  </button>
+                </h2>
+                <div id="collapseShipAddr" className="accordion-collapse collapse show" data-parent="#checkoutAccordion">
+                  <div className="accordion-body">
+                    <div id="shipping-address">
                       <label className="form-label">Name</label>
                       <div className="form-floating mb-3">
                         <input 
@@ -184,8 +252,12 @@ function Checkout(props:Props):JSX.Element {
                           placeholder="First &#38; Last Name" 
                           value={name} 
                           onChange={(e)=>setName(e.target.value)} 
+                          required
                         />
-                        <label htmlFor="name" className="form-label">Name</label>
+                        <label htmlFor="name" className="form-label">Recipient Name</label>
+                        <div className="invalid-feedback">
+                          Please provide a name.
+                        </div>
                       </div>
                       <div className="d-flex flex-column mb-3">
                         <label className="form-label">Shipping Address</label>
@@ -218,30 +290,35 @@ function Checkout(props:Props):JSX.Element {
                           />
                         <label htmlFor="useAsBilling" className="form-check-label">Use as billing address</label>
                       </div>
-                    </form>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            <div className="accordion-item">
-              <h2 className="accordion-header" id="headerPayDets">
-                <button className="accordion-button collapsed" type="button" data-toggle="collapse" data-target="#collapsePayDets">
-                  Payment Details
-                </button>
-              </h2>
-              <div id="collapsePayDets" className="accordion-collapse collapse" data-parent="#checkoutAccordion">
-                <div className="accordion-body">
-                  <div id="payment-details" >
-                    <form id="payment-details-form">
+              {/* Payment Details */}
+              <div className="accordion-item">
+                <h2 className="accordion-header" id="headerPayDets">
+                  <button className="accordion-button collapsed" type="button" data-toggle="collapse" data-target="#collapsePayDets">
+                    <h5 className="m-0">Payment Details</h5>
+                  </button>
+                </h2>
+                <div id="collapsePayDets" className="accordion-collapse collapse" data-parent="#checkoutAccordion">
+                  <div className="accordion-body">
+                    <div id="payment-details" >
                       <div className="d-flex flex-column mb-3">
                         <label className="form-label">Card Information</label>
                         <div className="form-floating mb-3">
-                          <select id="cardType" className="form-select" value={cardType} onChange={(e)=>setCardType(e.target.value)}>
-                            <option value="select">Select card type...</option>
+                          <select id="cardType" className="form-select" value={cardType} onChange={(e)=>setCardType(e.target.value)} required>
+                            <option selected disabled value="">Select card type...</option>
                             <option value="Visa">Visa</option>
+                            <option value="American Express">American Express</option>
+                            <option value="Discover">Discover</option>
+                            <option value="Mastercard">Mastercard</option>
                           </select>
                           <label htmlFor="cardType" className="form-label">Card Type</label>
+                          <div className="invalid-feedback">
+                            Please select a card type.
+                          </div>
                         </div>
                         <div className="form-floating mb-3">
                           <input 
@@ -251,8 +328,12 @@ function Checkout(props:Props):JSX.Element {
                             placeholder="First &#38; Last Name" 
                             value={cardName} 
                             onChange={(e)=>setCardName(e.target.value)} 
+                            required
                           />
                           <label htmlFor="cardName" className="form-label">Cardholder Name</label>
+                          <div className="invalid-feedback">
+                            Please provide a cardholder name.
+                          </div>
                         </div>
                         <div className="d-flex">
                           <div id="divCardNum" className="form-floating mb-3">
@@ -263,8 +344,12 @@ function Checkout(props:Props):JSX.Element {
                               placeholder="Card Number" 
                               value={cardNum} 
                               onChange={(e)=>setCardNum(e.target.value)} 
+                              required
                             />
                             <label htmlFor="cardNum" className="form-label">Card Number</label>
+                            <div className="invalid-feedback">
+                              Please provide the card number.
+                            </div>
                           </div>
                           <div id="divCardExp" className="form-floating mb-3">
                             <input
@@ -274,8 +359,12 @@ function Checkout(props:Props):JSX.Element {
                               placeholder="MM/YY"
                               value={cardExp}
                               onChange={(e)=>setCardExp(e.target.value)}
+                              required
                             />
                             <label htmlFor="cardExp" className="form-label">MM/YY</label>
+                            <div className="invalid-feedback">
+                              Please provide the card expiration date.
+                            </div>
                           </div>
                           <div id="divCardCVV" className="form-floating mb-3">
                             <input
@@ -285,8 +374,12 @@ function Checkout(props:Props):JSX.Element {
                               placeholder="CVV"
                               value={cardCVV}
                               onChange={(e)=>setCardCVV(e.target.value)}
+                              required
                             />
                             <label htmlFor="cardCVV" className="form-label">CVV</label>
+                            <div className="invalid-feedback">
+                              Please provide the card CVV.
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -310,38 +403,39 @@ function Checkout(props:Props):JSX.Element {
                           setZipcode={setBillAddrZip}
                         />
                       </div>
-                    </form>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-
-            <div className="accordion-item">
-              <h2 className="accordion-header" id="headerReviewOrder">
-                <button className="accordion-button collapsed" type="button" data-toggle="collapse" data-target="#collapseReviewOrder">
-                  Review Order
-                </button>
-              </h2>
-              <div id="collapseReviewOrder" className="accordion-collapse collapse" data-parent="#checkoutAccordion">
-                <div className="accordion-body">
-                  <div id="review-order" >
-                    <div className="shipment mb-3">
-                      <h5 className="mb-3">Shipment 1 of 1</h5>
-                      <div className="shipment-box bg-light">
-                        <h6>Delivery date: {todayDate.getMonth()} </h6>
-                        <div>
-                          { props.cart.map((plant) => <CheckoutItem key={plant.id} name={plant.name} price={plant.price} quantity={plant.quantity} image={plant.image} /> )}
+              
+              {/* Review Order */}
+              <div className="accordion-item">
+                <h2 className="accordion-header" id="headerReviewOrder">
+                  <button className="accordion-button collapsed" type="button" data-toggle="collapse" data-target="#collapseReviewOrder">
+                    <h5 className="m-0">Review Order</h5>
+                  </button>
+                </h2>
+                <div id="collapseReviewOrder" className="accordion-collapse collapse" data-parent="#checkoutAccordion">
+                  <div className="accordion-body">
+                    <div id="review-order" >
+                      <div className="shipment mb-3">
+                        <h5 className="mb-3">Shipment 1 of 1</h5>
+                        <div className="shipment-box bg-light">
+                          <p>Delivery date: <strong>{deliveryDate}</strong> </p>
+                          <div>
+                            { props.cart.map((plant) => <CheckoutItem key={plant.id} name={plant.name} price={plant.price} quantity={plant.quantity} image={plant.image} /> )}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div className="d-flex justify-content-between align-middle align-content-center">
-                      <h5 className="my-auto h-100">Total: ${total.toFixed(2)}</h5>
-                      <button className="btn btn-primary" onClick={handlePlaceOrder}>Place Order</button>
+                      <div className="d-flex justify-content-between align-middle align-content-center">
+                        <h5 className="my-auto h-100">Total: ${total.toFixed(2)}</h5>
+                        <input type="submit" className="btn btn-primary" value="Place Order" onClick={handlePlaceOrder}/>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </form>
           </div>
         </div>
 
@@ -366,7 +460,7 @@ function Checkout(props:Props):JSX.Element {
               <p><strong>Total</strong></p>
               <p><strong>${total.toFixed(2)}</strong></p>
             </div>
-            <button className="btn btn-primary mt-4" onClick={handlePlaceOrder}>Place Order</button>
+            <button type="submit" className="btn btn-primary mt-4" onClick={handlePlaceOrder}>Place Order</button>
           </div>
         </div>
       </div>
