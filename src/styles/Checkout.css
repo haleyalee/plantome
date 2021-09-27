@@ -1,0 +1,136 @@
+#checkout {
+  display: flex;
+  flex-direction: row;
+}
+
+#web-header {
+  display: none;
+}
+
+#mobile-header {
+  display: block;
+}
+
+#easy-checkout {
+  border-radius: 4px;
+  border: 0.5px solid rgba(0,0,0,0.125);
+}
+
+#order-summary {
+  border-radius: 4px;
+  border: 0.5px solid rgba(0,0,0,0.125);
+  height: 100%;
+  margin-bottom: 2.5rem;
+}
+
+#street-extra, #city-state-zip {
+  flex-direction: column;
+}
+
+#street, #extra, #city, #state, #zip {
+  width: 100%;
+  padding-bottom: 1rem;
+}
+
+#card-info {
+  flex-direction: column;
+}
+
+#exp-cvv {
+  width: 100%;
+}
+
+#divCardExp {
+  margin-right: 1rem;
+}
+
+#divCardExp, #divCardCVV {
+  width: 50%;
+}
+
+.shipment-box {
+  border-radius: 4px;
+  border: 0.5px solid rgba(0,0,0,0.125);
+  padding: 1rem;
+}
+
+@media (min-width: 768px) { 
+  
+  #street-extra, #city-state-zip {
+    flex-direction: row;
+  }
+
+  #street {
+    width: 75%;
+    margin-right: 1rem;
+  }
+
+  #extra {
+    width: 25%;
+  }
+
+  #city {
+    width: 50%;
+    margin-right: 1rem;
+  }
+
+  #state {
+    width: 25%;
+    margin-right: 1rem;
+  }
+
+  #zip {
+    width: 25%;
+  }
+
+  #card-info {
+    flex-direction: row;
+  }
+
+  #divCardNum {
+    width: 75%;
+  }
+
+  #exp-cvv {
+    width: 25%;
+  }
+
+  #divCardExp {
+    margin: 0;
+  }
+  
+  #cardNum {
+    border-right: none;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  
+  #cardExp {
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+    width: 100%;
+  }
+  
+  #cardCVV {
+    border-left: none;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    width: 100%;
+  }
+}
+
+@media (min-width: 992px) {
+  #checkout {
+    display: flex;
+    flex-direction: row-reverse;
+  }
+
+  #web-header {
+    display: block;
+  }
+  
+  #mobile-header {
+    display: none;
+  }
+}

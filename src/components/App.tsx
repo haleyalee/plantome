@@ -27,6 +27,8 @@ import SignUp from './SignUp';
 import SignIn from './SignIn';
 import ForgotPassword from './ForgotPassword';
 import Account from './Account';
+import Checkout from './Checkout';
+import OrderConfirmation from './OrderConfirmation';
 
 
 export type CartItemType = {
@@ -49,16 +51,16 @@ function App():JSX.Element {
 
   useEffect(() => {
     Auth.currentSession()
-    .then(() => {
-      setSignedIn(true);
-    })
-    .catch((error) => {
-      console.log(`Error: ${error}`);
-    })
+    .then(() => setSignedIn(true))
+    .catch((error) => console.log(`Error: ${error}`))
   });
   
   // Shopping Cart
   const [cart, setCart] = useState<Plant[]>([]);
+
+  const emptyCart = () => {
+    setCart([]);
+  }
 
   const handleAddToCart = (item:Plant) => {
     // if item is already in cart, increase quantity
@@ -101,24 +103,64 @@ function App():JSX.Element {
     setSearchResult(results);
   }
 
+  // Checkout
+  const [placedOrder, setPlacedOrder] = useState(false);
+  const [checkOutCart, setCheckoutCart] = useState<Plant[]>([]);
+  const handlePlacedOrder = () => {
+    setPlacedOrder(true);
+    setCheckoutCart(cart);
+  }
+
   return (
     <div>
       <Router >
         <Nav cart={cart} signedIn={signedIn} handleSignIn={handleSignIn} addToCart={handleAddToCart} removeFromCart={handleRemoveFromCart} search={searchPlants} />
         <Switch>
-          <Route exact path="/"><Home addToCart={handleAddToCart}/></Route>
-          <Route exact path="/plants/search"><SearchPlants search={searchPlants} searchResult={searchResult} addToCart={handleAddToCart} /></Route>
-          <Route exact path="/plants/best-seller"><FilteredPlants pageName={"Best Seller"} addToCart={handleAddToCart} /></Route>
-          <Route exact path="/plants/beginner"><FilteredPlants pageName={"Beginner"} addToCart={handleAddToCart} /></Route>
-          <Route exact path="/plants/low-maintenance"><FilteredPlants pageName={"Low Maintenance"} addToCart={handleAddToCart} /></Route>
-          <Route exact path="/plants/tropical"><FilteredPlants pageName={"Tropical"} addToCart={handleAddToCart} /></Route>
-          <Route path="/plants"><AllPlants addToCart={handleAddToCart}/></Route>
-          <Route path="/about"><About /></Route>
-          <Route path="/contact"><Contact /></Route>
-          <Route path="/signup"><SignUp handleSignIn={handleSignIn} /></Route>
-          <Route exact path="/signin/forgotpassword"><ForgotPassword /></Route>
-          <Route path="/signin"><SignIn handleSignIn={handleSignIn}/></Route>
-          <Route path="/account">{ (signedIn) ? <Account handleSignIn={handleSignIn} /> : <SignIn handleSignIn={handleSignIn} /> }</Route>
+          <Route exact path="/">
+            <Home addToCart={handleAddToCart}/>
+          </Route>
+          <Route exact path="/plants/search">
+            <SearchPlants search={searchPlants} searchResult={searchResult} addToCart={handleAddToCart} />
+          </Route>
+          <Route exact path="/plants/best-seller">
+            <FilteredPlants pageName={"Best Seller"} addToCart={handleAddToCart} />
+          </Route>
+          <Route exact path="/plants/beginner">
+            <FilteredPlants pageName={"Beginner"} addToCart={handleAddToCart} />
+          </Route>
+          <Route exact path="/plants/low-maintenance">
+            <FilteredPlants pageName={"Low Maintenance"} addToCart={handleAddToCart} />
+          </Route>
+          <Route exact path="/plants/tropical">
+            <FilteredPlants pageName={"Tropical"} addToCart={handleAddToCart} />
+          </Route>
+          <Route path="/plants">
+            <AllPlants addToCart={handleAddToCart}/>
+          </Route>
+          <Route path="/about">
+            <About />
+          </Route>
+          <Route path="/contact">
+            <Contact />
+          </Route>
+          <Route path="/signup">
+            <SignUp handleSignIn={handleSignIn} />
+          </Route>
+          <Route exact path="/signin/forgotpassword">
+            <ForgotPassword />
+          </Route>
+          <Route path="/signin">
+            <SignIn handleSignIn={handleSignIn}/>
+          </Route>
+          <Route path="/account">
+            { (signedIn) ? <Account handleSignIn={handleSignIn} cart={checkOutCart} /> : <SignIn handleSignIn={handleSignIn} /> }
+          </Route>
+          <Route exact path ="/checkout/order-confirmation">
+            { (placedOrder) ? <OrderConfirmation cart={checkOutCart} signedIn={signedIn} /> : <Home addToCart={handleAddToCart} /> }
+          </Route>
+          <Route path="/checkout">
+            <Checkout cart={cart} emptyCart={emptyCart} signedIn={signedIn} handleSignIn={handleSignIn} handlePlacedOrder={handlePlacedOrder}/>
+          </Route>
         </Switch>
       </Router>
     </div>
