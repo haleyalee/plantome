@@ -4,7 +4,7 @@
 }
 
 #badge {
-  background-color:var(--plant-green);
+  background-color: #B2AC88;
 }
 
 #x {
@@ -19,7 +19,11 @@
 }
 
 .nav-item img:hover {
-  fill: var(--plant-green);
+  fill: #B2AC88;
   transform: scale(1.25);
   transition-delay: transform 1s;
+}
+
+.nav-item .dropdown-item:active {
+  background-color: #B2AC88;
 }

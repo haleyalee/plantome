@@ -4,6 +4,7 @@ import Drawer from '@material-ui/core/Drawer'
 import { Auth } from 'aws-amplify';
 
 // import icons
+import plant from '../images/seedling.png';
 import shoppingCart from '../images/icons/shopping-cart.svg';
 import userProfile from '../images/icons/user.svg';
 import search from '../images/icons/search.svg';
@@ -49,7 +50,7 @@ function Nav(props:Props):JSX.Element {
       <nav className="navbar navbar-expand-lg navbar-light">
 
         {/* Brand */}
-        <Link to="/" id="home" className="navbar-brand">🌱 plantome</Link>
+        <Link to="/" id="home" className="navbar-brand"><img src={plant} width="18px" height="18px"/> plantome</Link>
 
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>

@@ -75,7 +75,7 @@ function ReviewOrder(props:Props):JSX.Element {
   });
 
   return (
-    <div>
+    <div >
       <div className="shipment-box bg-light">
         <p>Delivery date: <strong>{deliveryDate}</strong> </p>
         <div>

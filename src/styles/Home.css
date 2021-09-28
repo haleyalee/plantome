@@ -2,6 +2,7 @@
   background-image: url('../images/jumbotron/jumbotron-3.jpg');
   background-size: 100% 100%;
   height: 75vh;
+  box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
 }
 
 .display-6 {
@@ -36,6 +37,36 @@
   border: 0.5px solid rgba(0,0,0,.125);
 }
 
-.btn:hover {
+.btn:hover, .btn-primary:focus, .btn-success:focus {
   color: white;
+}
+
+.btn-secondary, .btn-success {
+  color: white;
+}
+
+#plant-card, #company-card {
+  box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
+}
+
+#company-card {
+  background-color:rgba(178, 172, 136, 0.2)
+}
+
+.hoverToAdd {
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+
+  opacity: 0.9;
+  background-color: #fff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hoverToAdd .btn {
+  opacity: 1 !important;
+  z-index: 100;
 }

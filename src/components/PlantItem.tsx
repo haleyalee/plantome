@@ -1,4 +1,4 @@
-import React  from 'react'
+import React from 'react'
 
 import Plant from '../entities/plant';
 
@@ -28,7 +28,7 @@ function PlantItem(props:Props):JSX.Element {
         <button className="btn btn-secondary" style={{opacity: 1}} onClick={() => props.addToCart(props.plant)}>Add to Cart</button>
       </div> }
 
-      <div className="position-relative" onMouseOver={handleMouseOver}>
+      <div id="plant-card" className="position-relative" onMouseOver={handleMouseOver}>
         <img className="card-img-top" src={props.plant.image} alt={props.plant.name} width="200px" height="250px"/>
         <div className="card-body">
           <p className="card-title">{props.plant.name}</p>

@@ -1,3 +1,20 @@
+.accordion {
+  box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: rgba(178, 172, 136, 0.2);
+  color: black;
+}
+
+.accordion-button:not(.collapsed)::after {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-chevron-down' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");}
+
+.accordion-button:focus {
+  outline: #B2AC88 !important;
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px #B2AC88;
+}
+
 #checkout {
   display: flex;
   flex-direction: row;
@@ -21,6 +38,8 @@
   border: 0.5px solid rgba(0,0,0,0.125);
   height: 100%;
   margin-bottom: 2.5rem;
+  box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
+  background-color:rgba(178, 172, 136, 0.2) !important;
 }
 
 #street-extra, #city-state-zip {
@@ -52,6 +71,11 @@
   border-radius: 4px;
   border: 0.5px solid rgba(0,0,0,0.125);
   padding: 1rem;
+  box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
+}
+
+#order-alert {
+  box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
 }
 
 @media (min-width: 768px) { 

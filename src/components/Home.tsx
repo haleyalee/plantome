@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 
 // import external stylesheet
-// import '../styles/App.css';
+import '../styles/App.css';
 import '../styles/Home.css';
 import '../styles/scss/custom.css';
 

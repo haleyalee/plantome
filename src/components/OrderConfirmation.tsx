@@ -29,7 +29,7 @@ function OrderConfirmation(props:any):JSX.Element {
   return (
     <div className="container py-5">
       <h2 className="pb-3">Order Confirmation</h2>
-      <div className="alert alert-success mb-5" role="alert">
+      <div id="order-alert" className="alert alert-success mb-5" role="alert">
         Your order number <a id="order-history" role="button" onClick={switchToOrderHistory}><u>#100235</u></a> has been successfully placed!
       </div>
       <div>
