@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from  'react';
-// import { useQuery } from 'react-query';
 import {
   BrowserRouter as Router,
   Switch,
@@ -12,6 +11,7 @@ Amplify.configure(aws_exports);
 
 // import external stylesheets
 import '../styles/App.css';
+import '../styles/scss/custom.css';
 
 import Plant from '../entities/plant';
 
