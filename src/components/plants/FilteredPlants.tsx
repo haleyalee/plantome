@@ -28,7 +28,7 @@ function ShopFilteredPlants(props:Props):JSX.Element {
   return (
     <div className="container py-5">
       <h2 className="pb-4">{props.pageName}</h2>
-      <Grid container spacing={4}>
+      <Grid container spacing={4} id="plant-grid">
         { plants.map( (plant) => 
           plant.category.includes(props.pageName) 
           ?

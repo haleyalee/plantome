@@ -25,7 +25,7 @@ function SearchPlants(props:Props):JSX.Element {
         ?
         <div className="d-flex justify-content-center"><em>Try a new search query!</em></div>
         :
-        <Grid container spacing={4}>
+        <Grid container spacing={4} id="plant-grid">
           { props.searchResult.map( (plant) => 
             <Grid key={plant.id} item xs={12} sm={6} md={4} lg={3}>
               <PlantItem key={plant.id} plant={plant} addToCart={props.addToCart} />

@@ -47,7 +47,7 @@ function Nav(props:Props):JSX.Element {
 
   return (
     <div className="container py-2">
-      <nav className="navbar navbar-expand-lg navbar-light">
+      <nav className="navbar navbar-expand-sm navbar-light">
 
         {/* Brand */}
         <Link to="/" id="home" className="navbar-brand"><img src={plant} width="18px" height="18px"/> plantome</Link>
@@ -91,7 +91,7 @@ function Nav(props:Props):JSX.Element {
           </ul>
 
           {/* Icons */}
-          <ul className="navbar-nav ml-auto">
+          <ul id="nav-icons" className="navbar-nav ml-auto">
 
             {/* Search */}
             <li className="nav-item px-2">
