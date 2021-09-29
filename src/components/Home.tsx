@@ -3,6 +3,8 @@ import { withRouter } from 'react-router-dom';
 
 // import external stylesheet
 import '../styles/App.css';
+import '../styles/Home.css';
+import '../styles/scss/custom.css';
 
 // import context
 // import Plant from '../entities/plant';
@@ -23,10 +25,12 @@ function Home(props:any):JSX.Element {
     <div>
 
       {/* Jumbotron */}
-      <div id="jumbotron" className="jumbotron jumbotron-fluid bg-light py-5" style={{height: "60vh"}}>
+      <div id="jumbotron" className="jumbotron jumbotron-fluid bg-light py-5">
         <div className="container py-5">
-          <h1 className="display-6 pb-3">Any plant, right to your front door.</h1>
-          <p className="lead">Sign up now for 15% off your first order and monthly plant care tips.</p>
+          <h1 className="display-6 pb-3"><a>Any plant, right to your front door.</a></h1>
+          <div className="lead">
+            <a>Sign up now for 15% off your first order and monthly plant care tips.</a>
+          </div>
           <div className="d-flex flex-row pt-5">
             <div>
               <a className="btn btn-primary btn-lg" href="#" role="button" onClick={() => props.history.push('/signup')}>Sign Up</a>

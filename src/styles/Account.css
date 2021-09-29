@@ -2,6 +2,8 @@
   border: 0.5px solid rgba(0, 0, 0, .125);
   border-radius: 4px;
   height: 100%;
+  background-color:rgba(178, 172, 136, 0.2);
+  box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
   /* height: 75vh; */
   /* max-width: 30%; */
 }
@@ -14,10 +16,23 @@
   border-radius: 4px;
   display: flex;
   align-content: center;
+  box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
+}
+
+.menu-opt:hover {
+  transform: scale(1.05);
+  transition-delay: transform 1s;
 }
 
 .menu-opt h5 {
   margin: 0;
+}
+
+.acc-sub {
+  border: 0.5px solid rgba(0, 0, 0, .125);
+  border-radius: 4px;
+  padding: 1.5rem;
+  box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
 }
 
 @media (min-width: 768px) {

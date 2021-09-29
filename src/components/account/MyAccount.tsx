@@ -51,7 +51,7 @@ function MyAccount(props:Props):JSX.Element {
   return (
     <div>
       <h3 className="pb-4">My Account</h3>
-      <div className="mb-4">
+      <div className="acc-sub mb-4">
         <h5 className="mb-2">Account Details</h5>
         <div className="d-flex">
           <div className="d-flex flex-column">
@@ -64,7 +64,7 @@ function MyAccount(props:Props):JSX.Element {
           </div>
         </div>
       </div>
-      <div className="mb-4">
+      <div className="acc-sub mb-4">
         <h5 className="mb-2">Change password</h5>
         <form id="changePasswordForm" className="form d-flex flex-column needs-validation" noValidate onSubmit={handleSubmit}>
           <input 

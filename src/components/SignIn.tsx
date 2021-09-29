@@ -57,37 +57,39 @@ function SignIn(props:any):JSX.Element {
         <form id="signInForm" className="mx-auto" onSubmit={handleSubmit} >
           <div className="row g-3">
             <div className="col-12">
-              <label htmlFor="email" className="form-label">Email Address</label>
-              <input 
-                type="email" 
-                id="email" 
-                className="form-control" 
-                placeholder="Email Address"
-                value={email} 
-                onChange={(e)=>setEmail(e.target.value)} 
-                required 
-              />
-              <div className="invalid-feedback">
-                Please provide a valid email address.
+              <div className="form-floating">
+                <input 
+                  type="email" 
+                  id="email" 
+                  className="form-control" 
+                  placeholder="Email Address"
+                  value={email} 
+                  onChange={(e)=>setEmail(e.target.value)} 
+                  required 
+                />
+                <label htmlFor="email" className="form-label">Email Address</label>
               </div>
             </div>
           </div>
           <div className="row g-3">
             <div className="col-12">
-              <div className="d-flex justify-content-between">
+              <div className="form-floating">
+                <input 
+                  type="password" 
+                  id="password" 
+                  className="form-control" 
+                  placeholder="Password" 
+                  // pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                  value={password} 
+                  onChange={(e)=>setPassword(e.target.value)} 
+                  required 
+                />
                 <label htmlFor="password" className="form-label">Password</label>
-                <a role="button" onClick={switchToForgotPassword}><small><u>Forgot password?</u></small></a>
+                <div className="d-flex justify-content-between">
+                  <div></div>
+                  <a role="button" onClick={switchToForgotPassword}><small><u>Forgot password?</u></small></a>
+                </div>
               </div>
-              <input 
-                type="password" 
-                id="password" 
-                className="form-control" 
-                placeholder="Password" 
-                // pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                value={password} 
-                onChange={(e)=>setPassword(e.target.value)} 
-                required 
-              />
             </div>
           </div>
           <div className="row g-3">

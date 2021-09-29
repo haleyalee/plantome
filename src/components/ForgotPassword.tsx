@@ -75,31 +75,35 @@ function ForgotPassword(props:any):JSX.Element {
           <form id="resetPasswordForm" className="mx-auto needs-validation" noValidate onSubmit={handleSubmit}>
             <div className="row g-3">
               <div className="col-12">
-                <label htmlFor="confirmation" className="form-label ">Confirmation Code</label>
-                <input 
-                  id="confirmation" 
-                  className="form-control"
-                  type="text" 
-                  placeholder="Confirmation Code" 
-                  value={confirmationCode}
-                  onChange={(e) => setConfirmationCode(e.target.value)}
-                />
+                <div className="form-floating">
+                  <input 
+                    id="confirmation" 
+                    className="form-control"
+                    type="text" 
+                    placeholder="Confirmation Code" 
+                    value={confirmationCode}
+                    onChange={(e) => setConfirmationCode(e.target.value)}
+                  />
+                  <label htmlFor="confirmation" className="form-label ">Confirmation Code</label>
+                </div>
               </div>
             </div>
             <div className="row g-3">
               <div className="col-12">
-                <label htmlFor="newPassword" className="form-label ">New Password</label>
-                <input 
-                  id="newPassword" 
-                  className="form-control mb-3"
-                  type="password" 
-                  placeholder="New Password" 
-                  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                  value={newPassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
-                />
-                <div className="invalid-feedback">
-                  A valid password must contain at least one number, one uppercase and one lowercase letter, and at least 8 or more characters.
+                <div className="form-floating">
+                  <input 
+                    id="newPassword" 
+                    className="form-control mb-3"
+                    type="password" 
+                    placeholder="New Password" 
+                    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                  />
+                  <label htmlFor="newPassword" className="form-label ">New Password</label>
+                  <div className="invalid-feedback">
+                    A valid password must contain at least one number, one uppercase and one lowercase letter, and at least 8 or more characters.
+                  </div>
                 </div>
               </div>
             </div>
@@ -120,15 +124,18 @@ function ForgotPassword(props:any):JSX.Element {
           <form id="forgotPasswordForm" className="mx-auto" onSubmit={handleSubmit}>
             <div className="row g-3">
               <div className="col-12">
-                <label htmlFor="email" className="form-label">Please enter the email associated with your account</label>
-                <input 
-                  id="email" 
-                  className="form-control" 
-                  type="text" 
-                  placeholder="Email" 
-                  value={email} 
-                  onChange={(e)=>setEmail(e.target.value)} 
-                />
+                <label className="form-label">Please enter the email associated with your account</label>
+                <div className="form-floating">
+                  <input 
+                    id="email" 
+                    className="form-control" 
+                    type="text" 
+                    placeholder="Email" 
+                    value={email} 
+                    onChange={(e)=>setEmail(e.target.value)} 
+                  />
+                  <label htmlFor="email" className="form-label">Email Address</label>
+                </div>
               </div>
             </div>
             <div className="row g-3">

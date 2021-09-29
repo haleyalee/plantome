@@ -65,7 +65,7 @@ function Account(props:any) {
       
       <div className="row pt-0">
         
-        <div id="account-menu" className="col-xs-12 col-md-4 col-lg-3 bg-light py-4">
+        <div id="account-menu" className="col-xs-12 col-md-4 col-lg-3 py-4">
           <h3 className="pb-4">Hello, {fname} 🌱</h3>
           <div id="my-account-opt" className="menu-opt" role="button" onClick={() => switchView('my-account')}>
             <h5>My Account</h5>
@@ -90,7 +90,7 @@ function Account(props:any) {
           ?
           <div id="order-history">
             <h3 className="pb-4">Order History</h3>
-            { (props.cart.length === 0) ? <div></div> : <ReviewOrder cart={props.cart} />  }
+            { (props.cart.length === 0) ? <div><em>No order history yet</em></div> : <ReviewOrder cart={props.cart} />  }
           </div>
           :
           <div></div>

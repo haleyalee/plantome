@@ -12,3 +12,18 @@
   right: 15px;
   left: auto;
 }
+
+#home:hover {
+  transform: scale(1.1);
+  transition-delay: transform 1s;
+}
+
+.nav-item img:hover {
+  fill: #B2AC88;
+  transform: scale(1.25);
+  transition-delay: transform 1s;
+}
+
+.nav-item .dropdown-item:active {
+  background-color: #B2AC88;
+}
