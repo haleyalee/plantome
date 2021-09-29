@@ -27,3 +27,26 @@
 .nav-item .dropdown-item:active {
   background-color: #B2AC88;
 }
+
+@media (max-width: 576px) {
+  .navbar-collapse {
+    /* padding-top: 1rem; */
+    /* padding-left: 1.5rem; */
+    padding: 1rem 1.5rem;
+    display: flex;
+    flex-direction: row;
+  }
+
+  #nav-icons {
+    display: flex;
+    flex-direction: row;
+  }
+
+  #nav-icons li {
+    margin-left: 1rem;
+  }
+
+  #badge {
+    margin-left: 0.4em;
+  }
+}

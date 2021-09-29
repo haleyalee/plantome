@@ -78,6 +78,12 @@
   box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
 }
 
+@media (max-width: 576px) {
+  #checkout {
+    padding: 1rem;
+  }
+}
+
 @media (min-width: 768px) { 
   
   #street-extra, #city-state-zip {

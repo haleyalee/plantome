@@ -27,7 +27,7 @@ function ShopPlants(props:Props):JSX.Element {
   return (
     <div className="container py-5">
       <h2 className="pb-4">All Plants</h2>
-      <Grid container spacing={4}>
+      <Grid container spacing={4} id="plant-grid">
         { plants.map( (plant) => 
           <Grid key={plant.id} item xs={12} sm={6} md={4} lg={3}>
             <PlantItem key={plant.id} plant={plant} addToCart={props.addToCart} />

@@ -70,3 +70,21 @@
   opacity: 1 !important;
   z-index: 100;
 }
+
+@media (max-width: 768px) {
+  .display-6, .lead {
+    line-height: 2;
+  }
+
+  #company-card {
+    margin-bottom: 1rem;
+  }
+
+}
+
+@media (max-width: 589px) {
+  #plant-grid {
+    width: 85%;
+    margin: auto;
+  }
+}
