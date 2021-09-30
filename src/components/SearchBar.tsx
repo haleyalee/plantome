@@ -16,7 +16,7 @@ function SearchBar(props:Props):JSX.Element {
   const { plants, setPlants } = useContext(AppContext);
 
   useEffect(() => {
-    fetch('https://knyxsiqbhk.execute-api.us-east-2.amazonaws.com/Prod/plants')
+    fetch('https://szhy1liq97.execute-api.us-east-2.amazonaws.com/Prod/plants')
     .then( response => response.json())
     .then( plnts => plnts.map( ( plant:Plant, index:number) => { plant._id = index+1; return plant}))
     .then( plnts => setPlants(plnts))
