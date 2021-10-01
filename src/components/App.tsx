@@ -29,6 +29,8 @@ import ForgotPassword from './ForgotPassword';
 import Account from './Account';
 import Checkout from './Checkout';
 import OrderConfirmation from './OrderConfirmation';
+import AddPlant from './AddPlant';
+import NotFound from './NotFound';
 
 
 export type CartItemType = {
@@ -52,9 +54,23 @@ function App():JSX.Element {
   useEffect(() => {
     Auth.currentSession()
     .then(() => setSignedIn(true))
-    .catch((error) => console.log(`Error: ${error}`))
+    .catch((error) => console.log(`No current session: ${error}`))
   });
   
+  // User Authorization
+  const [isAdmin, setIsAdmin] = useState(false);
+  
+  useEffect(()=> {
+    Auth.currentAuthenticatedUser()
+    .then((user) => { 
+      const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
+      if (groups.includes('admin')) {
+        setIsAdmin(true);
+      }
+    })
+    .catch((error) => console.log(`Error: ${error}`))
+  }, [setIsAdmin]);
+
   // Shopping Cart
   const [cart, setCart] = useState<Plant[]>([]);
 
@@ -161,6 +177,11 @@ function App():JSX.Element {
           <Route path="/checkout">
             <Checkout cart={cart} emptyCart={emptyCart} signedIn={signedIn} handleSignIn={handleSignIn} handlePlacedOrder={handlePlacedOrder}/>
           </Route>
+          <Route exact path="/admin/add-plant">
+            { (isAdmin) ? <AddPlant /> : <NotFound /> }
+          </Route>
+          <Route exact path="/admin/edit-plant/{id}"></Route>
+          <Route path="/admin"></Route>
         </Switch>
       </Router>
     </div>

@@ -22,5 +22,29 @@
         }
       }
     }
+  },
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-plantome-dev-164348-authRole",
+      "UnauthRoleArn": "arn:aws:iam::516406820790:role/amplify-plantome-dev-164348-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::516406820790:role/amplify-plantome-dev-164348-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-plantome-dev-164348-deployment",
+      "UnauthRoleName": "amplify-plantome-dev-164348-unauthRole",
+      "StackName": "amplify-plantome-dev-164348",
+      "StackId": "arn:aws:cloudformation:us-east-2:516406820790:stack/amplify-plantome-dev-164348/1ecd6fb0-222f-11ec-bcc0-0ae5c0f80fca",
+      "AmplifyAppId": "d3rrpv56jryuog"
+    },
+    "categories": {
+      "auth": {
+        "plantomeb4bc39f2": {}
+      },
+      "function": {
+        "AdminQueriesb5682ed5": {
+          "deploymentBucketName": "amplify-plantome-dev-164348-deployment",
+          "s3Key": "amplify-builds/AdminQueriesb5682ed5-4432373744362b434a31-build.zip"
+        }
+      }
+    }
   }
 }

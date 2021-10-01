@@ -1,0 +1,34 @@
+.form-check-input:checked {
+  background-color: #B2AC88;
+  border-color: #B2AC88;
+}
+
+.form-check-input:focus {
+  border-color: #B2AC88;
+}
+
+.input-group-text {
+  background-color:rgba(178, 172, 136, 0.2) !important;
+}
+
+#add-plant {
+  width: 60%;
+  margin-right: 3rem;
+}
+
+#plant-preview {
+  width: 40%;
+}
+
+#plant-preview img {
+  min-width: 200px;
+  max-width: 200px;
+}
+
+@media (max-width: 992px) {
+  #add-plant, #plant-preview {
+    margin-right: 0;
+    margin-bottom: 3rem;
+    width: 100%;
+  }
+}
