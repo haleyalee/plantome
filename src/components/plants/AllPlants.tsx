@@ -9,6 +9,7 @@ import PlantItem from './../PlantItem';
 import Plant from '../../entities/plant';
 
 type Props = {
+  isAdmin: boolean,
   addToCart: (item:Plant)=>void
 }
 
@@ -30,7 +31,7 @@ function ShopPlants(props:Props):JSX.Element {
       <Grid container spacing={4} id="plant-grid">
         { plants.map( (plant) => 
           <Grid key={plant.id} item xs={12} sm={6} md={4} lg={3}>
-            <PlantItem key={plant.id} plant={plant} addToCart={props.addToCart} />
+            <PlantItem key={plant.id} isAdmin={props.isAdmin} plant={plant} addToCart={props.addToCart} />
           </Grid>
         ) }
       </Grid>

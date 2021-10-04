@@ -31,6 +31,7 @@ import Checkout from './Checkout';
 import OrderConfirmation from './OrderConfirmation';
 import AddPlant from './AddPlant';
 import NotFound from './NotFound';
+import EditPlant from './EditPlant';
 
 
 export type CartItemType = {
@@ -133,25 +134,25 @@ function App():JSX.Element {
         <Nav cart={cart} signedIn={signedIn} handleSignIn={handleSignIn} addToCart={handleAddToCart} removeFromCart={handleRemoveFromCart} search={searchPlants} />
         <Switch>
           <Route exact path="/">
-            <Home addToCart={handleAddToCart}/>
+            <Home isAdmin={isAdmin} addToCart={handleAddToCart}/>
           </Route>
           <Route exact path="/plants/search">
-            <SearchPlants search={searchPlants} searchResult={searchResult} addToCart={handleAddToCart} />
+            <SearchPlants isAdmin={isAdmin} search={searchPlants} searchResult={searchResult} addToCart={handleAddToCart} />
           </Route>
           <Route exact path="/plants/best-seller">
-            <FilteredPlants pageName={"Best Seller"} addToCart={handleAddToCart} />
+            <FilteredPlants isAdmin={isAdmin} pageName={"Best Seller"} addToCart={handleAddToCart} />
           </Route>
           <Route exact path="/plants/beginner">
-            <FilteredPlants pageName={"Beginner"} addToCart={handleAddToCart} />
+            <FilteredPlants isAdmin={isAdmin} pageName={"Beginner"} addToCart={handleAddToCart} />
           </Route>
           <Route exact path="/plants/low-maintenance">
-            <FilteredPlants pageName={"Low Maintenance"} addToCart={handleAddToCart} />
+            <FilteredPlants isAdmin={isAdmin} pageName={"Low Maintenance"} addToCart={handleAddToCart} />
           </Route>
           <Route exact path="/plants/tropical">
-            <FilteredPlants pageName={"Tropical"} addToCart={handleAddToCart} />
+            <FilteredPlants isAdmin={isAdmin} pageName={"Tropical"} addToCart={handleAddToCart} />
           </Route>
           <Route path="/plants">
-            <AllPlants addToCart={handleAddToCart}/>
+            <AllPlants isAdmin={isAdmin} addToCart={handleAddToCart}/>
           </Route>
           <Route path="/about">
             <About />
@@ -180,7 +181,9 @@ function App():JSX.Element {
           <Route exact path="/admin/add-plant">
             { (isAdmin) ? <AddPlant /> : <NotFound /> }
           </Route>
-          <Route exact path="/admin/edit-plant/{id}"></Route>
+          <Route exact path="/admin/edit-plant/:id">
+            <EditPlant />
+          </Route>
           <Route path="/admin"></Route>
         </Switch>
       </Router>
