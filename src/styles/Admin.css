@@ -11,7 +11,7 @@
   background-color:rgba(178, 172, 136, 0.2) !important;
 }
 
-#add-plant {
+#addedit-plant {
   width: 60%;
   margin-right: 3rem;
 }
@@ -26,7 +26,7 @@
 }
 
 @media (max-width: 992px) {
-  #add-plant, #plant-preview {
+  #addedit-plant, #plant-preview {
     margin-right: 0;
     margin-bottom: 3rem;
     width: 100%;
