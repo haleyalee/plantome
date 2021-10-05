@@ -67,7 +67,7 @@ function AddressForm(props:Props):JSX.Element {
         </div>
         <div id="state" className="form-floating">
           <select id={props.stateId} className="form-select" value={props.state} onChange={(e)=>props.setState(e.target.value)} required>
-            <option selected disabled value="">Select state...</option>
+            <option disabled value="">Select state...</option>
             <option value="AL">Alabama</option>
             <option value="AK">Alaska</option>
             <option value="AZ">Arizona</option>

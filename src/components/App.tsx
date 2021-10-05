@@ -4,6 +4,9 @@ import {
   Switch,
   Route
 } from 'react-router-dom';
+import {Elements} from '@stripe/react-stripe-js';
+import {loadStripe} from '@stripe/stripe-js';
+
 import Amplify from 'aws-amplify';
 import aws_exports from '../aws-exports';
 import { Auth } from 'aws-amplify';
@@ -79,7 +82,7 @@ function App(props:any):JSX.Element {
     Auth.currentAuthenticatedUser()
     .then((user) => { 
       const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
-      if (groups.includes('admin')) {
+      if (groups && groups.includes('admin')) {
         setIsAdmin(true);
       }
     })
@@ -108,24 +111,11 @@ function App(props:any):JSX.Element {
   };
 
   const handleRemoveFromCart = (item:Plant) => {
-    // set item quantity to 0
     item.quantity = 0;
-    
-    // remove item from cart
-    setCart((currentCart) => {
-      const idxItem = currentCart.findIndex((cartItem) => cartItem.id === item.id);
-
-      if (idxItem === -1) {
-        return currentCart;
-      }
-
-      return [
-        ...currentCart.slice(0, idxItem),
-        ...currentCart.slice(idxItem + 1),
-      ];
-    });
-    console.log(cart)
+    setCart((currentCart) => currentCart.filter((cartItem) => cartItem.id !== item.id));
   }
+
+  const [stripePromise] = useState(() => loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx'));
 
   // Search
   const [searchResult, setSearchResult] = useState<Plant[]>([]);
@@ -177,7 +167,9 @@ function App(props:any):JSX.Element {
             { (placedOrder) ? <OrderConfirmation cart={checkOutCart} signedIn={signedIn} /> : <Home addToCart={handleAddToCart} /> }
           </Route>
           <Route path="/checkout">
-            <Checkout cart={cart} emptyCart={emptyCart} signedIn={signedIn} handleSignIn={handleSignIn} handlePlacedOrder={handlePlacedOrder}/>
+            <Elements stripe={stripePromise}>
+              <Checkout cart={cart} emptyCart={emptyCart} signedIn={signedIn} handleSignIn={handleSignIn} handlePlacedOrder={handlePlacedOrder}/>
+            </Elements>
           </Route>
 
         </Switch>
