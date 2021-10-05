@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Auth } from 'aws-amplify';
 import { withRouter } from 'react-router-dom';
+import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 
 // import styles
 import '../styles/Checkout.css';
@@ -63,16 +64,33 @@ function Checkout(props:any):JSX.Element {
   const [useAsBilling,   setUseAsBilling] = useState(false);
 
   // Payment Details
-  const [cardType, setCardType] = useState('');
+  // const [cardType, setCardType] = useState('');
   const [cardName, setCardName] = useState('');
-  const [cardNum,  setCardNum] = useState('');
-  const [cardExp,  setCardExp] = useState('');
-  const [cardCVV,  setCardCVV] = useState('');
+  // const [cardNum,  setCardNum] = useState('');
+  // const [cardExp,  setCardExp] = useState('');
+  // const [cardCVV,  setCardCVV] = useState('');
   const [billAddrStreet, setBillAddrStreet] = useState('');
   const [billAddrExtra,  setBillAddrExtra] = useState('');
   const [billAddrCity,   setBillAddrCity] = useState('');
   const [billAddrState,  setBillAddrState] = useState('');
   const [billAddrZip,    setBillAddrZip] = useState('');
+
+  // Stripe
+  const options = {
+    hidePostalCode: true,
+    style: {
+      base: {
+        fontSize: '16px',
+        fontFamily: 'Segoe UI'
+      },
+      invalid: {
+        color: '#9e2146',
+      },
+    },
+  };
+
+  const stripe = useStripe();
+  const elements = useElements();
 
   // Order Summary
   const [subtotal, setSubtotal] = useState(0);
@@ -114,23 +132,37 @@ function Checkout(props:any):JSX.Element {
     }
   }
   
-  const handlePlaceOrder = (e:React.SyntheticEvent) => {
+  const handlePlaceOrder = async (e:React.SyntheticEvent) => {
     e.preventDefault();
-    
-    // form validation
-    const form = document.getElementById("checkoutForm") as HTMLFormElement;
-    if (!form.checkValidity()) {
-      e.preventDefault()
-      e.stopPropagation()
-    }
-    else {
-      console.log("Successfully placed order");
-      props.handlePlacedOrder();
-      props.emptyCart();
-      props.history.push('/checkout/order-confirmation');
-    }
-    form.classList.add('was-validated');
 
+    if (!stripe || !elements) return;
+
+    // eslint-disable-next-line
+    const cardElement = elements.getElement(CardElement)!;
+    const {error, paymentMethod} = await stripe.createPaymentMethod({
+      type: "card",
+      card: cardElement
+    });
+
+    if (error) {
+      console.log('[error]', error);
+    } else {
+      console.log('[PaymentMethod]', paymentMethod);
+      
+      // form validation
+      const form = document.getElementById("checkoutForm") as HTMLFormElement;
+      if (!form.checkValidity()) {
+        e.preventDefault()
+        e.stopPropagation()
+      }
+      else {
+        console.log("Successfully placed order");
+        props.handlePlacedOrder();
+        props.emptyCart();
+        props.history.push('/checkout/order-confirmation');
+      }
+      form.classList.add('was-validated');
+    }
 
   }
 
@@ -275,7 +307,7 @@ function Checkout(props:any):JSX.Element {
                     <div id="payment-details" >
                       <div className="d-flex flex-column mb-3">
                         <label className="form-label">Card Information</label>
-                        <div className="form-floating mb-3">
+                        {/* <div className="form-floating mb-3">
                           <select id="cardType" className="form-select" value={cardType} onChange={(e)=>setCardType(e.target.value)} required>
                             <option selected disabled value="">Select card type...</option>
                             <option value="Visa">Visa</option>
@@ -287,7 +319,7 @@ function Checkout(props:any):JSX.Element {
                           <div className="invalid-feedback">
                             Please select a card type.
                           </div>
-                        </div>
+                        </div> */}
                         <div className="form-floating mb-3">
                           <input 
                             id="cardName" 
@@ -303,8 +335,11 @@ function Checkout(props:any):JSX.Element {
                             Please provide a cardholder name.
                           </div>
                         </div>
+                        <div className="form-control px-2 py-3" >
+                          <CardElement options={options} />
+                        </div>
                         <div id="card-info" className="d-flex">
-                          <div id="divCardNum" className="form-floating mb-3">
+                          {/* <div id="divCardNum" className="form-floating mb-3">
                             <input 
                               id="cardNum" 
                               type="text" 
@@ -350,7 +385,7 @@ function Checkout(props:any):JSX.Element {
                                 Please provide the card CVV.
                               </div>
                             </div>
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                       <div className="d-flex flex-column mb-3">
