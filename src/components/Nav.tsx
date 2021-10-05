@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import Drawer from '@material-ui/core/Drawer'
 import { Auth } from 'aws-amplify';
 
@@ -15,18 +15,19 @@ import '../styles/Nav.css';
 
 // import components
 import ShoppingCart from './ShoppingCart';
-import Plant from '../entities/plant';
+// import Plant from '../entities/plant';
 
-type Props = {
-  cart: Plant[],
-  handleSignIn: (state:boolean)=>void,
-  signedIn: boolean,
-  addToCart: (item:Plant)=>void,
-  removeFromCart: (item:Plant)=>void,
-  search: (results:Plant[])=>void
-}
+// type Props = {
+//   cart: Plant[],
+//   handleSignIn: (state:boolean)=>void,
+//   signedIn: boolean,
+//   addToCart: (item:Plant)=>void,
+//   removeFromCart: (item:Plant)=>void,
+//   search: (results:Plant[])=>void
+// }
 
-function Nav(props:Props):JSX.Element {
+// eslint-disable-next-line
+function Nav(props:any):JSX.Element {
 
   // Shopping Cart Drawer
   const [cartOpen, setCartOpen] = useState(false);
@@ -43,6 +44,8 @@ function Nav(props:Props):JSX.Element {
       props.handleSignIn(false);
     })
     .catch((error) => console.log(`Error signing out: ${error.message}`))
+
+    props.history.push('/signin');
   }
 
   return (
@@ -145,4 +148,4 @@ function Nav(props:Props):JSX.Element {
   )
 }
 
-export default Nav
+export default withRouter(Nav);

@@ -62,6 +62,7 @@ function App():JSX.Element {
 
   const handleSignIn = (state:boolean) => {
     setSignedIn(state);
+    setIsAdmin(false);
   }
 
   useEffect(() => {
@@ -82,7 +83,7 @@ function App():JSX.Element {
       }
     })
     .catch((error) => console.log(`Error: ${error}`))
-  }, [setIsAdmin]);
+  }, [signedIn]);
 
   // Shopping Cart
   const [cart, setCart] = useState<Plant[]>([]);
