@@ -1,7 +1,6 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { withRouter } from 'react-router-dom';
 
-import { AdminContext } from '../contexts';
 // import Plant from '../entities/plant';
 
 // type Props = {
@@ -14,8 +13,6 @@ import { AdminContext } from '../contexts';
 
 // eslint-disable-next-line
 function PlantItem(props:any):JSX.Element {
-
-  const { isAdmin } = useContext(AdminContext);
 
   // const [isHovering, setIsHovering] = useState(false);
 
@@ -51,15 +48,7 @@ function PlantItem(props:any):JSX.Element {
           <p className="card-text">${props.plant.price.toFixed(2)}</p>
         </div>
         <div>
-          { (isAdmin)
-            ?
-            <div className="d-flex justify-content-between px-4">
-              <button id="editBtn" className="btn btn-secondary mb-3" onClick={()=>props.history.push(`/admin/edit-plant/${props.plant.id}`)}>Edit Plant</button>
-              <button id="addToCartBtn" className="btn btn-outline-secondary mb-3" style={{opacity: 1}} onClick={()=>props.addToCart(props.plant)}>Add to Cart</button>
-            </div>
-            :
-            <button id="addToCartBtn" className="btn btn-outline-secondary mb-3" style={{opacity: 1}} onClick={()=>props.addToCart(props.plant)}>Add to Cart</button>
-          }
+          <button id="addToCartBtn" className="btn btn-outline-secondary mb-3" style={{opacity: 1}} onClick={()=>props.addToCart(props.plant)}>Add to Cart</button>
         </div>
       </div>
     </div>

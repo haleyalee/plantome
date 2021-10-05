@@ -45,7 +45,8 @@ export type CartItemType = {
   image: string
 }
 
-function App():JSX.Element {
+// eslint-disable-next-line
+function App(props:any):JSX.Element {
 
   // Plants Context
   const {setPlants} = useContext(AppContext);
@@ -146,60 +147,39 @@ function App():JSX.Element {
       <Router >
         <Nav cart={cart} signedIn={signedIn} handleSignIn={handleSignIn} addToCart={handleAddToCart} removeFromCart={handleRemoveFromCart} search={searchPlants} />
         <Switch>
-          <Route exact path="/">
-            <Home addToCart={handleAddToCart}/>
-          </Route>
-          <Route exact path="/plants/search">
-            <SearchPlants search={searchPlants} searchResult={searchResult} addToCart={handleAddToCart} />
-          </Route>
-          <Route exact path="/plants/best-seller">
-            <FilteredPlants pageName={"Best Seller"} addToCart={handleAddToCart} />
-          </Route>
-          <Route exact path="/plants/beginner">
-            <FilteredPlants pageName={"Beginner"} addToCart={handleAddToCart} />
-          </Route>
-          <Route exact path="/plants/low-maintenance">
-            <FilteredPlants pageName={"Low Maintenance"} addToCart={handleAddToCart} />
-          </Route>
-          <Route exact path="/plants/tropical">
-            <FilteredPlants pageName={"Tropical"} addToCart={handleAddToCart} />
-          </Route>
-          <Route path="/plants">
-            <AllPlants addToCart={handleAddToCart}/>
-          </Route>
-          <Route path="/about">
-            <About />
-          </Route>
-          <Route path="/contact">
-            <Contact />
-          </Route>
-          <Route path="/signup">
-            <SignUp handleSignIn={handleSignIn} />
-          </Route>
-          <Route exact path="/signin/forgotpassword">
-            <ForgotPassword />
-          </Route>
-          <Route path="/signin">
-            <SignIn handleSignIn={handleSignIn}/>
-          </Route>
+          <Route exact path="/"><Home addToCart={handleAddToCart}/></Route>
+          <Route exact path="/plants/search"><SearchPlants search={searchPlants} searchResult={searchResult} addToCart={handleAddToCart} /></Route>
+          
+          <Route exact path="/plants/best-seller"><FilteredPlants pageName={"Best Seller"} addToCart={handleAddToCart} /></Route>
+          <Route exact path="/plants/beginner"><FilteredPlants pageName={"Beginner"} addToCart={handleAddToCart} /></Route>
+          <Route exact path="/plants/low-maintenance"><FilteredPlants pageName={"Low Maintenance"} addToCart={handleAddToCart} /></Route>
+          <Route exact path="/plants/tropical"><FilteredPlants pageName={"Tropical"} addToCart={handleAddToCart} /></Route>
+          <Route path="/plants"><AllPlants addToCart={handleAddToCart}/></Route>
+          
+          <Route path="/about"><About /></Route>
+          <Route path="/contact"><Contact /></Route>
+
+          <Route path="/signup"><SignUp handleSignIn={handleSignIn} /></Route>
+          <Route exact path="/signin/forgotpassword"><ForgotPassword /></Route>
+          <Route path="/signin"><SignIn handleSignIn={handleSignIn}/></Route>
+
           <Route path="/account">
-            { (signedIn) ? (isAdmin) ? <Admin /> : <Account handleSignIn={handleSignIn} cart={checkOutCart} /> : <SignIn handleSignIn={handleSignIn} /> }
+            { (signedIn) 
+              ? <Account handleSignIn={handleSignIn} cart={checkOutCart} /> 
+              : <SignIn handleSignIn={handleSignIn} /> 
+            }
           </Route>
+          <Route exact path="/admin/add-plant">{ (isAdmin) ? <AddPlant /> : <NotFound /> }</Route>
+          <Route exact path="/admin/edit-plant/:id"><EditPlant /></Route>
+          <Route exact path="/admin"><Admin /></Route>
+
           <Route exact path ="/checkout/order-confirmation">
             { (placedOrder) ? <OrderConfirmation cart={checkOutCart} signedIn={signedIn} /> : <Home addToCart={handleAddToCart} /> }
           </Route>
           <Route path="/checkout">
             <Checkout cart={cart} emptyCart={emptyCart} signedIn={signedIn} handleSignIn={handleSignIn} handlePlacedOrder={handlePlacedOrder}/>
           </Route>
-          <Route exact path="/admin/add-plant">
-            { (isAdmin) ? <AddPlant /> : <NotFound /> }
-          </Route>
-          <Route exact path="/admin/edit-plant/:id">
-            <EditPlant />
-          </Route>
-          <Route path="/admin">
-            <Admin />
-          </Route>
+
         </Switch>
       </Router>
     </div>

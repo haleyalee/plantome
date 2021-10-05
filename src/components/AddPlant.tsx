@@ -30,7 +30,7 @@ function AddPlant(props:any):JSX.Element {
 
     const newPlants = [...plants, plant];
     setPlants(newPlants);
-    props.history.push('/plants');
+    props.history.push('/admin');
   };
 
   return (

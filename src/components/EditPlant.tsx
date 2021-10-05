@@ -34,7 +34,7 @@ function EditPlant(props:any):JSX.Element {
     const newPlants = [...plants.slice(0,idxPlant), plant, ...plants.slice(idxPlant+1)]
     setPlants(newPlants);
 
-    props.history.push('/plants');
+    props.history.push('/admin');
   };
 
   const deletePlant = () => {
@@ -51,7 +51,7 @@ function EditPlant(props:any):JSX.Element {
     const newPlants = plants.filter(plant => plant.id !== id);
     setPlants(newPlants);
 
-    props.history.push('/plants');
+    props.history.push('/admin');
   };
 
   return (
