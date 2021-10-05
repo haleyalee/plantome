@@ -25,7 +25,7 @@ function PlantItem(props:any):JSX.Element {
   // };
 
   return (
-    <div className="card text-center" >
+    <div className="plant-card card text-center" >
       
       {/* Hover to show add to cart button */}
       {/* { isHovering && 

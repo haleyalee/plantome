@@ -37,6 +37,7 @@ import AddPlant from './AddPlant';
 import NotFound from './NotFound';
 import EditPlant from './EditPlant';
 import Admin from './account/Admin';
+import Footer from './Footer';
 
 
 export type CartItemType = {
@@ -173,6 +174,7 @@ function App(props:any):JSX.Element {
           </Route>
 
         </Switch>
+        <Footer />
       </Router>
     </div>
   );
