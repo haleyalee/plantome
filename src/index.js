@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import './styles/index.css';
 import App from './components/App';
 import PlantContextProvider from './contexts/PlantContextProvider';
+import AdminContextProvider from './contexts/AdminContextProvider';
 
 // const client = new QueryClient();
 
@@ -11,7 +12,9 @@ ReactDOM.render(
   // <QueryClientProvider client={client}>
   <React.StrictMode>
     <PlantContextProvider>
-    <App />
+      <AdminContextProvider>
+        <App />
+      </AdminContextProvider>
     </PlantContextProvider>
   </React.StrictMode>,
   // </QueryClientProvider>,

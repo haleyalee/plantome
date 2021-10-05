@@ -51,9 +51,8 @@ function Home(props:any):JSX.Element {
         </div>
       </div>
 
-
       {/* Best Sellers */}
-      <FilteredPlants isAdmin={props.isAdmin} pageName={"Best Seller"} addToCart={props.addToCart} />
+      <FilteredPlants pageName={"Best Seller"} addToCart={props.addToCart} />
       
     </div>
   );

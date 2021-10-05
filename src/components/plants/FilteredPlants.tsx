@@ -10,8 +10,7 @@ import Plant from '../../entities/plant';
 
 type Props = {
   pageName: string,
-  addToCart: (item:Plant)=>void,
-  isAdmin: boolean
+  addToCart: (item:Plant)=>void
 }
 
 function ShopFilteredPlants(props:Props):JSX.Element {
@@ -33,7 +32,7 @@ function ShopFilteredPlants(props:Props):JSX.Element {
           plant.category.includes(props.pageName) 
           ?
           <Grid key={plant.id} item xs={12} sm={6} md={4} lg={3}>
-            <PlantItem key={plant.id} isAdmin={props.isAdmin} plant={plant} addToCart={props.addToCart} />
+            <PlantItem key={plant.id} plant={plant} addToCart={props.addToCart} />
           </Grid>
           :
           <div key={plant.id}></div>

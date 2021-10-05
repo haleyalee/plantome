@@ -13,7 +13,7 @@ Amplify.configure(aws_exports);
 import '../styles/App.css';
 import '../styles/scss/custom.css';
 
-import AppContext from '../contexts';
+import AppContext, { AdminContext } from '../contexts';
 import Plant from '../entities/plant';
 
 // import components
@@ -33,6 +33,7 @@ import OrderConfirmation from './OrderConfirmation';
 import AddPlant from './AddPlant';
 import NotFound from './NotFound';
 import EditPlant from './EditPlant';
+import Admin from './account/Admin';
 
 
 export type CartItemType = {
@@ -70,7 +71,7 @@ function App():JSX.Element {
   });
   
   // User Authorization
-  const [isAdmin, setIsAdmin] = useState(false);
+  const {isAdmin, setIsAdmin} = useContext(AdminContext);
   
   useEffect(()=> {
     Auth.currentAuthenticatedUser()
@@ -145,25 +146,25 @@ function App():JSX.Element {
         <Nav cart={cart} signedIn={signedIn} handleSignIn={handleSignIn} addToCart={handleAddToCart} removeFromCart={handleRemoveFromCart} search={searchPlants} />
         <Switch>
           <Route exact path="/">
-            <Home isAdmin={isAdmin} addToCart={handleAddToCart}/>
+            <Home addToCart={handleAddToCart}/>
           </Route>
           <Route exact path="/plants/search">
-            <SearchPlants isAdmin={isAdmin} search={searchPlants} searchResult={searchResult} addToCart={handleAddToCart} />
+            <SearchPlants search={searchPlants} searchResult={searchResult} addToCart={handleAddToCart} />
           </Route>
           <Route exact path="/plants/best-seller">
-            <FilteredPlants isAdmin={isAdmin} pageName={"Best Seller"} addToCart={handleAddToCart} />
+            <FilteredPlants pageName={"Best Seller"} addToCart={handleAddToCart} />
           </Route>
           <Route exact path="/plants/beginner">
-            <FilteredPlants isAdmin={isAdmin} pageName={"Beginner"} addToCart={handleAddToCart} />
+            <FilteredPlants pageName={"Beginner"} addToCart={handleAddToCart} />
           </Route>
           <Route exact path="/plants/low-maintenance">
-            <FilteredPlants isAdmin={isAdmin} pageName={"Low Maintenance"} addToCart={handleAddToCart} />
+            <FilteredPlants pageName={"Low Maintenance"} addToCart={handleAddToCart} />
           </Route>
           <Route exact path="/plants/tropical">
-            <FilteredPlants isAdmin={isAdmin} pageName={"Tropical"} addToCart={handleAddToCart} />
+            <FilteredPlants pageName={"Tropical"} addToCart={handleAddToCart} />
           </Route>
           <Route path="/plants">
-            <AllPlants isAdmin={isAdmin} addToCart={handleAddToCart}/>
+            <AllPlants addToCart={handleAddToCart}/>
           </Route>
           <Route path="/about">
             <About />
@@ -181,7 +182,7 @@ function App():JSX.Element {
             <SignIn handleSignIn={handleSignIn}/>
           </Route>
           <Route path="/account">
-            { (signedIn) ? <Account handleSignIn={handleSignIn} cart={checkOutCart} /> : <SignIn handleSignIn={handleSignIn} /> }
+            { (signedIn) ? (isAdmin) ? <Admin /> : <Account handleSignIn={handleSignIn} cart={checkOutCart} /> : <SignIn handleSignIn={handleSignIn} /> }
           </Route>
           <Route exact path ="/checkout/order-confirmation">
             { (placedOrder) ? <OrderConfirmation cart={checkOutCart} signedIn={signedIn} /> : <Home addToCart={handleAddToCart} /> }
@@ -195,7 +196,9 @@ function App():JSX.Element {
           <Route exact path="/admin/edit-plant/:id">
             <EditPlant />
           </Route>
-          <Route path="/admin"></Route>
+          <Route path="/admin">
+            <Admin />
+          </Route>
         </Switch>
       </Router>
     </div>
