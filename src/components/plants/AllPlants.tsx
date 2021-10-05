@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import { withRouter } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 
@@ -17,14 +17,14 @@ import PlantItem from './../PlantItem';
 // eslint-disable-next-line
 function ShopPlants(props:any):JSX.Element {
 
-  const { plants, setPlants } = useContext(AppContext);
+  const { plants } = useContext(AppContext);
 
-  useEffect(() => {
-    fetch('https://szhy1liq97.execute-api.us-east-2.amazonaws.com/Prod/plants')
-    .then( response => response.json())
-    .then( plnts => setPlants(plnts))
-    .catch( error => console.log(error));
-  }, [setPlants])
+  // useEffect(() => {
+  //   fetch('https://szhy1liq97.execute-api.us-east-2.amazonaws.com/Prod/plants')
+  //   .then( response => response.json())
+  //   .then( plnts => setPlants(plnts))
+  //   .catch( error => console.log(error));
+  // }, [])
 
   return (
     <div className="container py-5">
@@ -32,7 +32,7 @@ function ShopPlants(props:any):JSX.Element {
       <Grid container spacing={4} id="plant-grid">
         { plants.map( (plant) => 
           <Grid key={plant.id} item xs={12} sm={6} md={4} lg={3}>
-            <PlantItem key={plant.id} isAdmin={props.isAdmin} plant={plant} addToCart={props.addToCart} />
+            <PlantItem key={plant.id} plant={plant} addToCart={props.addToCart} />
           </Grid>
         ) }
       </Grid>

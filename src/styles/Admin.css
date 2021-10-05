@@ -31,4 +31,13 @@
     margin-bottom: 3rem;
     width: 100%;
   }
+  
+  #add {
+    flex-direction: column !important;
+    margin-bottom: 2rem;
+  }
+
+  #add h2 {
+    padding-bottom: 1rem;
+  }
 }

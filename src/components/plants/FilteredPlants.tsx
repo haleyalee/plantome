@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import Grid from '@material-ui/core/Grid';
 
 // import context
@@ -10,20 +10,19 @@ import Plant from '../../entities/plant';
 
 type Props = {
   pageName: string,
-  addToCart: (item:Plant)=>void,
-  isAdmin: boolean
+  addToCart: (item:Plant)=>void
 }
 
 function ShopFilteredPlants(props:Props):JSX.Element {
 
-  const { plants, setPlants } = useContext(AppContext);
+  const { plants } = useContext(AppContext);
 
-  useEffect(() => {
-    fetch('https://szhy1liq97.execute-api.us-east-2.amazonaws.com/Prod/plants')
-    .then( response => response.json())
-    .then( plnts => setPlants(plnts))
-    .catch( error => console.log(error));
-  }, [setPlants])
+  // useEffect(() => {
+  //   fetch('https://szhy1liq97.execute-api.us-east-2.amazonaws.com/Prod/plants')
+  //   .then( response => response.json())
+  //   .then( plnts => setPlants(plnts))
+  //   .catch( error => console.log(error));
+  // }, [setPlants])
 
   return (
     <div className="container py-5">
@@ -33,7 +32,7 @@ function ShopFilteredPlants(props:Props):JSX.Element {
           plant.category.includes(props.pageName) 
           ?
           <Grid key={plant.id} item xs={12} sm={6} md={4} lg={3}>
-            <PlantItem key={plant.id} isAdmin={props.isAdmin} plant={plant} addToCart={props.addToCart} />
+            <PlantItem key={plant.id} plant={plant} addToCart={props.addToCart} />
           </Grid>
           :
           <div key={plant.id}></div>

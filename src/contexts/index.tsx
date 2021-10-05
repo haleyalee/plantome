@@ -1,12 +1,12 @@
 import React from 'react';
 import Plant from '../entities/plant'
 
-type PlantsContext = {
+type TPlantsContext = {
   plants: Plant[],
   setPlants: (plants: Plant[])=>void
 };
 
-const initialContext = {
+const initialPlantContext = {
   // plants: [
   //   { id: 0, name: 'Monstera', 
   //     price: 19.00, 
@@ -81,6 +81,19 @@ const initialContext = {
   plants: [],
   setPlants: ()=>{return null}
 }
+const AppContext = React.createContext<TPlantsContext>(initialPlantContext);
+export default AppContext; 
 
-const AppContext = React.createContext<PlantsContext>(initialContext);
-export default AppContext;
+type TAdminContext = {
+  isAdmin: boolean,
+  setIsAdmin: (isAdmin: boolean) => void
+}
+
+
+const initialAdminContext = {
+  isAdmin: false,
+  setIsAdmin: ()=>{return null}
+}
+const AdminContext = React.createContext<TAdminContext>(initialAdminContext);
+
+export {AdminContext};

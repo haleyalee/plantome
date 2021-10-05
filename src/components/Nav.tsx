@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
+import React, { useContext, useState } from 'react'
+import { Link, withRouter } from 'react-router-dom';
 import Drawer from '@material-ui/core/Drawer'
 import { Auth } from 'aws-amplify';
 
@@ -10,31 +10,29 @@ import userProfile from '../images/icons/user.svg';
 import search from '../images/icons/search.svg';
 import x from '../images/icons/x-lg.svg';
 
+import { AdminContext } from '../contexts';
+
 // import styles
 import '../styles/Nav.css';
 
 // import components
 import ShoppingCart from './ShoppingCart';
-import Plant from '../entities/plant';
+// import Plant from '../entities/plant';
 
-type Props = {
-  cart: Plant[],
-  handleSignIn: (state:boolean)=>void,
-  signedIn: boolean,
-  addToCart: (item:Plant)=>void,
-  removeFromCart: (item:Plant)=>void,
-  search: (results:Plant[])=>void
-}
+// type Props = {
+//   cart: Plant[],
+//   handleSignIn: (state:boolean)=>void,
+//   signedIn: boolean,
+//   addToCart: (item:Plant)=>void,
+//   removeFromCart: (item:Plant)=>void,
+//   search: (results:Plant[])=>void
+// }
 
-function Nav(props:Props):JSX.Element {
+// eslint-disable-next-line
+function Nav(props:any):JSX.Element {
 
-  // Shopping Cart Drawer
-  const [cartOpen, setCartOpen] = useState(false);
-
-  const handleClose = (state:boolean) => {
-    setCartOpen(state);
-  }
-
+  const { isAdmin } = useContext(AdminContext);
+  
   // Sign Out
   const signOut = () => {
     Auth.signOut()
@@ -43,6 +41,15 @@ function Nav(props:Props):JSX.Element {
       props.handleSignIn(false);
     })
     .catch((error) => console.log(`Error signing out: ${error.message}`))
+    
+    props.history.push('/signin');
+  }
+  
+  // Shopping Cart Drawer
+  const [cartOpen, setCartOpen] = useState(false);
+
+  const handleClose = (state:boolean) => {
+    setCartOpen(state);
   }
 
   return (
@@ -108,7 +115,10 @@ function Nav(props:Props):JSX.Element {
                   <img src={userProfile} alt="User Profile" width="24px" height="24px"/>
                 </a>
                 <div className="dropdown-menu dropdown-menu-right p-2" aria-labelledby="userDropdown">
-                  <Link to="/account" className="dropdown-item">my account</Link>
+                  { (isAdmin)
+                    ? <Link to="/admin" className="dropdown-item">admin</Link>
+                    : <Link to="/account" className="dropdown-item">my account</Link>
+                  }
                   <a className="dropdown-item" role="button" onClick={signOut}>sign out</a>
                 </div>
               </li>
@@ -145,4 +155,4 @@ function Nav(props:Props):JSX.Element {
   )
 }
 
-export default Nav
+export default withRouter(Nav);
