@@ -20,7 +20,7 @@
 }
 
 .menu-opt:hover {
-  transform: scale(1.05);
+  transform: scale(1.02);
   transition-delay: transform 1s;
 }
 

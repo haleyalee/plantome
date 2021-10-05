@@ -45,11 +45,17 @@
   color: white;
 }
 
-#plant-card, #company-card {
+.plant-card, .company-card {
   box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
 }
 
-#company-card {
+.plant-card:hover {
+  transform: scale(1.01);
+  transition-delay: transform 1s;
+  box-shadow: rgba(33, 35, 38, 0.2) 0px 10px 10px -10px;
+}
+
+.company-card {
   background-color:rgba(178, 172, 136, 0.2)
 }
 
@@ -71,6 +77,32 @@
   z-index: 100;
 }
 
+#footer {
+  background-color:rgba(178, 172, 136, 0.2);
+}
+
+.footer-section {
+  padding-right:3rem;
+}
+
+.footer-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.footer-nav-link {
+  color: black;
+  text-decoration: none;
+}
+
+#footer table td {
+  padding-right: 0.5rem;
+}
+
+.footer-section p {
+  margin-bottom: 0.5rem;
+}
+
 @media (max-width: 768px) {
   .display-6, .lead {
     line-height: 2;
@@ -78,6 +110,16 @@
 
   #company-card {
     margin-bottom: 1rem;
+  }
+
+  #footer-flex {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .footer-section {
+    padding: 0;
+    padding-bottom: 2rem;
   }
 
 }

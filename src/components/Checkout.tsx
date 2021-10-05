@@ -81,7 +81,7 @@ function Checkout(props:any):JSX.Element {
     style: {
       base: {
         fontSize: '16px',
-        fontFamily: 'Segoe UI'
+        fontFamily: 'Segoe UI, sans-serif'
       },
       invalid: {
         color: '#9e2146',
