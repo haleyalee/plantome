@@ -47,13 +47,13 @@ export type CartItemType = {
 
 function App():JSX.Element {
 
-  // Set Plants Context
+  // Plants Context
   const {setPlants} = useContext(AppContext);
 
   useEffect(() => {
     fetch('https://szhy1liq97.execute-api.us-east-2.amazonaws.com/Prod/plants')
     .then( response => response.json())
-    .then( plnts => setPlants(plnts))
+    .then( plnts => setPlants(plnts.sort()))
     .catch( error => console.log(error));
   }, []);
   

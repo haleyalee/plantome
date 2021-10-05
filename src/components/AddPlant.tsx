@@ -28,7 +28,8 @@ function AddPlant(props:any):JSX.Element {
     .then(() => console.log("Successfully posted plant"))
     .catch(error => console.log(`Failed to post plant: ${error}`))
 
-    setPlants([...plants, plant]);
+    const newPlants = [...plants, plant];
+    setPlants(newPlants);
     props.history.push('/plants');
   };
 
