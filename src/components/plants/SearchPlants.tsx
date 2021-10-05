@@ -10,7 +10,8 @@ import SearchBar from '../SearchBar';
 type Props = {
   search: (results:Plant[])=>void,
   searchResult: Plant[],
-  addToCart: (item:Plant)=>void
+  addToCart: (item:Plant)=>void,
+  isAdmin: boolean
 }
 
 function SearchPlants(props:Props):JSX.Element {
@@ -28,7 +29,7 @@ function SearchPlants(props:Props):JSX.Element {
         <Grid container spacing={4} id="plant-grid">
           { props.searchResult.map( (plant) => 
             <Grid key={plant.id} item xs={12} sm={6} md={4} lg={3}>
-              <PlantItem key={plant.id} plant={plant} addToCart={props.addToCart} />
+              <PlantItem key={plant.id} isAdmin={props.isAdmin} plant={plant} addToCart={props.addToCart} />
             </Grid>
           ) }
         </Grid>

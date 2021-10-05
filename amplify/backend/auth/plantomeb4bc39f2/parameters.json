@@ -1,6 +1,6 @@
 {
     "identityPoolName": "plantomeb4bc39f2_identitypool_b4bc39f2",
-    "allowUnauthenticatedIdentities": false,
+    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "plantob4bc39f2",
     "userPoolName": "plantomeb4bc39f2_userpool_b4bc39f2",
     "autoVerifiedAttributes": [
@@ -12,7 +12,7 @@
     ],
     "smsAuthenticationMessage": "Your authentication code is {####}",
     "smsVerificationMessage": "Your verification code is {####}",
-    "emailVerificationSubject": "Your verification code",
+    "emailVerificationSubject": "[plantome] Your Verification Code",
     "emailVerificationMessage": "Your verification code is {####}",
     "defaultPasswordPolicy": false,
     "passwordPolicyMinLength": 8,
@@ -46,15 +46,17 @@
             "Arn"
         ]
     },
-    "useDefault": "default",
+    "useDefault": "manual",
     "usernameAttributes": [
         "email"
     ],
-    "userPoolGroupList": [],
+    "userPoolGroupList": [
+        "admin"
+    ],
     "serviceName": "Cognito",
     "usernameCaseSensitive": false,
     "dependsOn": [],
-    "userPoolGroups": false,
+    "userPoolGroups": true,
     "adminQueries": true,
     "triggers": "{}",
     "hostedUI": false,
@@ -64,5 +66,6 @@
     },
     "breakCircularDependency": true,
     "permissions": [],
-    "authProviders": []
+    "authProviders": [],
+    "thirdPartyAuth": false
 }
