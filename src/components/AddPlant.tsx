@@ -1,5 +1,6 @@
 import React from 'react';
 import {v4 as uuidv4} from 'uuid';
+import {withRouter} from 'react-router-dom';
 
 // import styles
 import '../styles/Admin.css';
@@ -10,7 +11,8 @@ import Plant from '../entities/plant';
 // import components
 import PlantForm from './PlantForm';
 
-function AddPlant():JSX.Element {
+// eslint-disable-next-line
+function AddPlant(props:any):JSX.Element {
 
   const postPlant = (plant: Plant)  => {
     fetch('https://szhy1liq97.execute-api.us-east-2.amazonaws.com/Prod/plant', {
@@ -22,6 +24,8 @@ function AddPlant():JSX.Element {
     })
     .then(() => console.log("Successfully posted plant"))
     .catch(error => console.log(`Failed to post plant: ${error}`))
+
+    props.history.push('/plants');
   };
 
   return (
@@ -31,4 +35,4 @@ function AddPlant():JSX.Element {
   )
 }
 
-export default AddPlant
+export default withRouter(AddPlant);

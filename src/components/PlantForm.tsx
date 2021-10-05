@@ -11,15 +11,15 @@ type Props = {
 
 function PlantForm(props:Props):JSX.Element {
 
-  const [name, setName] = useState(props.plant.name);
-  const [price, setPrice] = useState(props.plant.price);
-  const [category, setCategory] = useState<string[]>(props.plant.category);
-  const [image, setImage] = useState(props.plant.image);
+  const [name, setName] = useState(props.plant.name ? props.plant.name : '');
+  const [price, setPrice] = useState(props.plant.price ? props.plant.price : 0);
+  const [category, setCategory] = useState<string[]>(props.plant.category ? props.plant.category : []);
+  const [image, setImage] = useState(props.plant.image ? props.plant.image : '');
 
-  const [beginner, setBeginner] = useState(props.plant.category.includes("Beginner") ? true : false);
-  const [bestSeller, setBestSeller] = useState(props.plant.category.includes("Best Seller") ? true : false);
-  const [lowMaintenance, setLowMaintenance] = useState(props.plant.category.includes("Low Maintenance") ? true : false);
-  const [tropical, setTropical] = useState(props.plant.category.includes("Tropical") ? true : false);
+  const [beginner, setBeginner] = useState(props.plant.category && props.plant.category.includes("Beginner") ? true : false);
+  const [bestSeller, setBestSeller] = useState(props.plant.category && props.plant.category.includes("Best Seller") ? true : false);
+  const [lowMaintenance, setLowMaintenance] = useState(props.plant.category && props.plant.category.includes("Low Maintenance") ? true : false);
+  const [tropical, setTropical] = useState(props.plant.category && props.plant.category.includes("Tropical") ? true : false);
 
   // eslint-disable-next-line
   const handleCheckboxChange = (e:any) => {

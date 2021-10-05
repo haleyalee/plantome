@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from 'react'
+import { withRouter } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 
 // import context
@@ -6,21 +7,21 @@ import AppContext from '../../contexts';
 
 // import components
 import PlantItem from './../PlantItem';
-import Plant from '../../entities/plant';
+// import Plant from '../../entities/plant';
 
-type Props = {
-  isAdmin: boolean,
-  addToCart: (item:Plant)=>void
-}
+// type Props = {
+//   isAdmin: boolean,
+//   addToCart: (item:Plant)=>void
+// }
 
-function ShopPlants(props:Props):JSX.Element {
+// eslint-disable-next-line
+function ShopPlants(props:any):JSX.Element {
 
   const { plants, setPlants } = useContext(AppContext);
 
   useEffect(() => {
     fetch('https://szhy1liq97.execute-api.us-east-2.amazonaws.com/Prod/plants')
     .then( response => response.json())
-    .then( plnts => plnts.map( ( plant:Plant, index:number) => { plant._id = index+1; return plant}))
     .then( plnts => setPlants(plnts))
     .catch( error => console.log(error));
   }, [setPlants])
@@ -39,4 +40,4 @@ function ShopPlants(props:Props):JSX.Element {
   )
 }
 
-export default ShopPlants
+export default withRouter(ShopPlants);

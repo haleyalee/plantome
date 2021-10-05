@@ -21,7 +21,6 @@ function ShopFilteredPlants(props:Props):JSX.Element {
   useEffect(() => {
     fetch('https://szhy1liq97.execute-api.us-east-2.amazonaws.com/Prod/plants')
     .then( response => response.json())
-    .then( plnts => plnts.map( ( plant:Plant, index:number) => { plant._id = index+1; return plant}))
     .then( plnts => setPlants(plnts))
     .catch( error => console.log(error));
   }, [setPlants])
