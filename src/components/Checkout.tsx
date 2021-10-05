@@ -77,6 +77,7 @@ function Checkout(props:any):JSX.Element {
 
   // Stripe
   const options = {
+    hidePostalCode: true,
     style: {
       base: {
         fontSize: '16px',
