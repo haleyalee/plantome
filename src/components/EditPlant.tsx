@@ -12,8 +12,10 @@ function EditPlant(props:any):JSX.Element {
 
   // eslint-disable-next-line
   const {id} = useParams<any>();
-  const {plants} = useContext(AppContext);
+  const {plants, setPlants} = useContext(AppContext);
   const [plant, setPlant] = useState<Plant>();
+
+  const oldPlants = plants.filter(plant => plant.id !== id);
 
   useEffect(() => {
     setPlant(plants.find(plnt=>plnt.id==id))
@@ -30,6 +32,8 @@ function EditPlant(props:any):JSX.Element {
     .then(() => console.log("Successfully edited plant"))
     .catch(error => console.log(`Failed to edit plant: ${error}`))
 
+    setPlants([...oldPlants, plant]);
+
     props.history.push('/plants');
   };
 
@@ -44,6 +48,7 @@ function EditPlant(props:any):JSX.Element {
     .then(() => console.log("Succesfully deleted plant"))
     .catch(error => console.log(`Failed to delete plant: ${error}`))
 
+    setPlants(oldPlants);
     props.history.push('/plants');
   };
 

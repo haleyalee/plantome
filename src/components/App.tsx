@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from  'react';
+import React, {useState, useEffect, useContext} from  'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -13,6 +13,7 @@ Amplify.configure(aws_exports);
 import '../styles/App.css';
 import '../styles/scss/custom.css';
 
+import AppContext from '../contexts';
 import Plant from '../entities/plant';
 
 // import components
@@ -44,6 +45,16 @@ export type CartItemType = {
 }
 
 function App():JSX.Element {
+
+  // Set Plants Context
+  const {setPlants} = useContext(AppContext);
+
+  useEffect(() => {
+    fetch('https://szhy1liq97.execute-api.us-east-2.amazonaws.com/Prod/plants')
+    .then( response => response.json())
+    .then( plnts => setPlants(plnts))
+    .catch( error => console.log(error));
+  }, []);
   
   // User Authentication
   const [signedIn, setSignedIn] = useState(false);

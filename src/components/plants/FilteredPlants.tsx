@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import Grid from '@material-ui/core/Grid';
 
 // import context
@@ -16,14 +16,14 @@ type Props = {
 
 function ShopFilteredPlants(props:Props):JSX.Element {
 
-  const { plants, setPlants } = useContext(AppContext);
+  const { plants } = useContext(AppContext);
 
-  useEffect(() => {
-    fetch('https://szhy1liq97.execute-api.us-east-2.amazonaws.com/Prod/plants')
-    .then( response => response.json())
-    .then( plnts => setPlants(plnts))
-    .catch( error => console.log(error));
-  }, [setPlants])
+  // useEffect(() => {
+  //   fetch('https://szhy1liq97.execute-api.us-east-2.amazonaws.com/Prod/plants')
+  //   .then( response => response.json())
+  //   .then( plnts => setPlants(plnts))
+  //   .catch( error => console.log(error));
+  // }, [setPlants])
 
   return (
     <div className="container py-5">
