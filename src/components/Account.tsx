@@ -7,7 +7,7 @@ import "../styles/Account.css";
 
 // import components
 import MyAccount from "./account/MyAccount";
-import ReviewOrder from './ReviewOrder';
+import OrderHistory from './OrderHistory';
 
 // eslint-disable-next-line
 function Account(props:any) {
@@ -90,7 +90,7 @@ function Account(props:any) {
           ?
           <div id="order-history">
             <h3 className="pb-4">Order History</h3>
-            { (props.cart.length === 0) ? <div><em>No order history yet</em></div> : <ReviewOrder cart={props.cart} />  }
+            { (props.orderHistory.length === 0) ? <div><em>No order history yet</em></div> : <OrderHistory orderHistory={props.orderHistory} />  }
           </div>
           :
           <div></div>

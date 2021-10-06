@@ -89,7 +89,6 @@ type TAdminContext = {
   setIsAdmin: (isAdmin: boolean) => void
 }
 
-
 const initialAdminContext = {
   isAdmin: false,
   setIsAdmin: ()=>{return null}
@@ -97,3 +96,16 @@ const initialAdminContext = {
 const AdminContext = React.createContext<TAdminContext>(initialAdminContext);
 
 export {AdminContext};
+
+type TCartContext = {
+  cart: Plant[],
+  setCart: (plants:Plant[]) => void
+}
+
+const initialCartContext = {
+  cart: [],
+  setCart: ()=>{return null}
+}
+const CartContext = React.createContext<TCartContext>(initialCartContext);
+
+export {CartContext};

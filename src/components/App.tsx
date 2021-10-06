@@ -16,8 +16,10 @@ Amplify.configure(aws_exports);
 import '../styles/App.css';
 import '../styles/scss/custom.css';
 
-import AppContext, { AdminContext } from '../contexts';
+// import contexts and entities
+import AppContext, { AdminContext, CartContext } from '../contexts';
 import Plant from '../entities/plant';
+import Cart from '../entities/cart';
 
 // import components
 import Nav from './Nav';
@@ -39,31 +41,12 @@ import EditPlant from './EditPlant';
 import Admin from './account/Admin';
 import Footer from './Footer';
 
-
-export type CartItemType = {
-  id: number,
-  name: string,
-  price: number,
-  category: string,
-  quantity: number,
-  image: string
-}
-
 // eslint-disable-next-line
 function App(props:any):JSX.Element {
 
-  // Plants Context
-  const {setPlants} = useContext(AppContext);
-
-  useEffect(() => {
-    fetch('https://szhy1liq97.execute-api.us-east-2.amazonaws.com/Prod/plants')
-    .then( response => response.json())
-    .then( plnts => setPlants(plnts.sort()))
-    .catch( error => console.log(error));
-  }, []);
-  
   // User Authentication
   const [signedIn, setSignedIn] = useState(false);
+  const [user, setUser] = useState();
 
   const handleSignIn = (state:boolean) => {
     setSignedIn(state);
@@ -74,7 +57,7 @@ function App(props:any):JSX.Element {
     Auth.currentSession()
     .then(() => setSignedIn(true))
     .catch((error) => console.log(`No current session: ${error}`))
-  });
+  }, []);
   
   // User Authorization
   const {isAdmin, setIsAdmin} = useContext(AdminContext);
@@ -82,6 +65,7 @@ function App(props:any):JSX.Element {
   useEffect(()=> {
     Auth.currentAuthenticatedUser()
     .then((user) => { 
+      setUser(user.username);
       const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
       if (groups && groups.includes('admin')) {
         setIsAdmin(true);
@@ -90,30 +74,72 @@ function App(props:any):JSX.Element {
     .catch((error) => console.log(`Error: ${error}`))
   }, [signedIn]);
 
-  // Shopping Cart
-  const [cart, setCart] = useState<Plant[]>([]);
+  // Plants Context
+  const {setPlants} = useContext(AppContext);
+
+  useEffect(() => {
+    fetch('https://szhy1liq97.execute-api.us-east-2.amazonaws.com/Prod/plants')
+    .then( response => response.json())
+    .then( plnts => setPlants(plnts))
+    .catch( error => console.log(error))
+  }, []);
+
+  // Cart Context
+  const {cart, setCart} = useContext(CartContext);
+  const [orderHistory, setOrderHistory] = useState<(Plant[])[]>([]);
+
+  // Read cart from database if signed in
+  useEffect(() => {
+    if (signedIn && user) {
+      fetch(`https://szhy1liq97.execute-api.us-east-2.amazonaws.com/Prod/cart/${user}`)
+      .then( response => response.json())
+      .then( userCart => {
+        setCart(userCart.cart);
+        setOrderHistory(userCart.orderHistory);
+        console.log("Successfully read cart");
+      })
+      .catch( error => console.log(`Failed to read cart: ${error}`))
+    }
+  }, [signedIn, user]);
+
+  // Update cart in database when changed
+  useEffect(() => {
+    if (signedIn && user) {
+      const userCart = new Cart(user, cart, orderHistory);
+      fetch('https://szhy1liq97.execute-api.us-east-2.amazonaws.com/Prod/cart', {
+        method: 'POST',
+        body: JSON.stringify(userCart),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+      })
+      .then(() => console.log("Successfully updated cart"))
+      .catch(error => console.log(`Failed to update cart: ${error}`))
+    }
+  }, [cart, orderHistory, setCart, setOrderHistory]);
 
   const emptyCart = () => {
     setCart([]);
   }
 
-  const handleAddToCart = (item:Plant) => {
+  const handleAddToCart = (item:Plant, qty:number) => {
     // if item is already in cart, increase quantity
     if (cart.includes(item)) {
-      item.quantity += 1;
-      console.log(item)
+      item.quantity = qty;
+      const idxItem = cart.findIndex((itm) => itm.id === item.id);
+      const newCart = [...cart.slice(0,idxItem), item, ...cart.slice(idxItem+1)]
+      setCart(newCart);
     } 
     // else add item to cart, set quantity to 1
     else {
       item.quantity = 1;
-      setCart((currentCart) => [...currentCart, item]);
+      setCart([...cart, item]);
     }
-    console.log(cart);
   };
 
   const handleRemoveFromCart = (item:Plant) => {
     item.quantity = 0;
-    setCart((currentCart) => currentCart.filter((cartItem) => cartItem.id !== item.id));
+    setCart(cart.filter((cartItem) => cartItem.id !== item.id));
   }
 
   const [stripePromise] = useState(() => loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx'));
@@ -127,16 +153,16 @@ function App(props:any):JSX.Element {
 
   // Checkout
   const [placedOrder, setPlacedOrder] = useState(false);
-  const [checkOutCart, setCheckoutCart] = useState<Plant[]>([]);
+  // const [orderHistory, setOrderHistory] = useState<Plant[]>([]);
   const handlePlacedOrder = () => {
     setPlacedOrder(true);
-    setCheckoutCart(cart);
+    setOrderHistory([cart, ...orderHistory]);
   }
 
   return (
     <div>
       <Router >
-        <Nav cart={cart} signedIn={signedIn} handleSignIn={handleSignIn} addToCart={handleAddToCart} removeFromCart={handleRemoveFromCart} search={searchPlants} />
+        <Nav signedIn={signedIn} handleSignIn={handleSignIn} addToCart={handleAddToCart} removeFromCart={handleRemoveFromCart} search={searchPlants} />
         <Switch>
           <Route exact path="/"><Home addToCart={handleAddToCart}/></Route>
           <Route exact path="/plants/search"><SearchPlants search={searchPlants} searchResult={searchResult} addToCart={handleAddToCart} /></Route>
@@ -156,7 +182,7 @@ function App(props:any):JSX.Element {
 
           <Route path="/account">
             { (signedIn) 
-              ? <Account handleSignIn={handleSignIn} cart={checkOutCart} /> 
+              ? <Account handleSignIn={handleSignIn} orderHistory={orderHistory} /> 
               : <SignIn handleSignIn={handleSignIn} /> 
             }
           </Route>
@@ -165,11 +191,11 @@ function App(props:any):JSX.Element {
           <Route exact path="/admin"><Admin /></Route>
 
           <Route exact path ="/checkout/order-confirmation">
-            { (placedOrder) ? <OrderConfirmation cart={checkOutCart} signedIn={signedIn} /> : <Home addToCart={handleAddToCart} /> }
+            { (placedOrder) ? <OrderConfirmation orderHistory={orderHistory} signedIn={signedIn} /> : <Home addToCart={handleAddToCart} /> }
           </Route>
           <Route path="/checkout">
             <Elements stripe={stripePromise}>
-              <Checkout cart={cart} emptyCart={emptyCart} signedIn={signedIn} handleSignIn={handleSignIn} handlePlacedOrder={handlePlacedOrder}/>
+              <Checkout emptyCart={emptyCart} signedIn={signedIn} handleSignIn={handleSignIn} handlePlacedOrder={handlePlacedOrder}/>
             </Elements>
           </Route>
 

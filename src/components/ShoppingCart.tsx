@@ -1,11 +1,12 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {withRouter} from 'react-router-dom';
 
 // import components
 import ShoppingCartItem from './ShoppingCartItem'
 
-// import entities
+// import contexts and entities
 import Plant from '../entities/plant';
+import { CartContext } from '../contexts';
 
 // import styles
 import '../styles/ShoppingCart.css';
@@ -22,21 +23,17 @@ import '../styles/ShoppingCart.css';
 function ShoppingCart(props:any):JSX.Element {
 
   const [subtotal, setSubtotal] = useState(0);
-  const [cart, setCart] = useState(props.cart);
+  const {cart} = useContext(CartContext);
   const tax = subtotal * 0.06;
 
-  let subtotalArr:number[] = props.cart.map( (item:Plant) => item.price * item.quantity );
-
-  useEffect(() => {
-    setCart(props.cart);
-  }, [props.cart]);
+  let subtotalArr:number[] = cart.map( (item:Plant) => item.price * item.quantity );
 
   useEffect(() => {
     if (cart.length > 0) {
       subtotalArr = cart.map( (item:Plant) => item.price * item.quantity );
       setSubtotal(subtotalArr.reduce( (prev:number, curr:number) => prev + curr));
     }
-  });
+  }, [subtotal, cart]);
 
   const handleShopNow = () => {
     props.history.push("/plants");
@@ -56,7 +53,7 @@ function ShoppingCart(props:any):JSX.Element {
     <div id="cart" className="container px-4 py-4">
       <h3 className="pb-3">Shopping Cart</h3>
       {
-        (props.cart.length === 0 || cart.length === 0)
+        (cart.length === 0)
         ?
         // Empty Cart
         <div className="d-flex flex-column justify-content-center">

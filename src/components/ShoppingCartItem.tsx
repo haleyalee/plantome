@@ -7,7 +7,7 @@ import "../styles/ShoppingCart.css"
 
 type Props = {
   plant: Plant,
-  addToCart: (item:Plant)=>void,
+  addToCart: (item:Plant, qty:number)=>void,
   removeFromCart: (item:Plant)=>void,
   findSubtotal: (itemPrice:number)=>void
 }
@@ -34,18 +34,20 @@ function ShoppingCartItem(props:Props):JSX.Element {
     props.findSubtotal(props.plant.quantity * props.plant.price);
   });
 
+  useEffect(() => {
+    props.addToCart(props.plant, count);
+  }, [count])
+
   const handleMinus = () => {
     if (count-1 >= 0) {
       setCount(count-1);
       props.plant.quantity -= 1;
     }
-    console.log(props.plant)
   }
 
   const handlePlus = () => {
     setCount(count+1);
     props.plant.quantity += 1;
-    console.log(props.plant)
   }
 
   return (

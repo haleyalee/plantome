@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Auth } from 'aws-amplify';
 import { withRouter } from 'react-router-dom';
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
@@ -7,8 +7,9 @@ import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import '../styles/Checkout.css';
 import AddressForm from './AddressForm';
 
-// import entities
+// import contexts and entities
 import Plant from '../entities/plant';
+import { CartContext } from '../contexts';
 
 // import components
 // import CheckoutItem from './CheckoutItem';
@@ -93,20 +94,22 @@ function Checkout(props:any):JSX.Element {
   const elements = useElements();
 
   // Order Summary
+  const {cart} = useContext(CartContext);
   const [subtotal, setSubtotal] = useState(0);
   const [tax, setTax] = useState(0);
-  const [total, setTotal] = useState(0);
 
-  let subtotalArr:number[] = props.cart.map( (item:Plant) => item.price * item.quantity );
+  let subtotalArr:number[] = cart.map( (item:Plant) => item.price * item.quantity );
 
   useEffect(() => {
-    if (props.cart.length > 0) {
-      subtotalArr = props.cart.map( (item:Plant) => item.price * item.quantity );
+    if (cart.length > 0) {
+      subtotalArr = cart.map( (item:Plant) => item.price * item.quantity );
       setSubtotal(subtotalArr.reduce( (prev:number, curr:number) => prev + curr));
     }
+  }, [cart]);
+
+  useEffect(() => {
     setTax(subtotal*0.06);
-    setTotal(subtotal+tax);
-  }, [subtotal, tax, setSubtotal, setTax, setTotal]);
+  }, [subtotal])
 
   // Use Shipping Address as Billing Address
   const toggleUseAsBilling = () => {
@@ -189,7 +192,7 @@ function Checkout(props:any):JSX.Element {
             </div>
             <div className="d-flex justify-content-between">
               <p><strong>Total</strong></p>
-              <p><strong>${total.toFixed(2)}</strong></p>
+              <p><strong>${(subtotal + tax).toFixed(2)}</strong></p>
             </div>
             <button type="submit" className="btn btn-primary mt-4" onClick={handlePlaceOrder}>Place Order</button>
           </div>
@@ -425,10 +428,10 @@ function Checkout(props:any):JSX.Element {
                     <div id="review-order" >
                       <div className="shipment mb-3">
                         <h5 className="mb-3">Shipment 1 of 1</h5>
-                        <ReviewOrder cart={props.cart} />
+                        <ReviewOrder order={cart} />
                       </div>
                       <div className="d-flex justify-content-between align-middle align-content-center">
-                        <h5 className="my-auto h-100">Total: ${total.toFixed(2)}</h5>
+                        <h5 className="my-auto h-100">Total: ${(subtotal + tax).toFixed(2)}</h5>
                         <input type="submit" className="btn btn-primary" value="Place Order" onClick={handlePlaceOrder}/>
                       </div>
                     </div>
