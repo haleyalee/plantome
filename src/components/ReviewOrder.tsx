@@ -10,11 +10,10 @@ import Plant from '../entities/plant';
 import CheckoutItem from './CheckoutItem';
 
 type Props = {
-  cart: Plant[];
+  order: Plant[];
 }
 
 function ReviewOrder(props:Props):JSX.Element {
-
   // Delivery date
   const [deliveryDate, setDeliveryDate] = useState("");
 
@@ -79,7 +78,7 @@ function ReviewOrder(props:Props):JSX.Element {
       <div className="shipment-box bg-light">
         <p>Delivery date: <strong>{deliveryDate}</strong> </p>
         <div>
-          { props.cart.map((plant) => <CheckoutItem key={plant.id} name={plant.name} price={plant.price} quantity={plant.quantity} image={plant.image} /> )}
+          { props.order.map((plant) => <CheckoutItem key={plant.id} name={plant.name} price={plant.price} quantity={plant.quantity} image={plant.image} /> )}
         </div>
       </div>
     </div>

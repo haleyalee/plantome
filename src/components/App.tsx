@@ -86,6 +86,7 @@ function App(props:any):JSX.Element {
 
   // Cart Context
   const {cart, setCart} = useContext(CartContext);
+  const [orderHistory, setOrderHistory] = useState<(Plant[])[]>([]);
 
   // Read cart from database if signed in
   useEffect(() => {
@@ -94,6 +95,7 @@ function App(props:any):JSX.Element {
       .then( response => response.json())
       .then( userCart => {
         setCart(userCart.cart);
+        setOrderHistory(userCart.orderHistory);
         console.log("Successfully read cart");
       })
       .catch( error => console.log(`Failed to read cart: ${error}`))
@@ -103,7 +105,7 @@ function App(props:any):JSX.Element {
   // Update cart in database when changed
   useEffect(() => {
     if (signedIn && user) {
-      const userCart = new Cart(user, cart);
+      const userCart = new Cart(user, cart, orderHistory);
       fetch('https://szhy1liq97.execute-api.us-east-2.amazonaws.com/Prod/cart', {
         method: 'POST',
         body: JSON.stringify(userCart),
@@ -114,7 +116,7 @@ function App(props:any):JSX.Element {
       .then(() => console.log("Successfully updated cart"))
       .catch(error => console.log(`Failed to update cart: ${error}`))
     }
-  }, [cart, setCart]);
+  }, [cart, orderHistory, setCart, setOrderHistory]);
 
   const emptyCart = () => {
     setCart([]);
@@ -151,10 +153,10 @@ function App(props:any):JSX.Element {
 
   // Checkout
   const [placedOrder, setPlacedOrder] = useState(false);
-  const [checkOutCart, setCheckoutCart] = useState<Plant[]>([]);
+  // const [orderHistory, setOrderHistory] = useState<Plant[]>([]);
   const handlePlacedOrder = () => {
     setPlacedOrder(true);
-    setCheckoutCart(cart);
+    setOrderHistory([cart, ...orderHistory]);
   }
 
   return (
@@ -180,7 +182,7 @@ function App(props:any):JSX.Element {
 
           <Route path="/account">
             { (signedIn) 
-              ? <Account handleSignIn={handleSignIn} cart={checkOutCart} /> 
+              ? <Account handleSignIn={handleSignIn} orderHistory={orderHistory} /> 
               : <SignIn handleSignIn={handleSignIn} /> 
             }
           </Route>
@@ -189,7 +191,7 @@ function App(props:any):JSX.Element {
           <Route exact path="/admin"><Admin /></Route>
 
           <Route exact path ="/checkout/order-confirmation">
-            { (placedOrder) ? <OrderConfirmation cart={checkOutCart} signedIn={signedIn} /> : <Home addToCart={handleAddToCart} /> }
+            { (placedOrder) ? <OrderConfirmation orderHistory={orderHistory} signedIn={signedIn} /> : <Home addToCart={handleAddToCart} /> }
           </Route>
           <Route path="/checkout">
             <Elements stripe={stripePromise}>

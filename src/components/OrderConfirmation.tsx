@@ -13,7 +13,7 @@ import ReviewOrder from './ReviewOrder';
 // eslint-disable-next-line
 function OrderConfirmation(props:any):JSX.Element {
 
-  const [cart] = useState(props.cart);
+  const [orderHistory] = useState(props.orderHistory);
 
   useEffect(()=> {
     if (!props.signedIn) {
@@ -34,7 +34,7 @@ function OrderConfirmation(props:any):JSX.Element {
       </div>
       <div>
         <h5 className="mb-4">Here&apos;s what to look forward to:</h5>
-        <ReviewOrder cart={cart} />
+        <ReviewOrder order={orderHistory[0]} />
       </div>
     </div>
   )

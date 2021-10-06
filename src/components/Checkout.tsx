@@ -428,7 +428,7 @@ function Checkout(props:any):JSX.Element {
                     <div id="review-order" >
                       <div className="shipment mb-3">
                         <h5 className="mb-3">Shipment 1 of 1</h5>
-                        <ReviewOrder cart={cart} />
+                        <ReviewOrder order={cart} />
                       </div>
                       <div className="d-flex justify-content-between align-middle align-content-center">
                         <h5 className="my-auto h-100">Total: ${(subtotal + tax).toFixed(2)}</h5>
