@@ -11,6 +11,7 @@ import search from '../images/icons/search.svg';
 import x from '../images/icons/x-lg.svg';
 
 import { AdminContext } from '../contexts';
+import { CartContext } from '../contexts';
 
 // import styles
 import '../styles/Nav.css';
@@ -32,6 +33,7 @@ import ShoppingCart from './ShoppingCart';
 function Nav(props:any):JSX.Element {
 
   const { isAdmin } = useContext(AdminContext);
+  const { cart } = useContext(CartContext);
   
   // Sign Out
   const signOut = () => {
@@ -139,12 +141,12 @@ function Nav(props:any):JSX.Element {
                   </button>
                 </div>
                 <div>
-                  <ShoppingCart cart={props.cart} addToCart={props.addToCart} removeFromCart={props.removeFromCart} close={handleClose}/>
+                  <ShoppingCart addToCart={props.addToCart} removeFromCart={props.removeFromCart} close={handleClose}/>
                 </div>
               </Drawer>
               <a className="nav-link position-relative" role="button" onClick={()=> setCartOpen(true)}>
                 <img src={shoppingCart} alt="Shopping Cart" width="24px" height="24px"/>
-                <span id="badge" className="position-absolute translate-middle start-100 badge rounded-pill">{props.cart.length}</span>
+                <span id="badge" className="position-absolute translate-middle start-100 badge rounded-pill">{cart.length}</span>
               </a>
             </li>
 

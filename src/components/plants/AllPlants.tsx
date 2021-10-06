@@ -11,7 +11,7 @@ import PlantItem from './../PlantItem';
 
 // type Props = {
 //   isAdmin: boolean,
-//   addToCart: (item:Plant)=>void
+//   addToCart: (item:Plant, qty:number)=>void
 // }
 
 // eslint-disable-next-line

@@ -42,18 +42,20 @@ function Footer():JSX.Element {
             <h6>Contact</h6>
             <p>Haley Lee</p>
             <table>
-              <tr>
-                <td>📞</td>
-                <td><a href="tel:904-576-3213">904-576-3214</a></td>
-              </tr>
-              <tr>
-                <td>📧</td>
-                <td><a href="mailto: haleyalee@gmail.com">haleyalee@gmail.com</a></td>
-              </tr>
-              <tr>
-                <td></td>
-                <td><a href="mailto: haley.lee@cognizant.com">haley.lee@cogniant.com</a></td>
-              </tr>
+              <tbody>
+                <tr>
+                  <td>📞</td>
+                  <td><a href="tel:904-576-3213">904-576-3213</a></td>
+                </tr>
+                <tr>
+                  <td>📧</td>
+                  <td><a href="mailto: haleyalee@gmail.com">haleyalee@gmail.com</a></td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td><a href="mailto: haley.lee@cognizant.com">haley.lee@cogniant.com</a></td>
+                </tr>
+              </tbody>
             </table>
           </div>
         </div>

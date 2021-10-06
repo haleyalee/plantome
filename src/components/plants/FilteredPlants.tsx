@@ -10,7 +10,7 @@ import Plant from '../../entities/plant';
 
 type Props = {
   pageName: string,
-  addToCart: (item:Plant)=>void
+  addToCart: (item:Plant, qty:number)=>void
 }
 
 function ShopFilteredPlants(props:Props):JSX.Element {

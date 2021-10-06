@@ -10,7 +10,7 @@ import SearchBar from '../SearchBar';
 type Props = {
   search: (results:Plant[])=>void,
   searchResult: Plant[],
-  addToCart: (item:Plant)=>void
+  addToCart: (item:Plant, qty:number)=>void
 }
 
 function SearchPlants(props:Props):JSX.Element {
