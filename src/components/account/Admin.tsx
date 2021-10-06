@@ -23,7 +23,7 @@ function Admin(props:any):JSX.Element {
           <Grid container spacing={4} id="plant-grid">
             {plants.map( (plant) => 
               <Grid key={plant.id} item xs={12} sm={6} md={4} lg={3}>
-                <div className="text-center">
+                <div className="plant-card card text-center">
                   <img className="card-img-top" src={plant.image} alt={plant.name} width="200px" height="250px"/>
                   <div className="card-body">
                     <p className="card-title">{plant.name}</p>

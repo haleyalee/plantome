@@ -38,6 +38,7 @@ import AddPlant from './AddPlant';
 import NotFound from './NotFound';
 import EditPlant from './EditPlant';
 import Admin from './account/Admin';
+import Footer from './Footer';
 
 // eslint-disable-next-line
 function App(props:any):JSX.Element {
@@ -174,6 +175,7 @@ function App(props:any):JSX.Element {
           </Route>
 
         </Switch>
+        <Footer />
       </Router>
     </div>
   );
