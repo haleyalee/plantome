@@ -43,13 +43,11 @@ function ShoppingCartItem(props:Props):JSX.Element {
       setCount(count-1);
       props.plant.quantity -= 1;
     }
-    // console.log(props.plant)
   }
 
   const handlePlus = () => {
     setCount(count+1);
     props.plant.quantity += 1;
-    // console.log(props.plant)
   }
 
   return (

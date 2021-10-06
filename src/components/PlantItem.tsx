@@ -48,7 +48,7 @@ function PlantItem(props:any):JSX.Element {
           <p className="card-text">${props.plant.price.toFixed(2)}</p>
         </div>
         <div>
-          <button id="addToCartBtn" className="btn btn-outline-secondary mb-3" style={{opacity: 1}} onClick={()=>props.addToCart(props.plant)}>Add to Cart</button>
+          <button id="addToCartBtn" className="btn btn-outline-secondary mb-3" style={{opacity: 1}} onClick={()=>props.addToCart(props.plant, props.plant.quantity+1)}>Add to Cart</button>
         </div>
       </div>
     </div>
