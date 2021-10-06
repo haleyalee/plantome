@@ -16,7 +16,8 @@ Amplify.configure(aws_exports);
 import '../styles/App.css';
 import '../styles/scss/custom.css';
 
-import AppContext, { AdminContext } from '../contexts';
+// import contexts and entities
+import AppContext, { AdminContext, CartContext } from '../contexts';
 import Plant from '../entities/plant';
 
 // import components
@@ -38,16 +39,6 @@ import NotFound from './NotFound';
 import EditPlant from './EditPlant';
 import Admin from './account/Admin';
 
-
-export type CartItemType = {
-  id: number,
-  name: string,
-  price: number,
-  category: string,
-  quantity: number,
-  image: string
-}
-
 // eslint-disable-next-line
 function App(props:any):JSX.Element {
 
@@ -57,7 +48,17 @@ function App(props:any):JSX.Element {
   useEffect(() => {
     fetch('https://szhy1liq97.execute-api.us-east-2.amazonaws.com/Prod/plants')
     .then( response => response.json())
-    .then( plnts => setPlants(plnts.sort()))
+    .then( plnts => setPlants(plnts))
+    .catch( error => console.log(error));
+  }, []);
+
+  // Cart Context
+  const {cart, setCart} = useContext(CartContext);
+
+  useEffect(() => {
+    fetch('')
+    .then( response => response.json() )
+    .then( cart => setCart(cart))
     .catch( error => console.log(error));
   }, []);
   
@@ -90,7 +91,7 @@ function App(props:any):JSX.Element {
   }, [signedIn]);
 
   // Shopping Cart
-  const [cart, setCart] = useState<Plant[]>([]);
+  // const [cart, setCart] = useState<Plant[]>([]);
 
   const emptyCart = () => {
     setCart([]);
@@ -105,7 +106,7 @@ function App(props:any):JSX.Element {
     // else add item to cart, set quantity to 1
     else {
       item.quantity = 1;
-      setCart((currentCart) => [...currentCart, item]);
+      setCart((currentCart:Plant[]) => [...currentCart, item]);
     }
     console.log(cart);
   };
