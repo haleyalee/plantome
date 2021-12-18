@@ -18,7 +18,7 @@ function AddPlant(props:any):JSX.Element {
   const {plants, setPlants} = useContext(AppContext);
 
   const postPlant = (plant: Plant)  => {
-    fetch('https://szhy1liq97.execute-api.us-east-2.amazonaws.com/Prod/plant', {
+    fetch('https://ui3lck4yg1.execute-api.us-east-2.amazonaws.com/Prod/plant', {
       method: 'POST',
       body: JSON.stringify(plant),
       headers: {

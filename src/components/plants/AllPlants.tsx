@@ -20,7 +20,7 @@ function ShopPlants(props:any):JSX.Element {
   const { plants } = useContext(AppContext);
 
   // useEffect(() => {
-  //   fetch('https://szhy1liq97.execute-api.us-east-2.amazonaws.com/Prod/plants')
+  //   fetch('https://ui3lck4yg1.execute-api.us-east-2.amazonaws.com/Prod/plants')
   //   .then( response => response.json())
   //   .then( plnts => setPlants(plnts))
   //   .catch( error => console.log(error));

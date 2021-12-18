@@ -78,7 +78,7 @@ function App(props:any):JSX.Element {
   const {setPlants} = useContext(AppContext);
 
   useEffect(() => {
-    fetch('https://szhy1liq97.execute-api.us-east-2.amazonaws.com/Prod/plants')
+    fetch('https://ui3lck4yg1.execute-api.us-east-2.amazonaws.com/Prod/plants')
     .then( response => response.json())
     .then( plnts => setPlants(plnts))
     .catch( error => console.log(error))
@@ -91,7 +91,7 @@ function App(props:any):JSX.Element {
   // Read cart from database if signed in
   useEffect(() => {
     if (signedIn && user) {
-      fetch(`https://szhy1liq97.execute-api.us-east-2.amazonaws.com/Prod/cart/${user}`)
+      fetch(`https://ui3lck4yg1.execute-api.us-east-2.amazonaws.com/Prod/cart/${user}`)
       .then( response => response.json())
       .then( userCart => {
         setCart(userCart.cart);
@@ -106,7 +106,7 @@ function App(props:any):JSX.Element {
   useEffect(() => {
     if (signedIn && user) {
       const userCart = new Cart(user, cart, orderHistory);
-      fetch('https://szhy1liq97.execute-api.us-east-2.amazonaws.com/Prod/cart', {
+      fetch('https://ui3lck4yg1.execute-api.us-east-2.amazonaws.com/Prod/cart', {
         method: 'POST',
         body: JSON.stringify(userCart),
         headers: {

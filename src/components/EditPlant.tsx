@@ -20,7 +20,7 @@ function EditPlant(props:any):JSX.Element {
   }, [id, plants, setPlant])
   
   const editPlant = (plant:Plant) => {
-    fetch('https://szhy1liq97.execute-api.us-east-2.amazonaws.com/Prod/plant', {
+    fetch('https://ui3lck4yg1.execute-api.us-east-2.amazonaws.com/Prod/plant', {
       method: 'POST',
       body: JSON.stringify(plant),
       headers: {
@@ -39,7 +39,7 @@ function EditPlant(props:any):JSX.Element {
 
   const deletePlant = () => {
     console.log(`${id}`)
-    fetch(`https://szhy1liq97.execute-api.us-east-2.amazonaws.com/Prod/plant/${id}`, {
+    fetch(`https://ui3lck4yg1.execute-api.us-east-2.amazonaws.com/Prod/plant/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json'
