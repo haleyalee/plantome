@@ -1,18 +1,11 @@
 {
   "auth": {
-    "plantome1419b7d1": {
+    "plantomeb7752107": {
       "service": "Cognito",
       "serviceType": "imported",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
       "customAuth": false
-    }
-  },
-  "hosting": {
-    "amplifyhosting": {
-      "service": "amplifyhosting",
-      "type": "cicd",
-      "lastPushTimeStamp": "2021-12-18T21:08:41.841Z"
     }
   }
 }
