@@ -67,7 +67,7 @@ function App(props:any):JSX.Element {
     .then((user) => { 
       setUser(user.username);
       const groups = user.signInUserSession.accessToken.payload["cognito:groups"];
-      if (groups && groups.includes('admin')) {
+      if (groups && groups.includes('Admin')) {
         setIsAdmin(true);
       }
     })
